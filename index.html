@@ -3328,6 +3328,8 @@ function showLanding() {
   cdStop();
   sidebarClose(true);
   tabCdStop();
+  if (_anketTimer) { clearTimeout(_anketTimer); _anketTimer = null; }
+  closeAnket();
 }
 
 /* ── Countdown Banner Logic ── */
@@ -3402,7 +3404,6 @@ function openAnket() {
 function closeAnket() {
   var overlay = document.getElementById('anket-overlay');
   if (overlay) overlay.classList.remove('visible');
-  sessionStorage.setItem('anket-closed', '1');
 }
 
 function initAnket() {
@@ -3412,10 +3413,10 @@ function initAnket() {
   document.getElementById('anket-steps').style.display = '';
   document.getElementById('anket-nav').style.display = '';
   document.getElementById('anket-counter').style.display = '';
+  /* close any previously open overlay instantly before re-opening */
+  closeAnket();
   if (_anketTimer) clearTimeout(_anketTimer);
-  _anketTimer = setTimeout(function() {
-    if (!sessionStorage.getItem('anket-closed')) openAnket();
-  }, 1500);
+  _anketTimer = setTimeout(openAnket, 1000);
 }
 
 function renderAnketStep() {
