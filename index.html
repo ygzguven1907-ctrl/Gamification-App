@@ -1239,6 +1239,61 @@ html, body {
 }
 .sb-info-chip span { font-size: .8rem; color: #7c3aed88; }
 
+/* ═══════════════════════════════════════════
+   KURGU DEMO — FULL SCREEN OVERRIDE
+═══════════════════════════════════════════ */
+#page-countdown,
+#page-slidingbanner {
+  padding: 0;
+  align-items: stretch;
+}
+#page-countdown .game-topbar,
+#page-slidingbanner .game-topbar {
+  max-width: none;
+  width: 100%;
+  padding: 16px 24px;
+  background: #07061a;
+  border-bottom: 1px solid #7c3aed22;
+  position: sticky; top: 0; z-index: 10;
+}
+#page-countdown .demo-page-inner,
+#page-slidingbanner .demo-page-inner {
+  max-width: none;
+  flex: 1;
+  padding: 0;
+}
+#page-countdown .demo-label,
+#page-slidingbanner .demo-label {
+  display: none;
+}
+#page-countdown .cd-banner,
+#page-slidingbanner .sb-banner-wrap {
+  border-radius: 0 !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+}
+#page-countdown .demo-hero-mock,
+#page-slidingbanner .demo-hero-mock {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  flex: 1;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#page-countdown .demo-chips,
+#page-slidingbanner .demo-chips {
+  max-width: none;
+  padding: 16px 24px;
+  background: #07061a;
+  border-top: 1px solid #7c3aed22;
+  margin-top: 0;
+}
+
 </style>
 </head>
 <body>
