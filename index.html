@@ -1015,118 +1015,131 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════
-   COUNTDOWN BANNER PAGE
+   KURGU DEMO PAGES — shared layout
 ═══════════════════════════════════════════ */
-.cd-preview-label {
-  font-size: .72rem; letter-spacing: 2px; text-transform: uppercase;
-  color: #7c3aed88; text-align: center;
-  margin-bottom: 20px;
-  border: 1px dashed #7c3aed33;
-  padding: 6px 16px; border-radius: 8px;
-  display: inline-block;
+.demo-page-inner {
+  width: 100%; max-width: 860px;
+  display: flex; flex-direction: column; align-items: stretch;
+  padding-bottom: 32px;
 }
+.demo-label {
+  font-size: .68rem; letter-spacing: 2.5px; text-transform: uppercase;
+  color: #7c3aed55; text-align: center; margin-bottom: 12px;
+}
+.demo-hero-mock {
+  width: 100%;
+  background: linear-gradient(180deg, #0e0b28 0%, #16103c 100%);
+  border: 1px solid #7c3aed22; border-top: none;
+  border-radius: 0 0 18px 18px;
+  padding: 32px 28px 28px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.demo-hero-mock::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 0%, #7c3aed12, transparent);
+  pointer-events: none;
+}
+.dmh-logo { font-family:'Orbitron',sans-serif; font-size:.7rem; letter-spacing:3px; color:#7c3aed66; margin-bottom:14px; }
+.dmh-title {
+  font-family:'Orbitron',sans-serif; font-size:clamp(1.2rem,4vw,1.9rem); font-weight:900;
+  background:linear-gradient(135deg,#fff 30%,#c4b5fd);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  line-height:1.2; margin-bottom:8px;
+}
+.dmh-desc { font-size:.85rem; color:#a78bfa55; margin-bottom:18px; }
+.dmh-btn-mock {
+  display:inline-block; padding:9px 26px; border-radius:30px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  font-family:'Rajdhani',sans-serif; font-size:.88rem; font-weight:700; color:#fff;
+  opacity:.4; pointer-events:none;
+}
+.dmh-dots { display:flex; justify-content:center; gap:8px; margin-top:18px; }
+.dmh-dot { width:32px; height:3px; border-radius:2px; background:#7c3aed1a; }
+.dmh-dot:nth-child(2) { background:#7c3aed44; }
+
+.demo-chips {
+  display:flex; gap:12px; flex-wrap:wrap;
+  margin-top:18px; width:100%; max-width:860px;
+}
+.demo-chip {
+  flex:1; min-width:120px;
+  background:#ffffff06; border:1px solid #7c3aed22;
+  border-radius:12px; padding:13px 15px; text-align:center;
+}
+.demo-chip strong {
+  display:block; font-family:'Orbitron',sans-serif;
+  font-size:.9rem; color:var(--violet); margin-bottom:4px;
+}
+.demo-chip span { font-size:.76rem; color:#7c3aed66; }
+
+/* ── COUNTDOWN BANNER (dark theme) ── */
 .cd-banner {
   width: 100%;
-  background: #fff;
-  border-radius: 14px;
+  background: linear-gradient(135deg, #13103a 0%, #1e0a3c 100%);
+  border: 1px solid #7c3aed55; border-bottom: none;
+  border-radius: 18px 18px 0 0;
   overflow: hidden;
-  box-shadow: 0 8px 40px #0008, 0 0 0 1px #ffffff10;
+  box-shadow: 0 0 40px #7c3aed18;
 }
 .cd-banner-topbar {
-  height: 5px;
-  background: linear-gradient(90deg, #f97316, #fb923c, #fdba74);
+  height: 3px;
+  background: linear-gradient(90deg, #f97316, #fb923c, #fbbf24, #fb923c, #f97316);
+  background-size: 200% 100%;
+  animation: cdBarShift 3s linear infinite;
+}
+@keyframes cdBarShift {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
 }
 .cd-banner-inner {
-  padding: 24px 28px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: nowrap;
+  padding: 18px 24px;
+  display: flex; flex-direction: row;
+  align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: nowrap;
 }
 .cd-banner-text { flex: 1; min-width: 0; }
 .cd-digits { flex-shrink: 0; }
-.cd-banner-btn-row {
-  padding: 0 28px 20px;
-  text-align: right;
-}
-.cd-banner-text { flex: 1; min-width: 180px; }
+.cd-banner-btn-row { padding: 0 24px 16px; text-align: right; }
 .cd-banner-title {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 1.1rem; font-weight: 700;
-  color: #111; margin-bottom: 4px;
+  font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 2px;
 }
-.cd-banner-sub {
-  font-size: .82rem; color: #555; line-height: 1.4;
-}
-.cd-digits {
-  display: flex; align-items: center; gap: 4px;
-}
-.cd-digit-group {
-  display: flex; flex-direction: column; align-items: center;
-}
+.cd-banner-sub { font-size: .78rem; color: #a78bfa88; line-height: 1.4; }
+.cd-digits { display: flex; align-items: center; gap: 4px; }
+.cd-digit-group { display: flex; flex-direction: column; align-items: center; }
 .cd-num {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.7rem; font-weight: 900;
-  color: #111;
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 6px 14px;
-  min-width: 60px; text-align: center;
-  line-height: 1;
-  transition: color .2s ease;
+  font-size: 1.5rem; font-weight: 900; color: #f0abfc;
+  background: #ffffff0a; border: 1px solid #7c3aed44;
+  border-radius: 8px; padding: 5px 11px;
+  min-width: 52px; text-align: center; line-height: 1;
+  transition: color .15s ease;
 }
-.cd-num.tick { color: #f97316; }
+.cd-num.tick { color: #fbbf24; }
 .cd-unit {
-  font-size: .58rem; letter-spacing: 1px; text-transform: uppercase;
-  color: #888; margin-top: 4px;
+  font-size: .52rem; letter-spacing: 1px; text-transform: uppercase;
+  color: #7c3aed88; margin-top: 4px;
   font-family: 'Rajdhani', sans-serif; font-weight: 600;
 }
-.cd-sep {
-  font-size: 1.6rem; font-weight: 900; color: #d1d5db;
-  padding-bottom: 12px; line-height: 1;
-}
+.cd-sep { font-size: 1.4rem; font-weight: 900; color: #7c3aed44; padding-bottom: 14px; line-height: 1; }
 .cd-cta-btn {
-  background: linear-gradient(135deg, #16a34a, #15803d);
-  color: #fff;
-  border: none; border-radius: 10px;
-  padding: 12px 24px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1rem; font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff; border: none; border-radius: 10px;
+  padding: 9px 20px;
+  font-family: 'Rajdhani', sans-serif; font-size: .95rem; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
   transition: transform .2s, box-shadow .2s;
   touch-action: manipulation;
+  box-shadow: 0 4px 20px #7c3aed44;
 }
-.cd-cta-btn:hover { transform: scale(1.04); box-shadow: 0 4px 16px #16a34a55; }
+.cd-cta-btn:hover { transform: scale(1.04); box-shadow: 0 6px 24px #ec489955; }
 .cd-cta-btn:active { transform: scale(.97); }
 
-.cd-info-row {
-  display: flex; gap: 16px; flex-wrap: wrap;
-  margin-top: 24px;
-}
-.cd-info-chip {
-  flex: 1; min-width: 140px;
-  background: #ffffff08;
-  border: 1px solid #7c3aed22;
-  border-radius: 12px;
-  padding: 14px 18px;
-  text-align: center;
-}
-.cd-info-chip strong {
-  display: block;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem; color: var(--violet);
-  margin-bottom: 4px;
-}
-.cd-info-chip span { font-size: .8rem; color: #7c3aed88; }
-
 @media (max-width: 600px) {
-  .cd-banner-inner { flex-direction: column; align-items: flex-start; }
+  .cd-banner-inner { flex-wrap: wrap; }
+  .cd-num { font-size: 1.2rem; padding: 4px 9px; min-width: 42px; }
   .cd-cta-btn { width: 100%; text-align: center; }
-  .cd-num { font-size: 1.3rem; padding: 5px 10px; min-width: 46px; }
 }
 
 /* ═══════════════════════════════════════════
@@ -1776,15 +1789,11 @@ html, body {
     <span class="topbar-title">Countdown Banner ⏱️</span>
     <div style="width:80px"></div>
   </div>
-  <div class="game-card-wrap">
-    <div class="game-title">Countdown Banner ⏱️</div>
-    <div class="game-subtitle">Kullanıcı başına 2 saatlik kişisel geri sayım</div>
 
-    <div style="text-align:center;margin-bottom:20px">
-      <span class="cd-preview-label">Önizleme — Sitenizde Böyle Görünür</span>
-    </div>
+  <div class="demo-page-inner">
+    <p class="demo-label">— Sitenizde Böyle Görünür —</p>
 
-    <!-- The Banner -->
+    <!-- Banner at top -->
     <div class="cd-banner">
       <div class="cd-banner-topbar"></div>
       <div class="cd-banner-inner">
@@ -1814,22 +1823,23 @@ html, body {
       </div>
     </div>
 
-    <!-- Info chips -->
-    <div class="cd-info-row">
-      <div class="cd-info-chip">
-        <strong>2 Saat</strong>
-        <span>Kullanıcı bazlı süre</span>
-      </div>
-      <div class="cd-info-chip">
-        <strong>LocalStorage</strong>
-        <span>Sayfa yenilense de devam eder</span>
-      </div>
-      <div class="cd-info-chip">
-        <strong>Sıfır Kod</strong>
-        <span>Sitenize tek satırla entegre</span>
+    <!-- Hero mockup below banner -->
+    <div class="demo-hero-mock">
+      <div class="dmh-logo">YGZ GAMİFİCATİON</div>
+      <div class="dmh-title">GAMIFICATION<br>İLE BÜYÜ</div>
+      <div class="dmh-desc">Kullanıcılarınız oyun oynasın, siz büyüyün.</div>
+      <div class="dmh-btn-mock">Oyunları Keşfet ↓</div>
+      <div class="dmh-dots">
+        <div class="dmh-dot"></div><div class="dmh-dot"></div><div class="dmh-dot"></div>
       </div>
     </div>
 
+    <!-- Info chips -->
+    <div class="demo-chips">
+      <div class="demo-chip"><strong>2 Saat</strong><span>Kullanıcı bazlı süre</span></div>
+      <div class="demo-chip"><strong>LocalStorage</strong><span>Sayfa yenilense devam eder</span></div>
+      <div class="demo-chip"><strong>Sıfır Kod</strong><span>Tek satırla entegre</span></div>
+    </div>
   </div>
 </div>
 
@@ -1844,44 +1854,40 @@ html, body {
     <span class="topbar-title">Sliding Banner 📢</span>
     <div style="width:80px"></div>
   </div>
-  <div class="game-card-wrap">
-    <div class="game-title">Sliding Banner 📢</div>
-    <div class="game-subtitle">Sağdan sola kayan kampanya mesajları</div>
 
-    <div style="text-align:center;margin-bottom:20px">
-      <span class="cd-preview-label">Önizleme — Sitenizde Böyle Görünür</span>
-    </div>
+  <div class="demo-page-inner">
+    <p class="demo-label">— Sitenizde Böyle Görünür —</p>
 
-    <!-- Sliding Banner -->
-    <div class="sb-banner-wrap">
+    <!-- Sliding banner at top -->
+    <div class="sb-banner-wrap" style="border-radius:18px 18px 0 0; border-bottom:none;">
       <div class="sb-topline"></div>
       <div class="sb-track">
         <span class="sb-item"><span class="sb-dot"></span>🔥 <span class="sb-hl">%30 İndirim</span> &nbsp;— Kampanya bugün sona eriyor, kaçırma!</span>
         <span class="sb-item"><span class="sb-dot"></span>🎁 <span class="sb-hl">Ücretsiz Kargo</span> &nbsp;— 150₺ üzeri tüm siparişlerde geçerli</span>
         <span class="sb-item"><span class="sb-dot"></span>⚡ <span class="sb-hl">Sınırlı Stok</span> &nbsp;— En çok satanlar hızla tükeniyor!</span>
-        <!-- duplicate for seamless loop -->
         <span class="sb-item"><span class="sb-dot"></span>🔥 <span class="sb-hl">%30 İndirim</span> &nbsp;— Kampanya bugün sona eriyor, kaçırma!</span>
         <span class="sb-item"><span class="sb-dot"></span>🎁 <span class="sb-hl">Ücretsiz Kargo</span> &nbsp;— 150₺ üzeri tüm siparişlerde geçerli</span>
         <span class="sb-item"><span class="sb-dot"></span>⚡ <span class="sb-hl">Sınırlı Stok</span> &nbsp;— En çok satanlar hızla tükeniyor!</span>
       </div>
     </div>
 
-    <!-- Info chips -->
-    <div class="sb-info-row">
-      <div class="sb-info-chip">
-        <strong>3 Mesaj</strong>
-        <span>Sırayla döner</span>
-      </div>
-      <div class="sb-info-chip">
-        <strong>Sonsuz Döngü</strong>
-        <span>Kesintisiz kayan şerit</span>
-      </div>
-      <div class="sb-info-chip">
-        <strong>Hover'da Durur</strong>
-        <span>Kullanıcı okuyabilir</span>
+    <!-- Hero mockup below banner -->
+    <div class="demo-hero-mock">
+      <div class="dmh-logo">YGZ GAMİFİCATİON</div>
+      <div class="dmh-title">GAMIFICATION<br>İLE BÜYÜ</div>
+      <div class="dmh-desc">Kullanıcılarınız oyun oynasın, siz büyüyün.</div>
+      <div class="dmh-btn-mock">Oyunları Keşfet ↓</div>
+      <div class="dmh-dots">
+        <div class="dmh-dot"></div><div class="dmh-dot"></div><div class="dmh-dot"></div>
       </div>
     </div>
 
+    <!-- Info chips -->
+    <div class="demo-chips">
+      <div class="demo-chip"><strong>3 Mesaj</strong><span>Sırayla döner</span></div>
+      <div class="demo-chip"><strong>Sonsuz Döngü</strong><span>Kesintisiz kayan şerit</span></div>
+      <div class="demo-chip"><strong>Tam Özelleştirme</strong><span>Metin & renk ayarlanır</span></div>
+    </div>
   </div>
 </div>
 
