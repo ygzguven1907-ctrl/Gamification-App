@@ -1668,7 +1668,7 @@ html, body {
   flex: 1; display: flex; flex-direction: column;
   position: relative;
   background: linear-gradient(180deg, #0e0b28 0%, #16103c 100%);
-  overflow: hidden;
+  overflow-y: auto; overflow-x: hidden;
 }
 .bb-demo-area::before {
   content: ''; position: absolute; inset: 0;
@@ -1700,6 +1700,16 @@ html, body {
   align-items: center; justify-content: center;
   text-align: center; padding: 40px 24px; position: relative; z-index: 1;
 }
+.bb-mock-cards {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px; margin-top: 28px; width: 100%; max-width: 480px;
+}
+.bb-mock-card {
+  background: rgba(124,58,237,.12); border: 1px solid #7c3aed33;
+  border-radius: 12px; padding: 18px 10px;
+  font-family: 'Rajdhani', sans-serif; font-size: .9rem; font-weight: 600;
+  color: #c4b5fd; text-align: center;
+}
 .bb-sim-hero h2 {
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(1.4rem,4vw,2.4rem); font-weight: 900;
@@ -1713,12 +1723,14 @@ html, body {
 .bb-banner {
   position: sticky;
   bottom: 0; left: 0; right: 0;
+  width: 100%; flex-shrink: 0;
   z-index: 10;
   background: linear-gradient(135deg, #13103a 0%, #1e0a3c 100%);
   border-top: 1px solid #7c3aed44;
   box-shadow: 0 -4px 30px #7c3aed22;
   overflow: hidden;
   height: 56px;
+  margin-top: auto;
 }
 .bb-banner.hidden { display: none; }
 
@@ -2667,7 +2679,26 @@ html, body {
     <div class="bb-sim-hero">
       <div class="sim-hero-eyebrow">✦ Büyüme Senaryoları</div>
       <h2>BÜYÜME<br>SENARYOLARI</h2>
-      <p>Oyunlar ve kurgularla büyüyün.</p>
+      <p>Oyunlar ve kurgularla büyüyün. Aşağı kaydır, banner sabit kalır.</p>
+
+      <!-- Scrollable mock cards -->
+      <div class="bb-mock-cards">
+        <div class="bb-mock-card">🎰 Jackpot Slot</div>
+        <div class="bb-mock-card">🎡 Spin & Win</div>
+        <div class="bb-mock-card">🧲 Claw Machine</div>
+        <div class="bb-mock-card">🃏 Scratch Card</div>
+        <div class="bb-mock-card">🟣 Kare Spin</div>
+        <div class="bb-mock-card">😀 Emoji Match</div>
+        <div class="bb-mock-card">📣 Sliding Banner</div>
+        <div class="bb-mock-card">⏳ Countdown</div>
+        <div class="bb-mock-card">🔔 Bildirim Paneli</div>
+      </div>
+    </div>
+
+    <div class="demo-chips" style="margin:0;padding:14px 24px;background:transparent;border-top:1px solid #7c3aed22;">
+      <div class="demo-chip"><strong>3 Mesaj</strong><span>Yukarı kayarak döner</span></div>
+      <div class="demo-chip"><strong>Sticky</strong><span>Scroll'da da kalır</span></div>
+      <div class="demo-chip"><strong>✕ Kapat</strong><span>Kullanıcı kapatabilir</span></div>
     </div>
 
     <!-- BOTTOM BANNER -->
@@ -2679,12 +2710,6 @@ html, body {
       </div>
       <button class="bb-close" onclick="document.getElementById('bb-banner').classList.add('hidden')">✕</button>
     </div>
-  </div>
-
-  <div class="demo-chips">
-    <div class="demo-chip"><strong>3 Mesaj</strong><span>Yukarı kayarak döner</span></div>
-    <div class="demo-chip"><strong>Sticky</strong><span>Scroll'da da kalır</span></div>
-    <div class="demo-chip"><strong>✕ Kapat</strong><span>Kullanıcı kapatabilir</span></div>
   </div>
 </div>
 
