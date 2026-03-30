@@ -1135,31 +1135,41 @@ html, body {
 .sb-banner-wrap {
   width: 100%;
   position: relative;
-  background: linear-gradient(135deg, #0d0b26 0%, #1a1040 100%);
-  border: 1px solid #7c3aed44;
+  background: linear-gradient(135deg, #0d0b26 0%, #1e0a3c 50%, #0d0b26 100%);
+  border: 1px solid #7c3aed66;
   border-radius: 14px;
   overflow: hidden;
+  box-shadow: 0 0 30px #7c3aed22, inset 0 1px 0 #a78bfa22;
 }
 .sb-banner-wrap::before,
 .sb-banner-wrap::after {
   content: '';
-  position: absolute; top: 0; bottom: 0; width: 80px;
+  position: absolute; top: 0; bottom: 0; width: 90px;
   z-index: 2; pointer-events: none;
 }
 .sb-banner-wrap::before {
   left: 0;
-  background: linear-gradient(90deg, #0d0b26 20%, transparent);
+  background: linear-gradient(90deg, #0d0b26 30%, transparent);
 }
 .sb-banner-wrap::after {
   right: 0;
-  background: linear-gradient(270deg, #0d0b26 20%, transparent);
+  background: linear-gradient(270deg, #0d0b26 30%, transparent);
+}
+/* top accent line */
+.sb-banner-wrap > .sb-topline {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #7c3aed, #ec4899, #a78bfa, transparent);
+  animation: sbLineShift 3s ease infinite alternate;
+}
+@keyframes sbLineShift {
+  0%   { opacity: .6; }
+  100% { opacity: 1; }
 }
 .sb-track {
   display: flex;
   white-space: nowrap;
-  animation: sbScroll 30s linear infinite;
+  animation: sbScroll 18s linear infinite;
 }
-.sb-track:hover { animation-play-state: paused; }
 @keyframes sbScroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -1167,22 +1177,34 @@ html, body {
 .sb-item {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 18px 40px;
+  gap: 12px;
+  padding: 16px 44px;
   font-family: 'Rajdhani', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #c4b5fd;
-  letter-spacing: .3px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ddd6fe;
+  letter-spacing: .4px;
 }
 .sb-dot {
-  width: 5px; height: 5px;
+  width: 7px; height: 7px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--violet), var(--pink));
+  background: linear-gradient(135deg, #a78bfa, #ec4899);
   flex-shrink: 0;
-  box-shadow: 0 0 6px #a78bfa88;
+  box-shadow: 0 0 10px #ec489988, 0 0 20px #7c3aed44;
+  animation: sbDotPulse 2s ease-in-out infinite;
 }
-.sb-hl { color: #f0abfc; font-weight: 700; }
+@keyframes sbDotPulse {
+  0%, 100% { transform: scale(1);   box-shadow: 0 0 8px #ec489977; }
+  50%       { transform: scale(1.4); box-shadow: 0 0 16px #ec4899cc; }
+}
+.sb-hl {
+  background: linear-gradient(90deg, #f0abfc, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  font-size: 1.15rem;
+}
 
 .sb-info-row {
   display: flex; gap: 16px; flex-wrap: wrap;
@@ -1832,6 +1854,7 @@ html, body {
 
     <!-- Sliding Banner -->
     <div class="sb-banner-wrap">
+      <div class="sb-topline"></div>
       <div class="sb-track">
         <span class="sb-item"><span class="sb-dot"></span>🔥 <span class="sb-hl">%30 İndirim</span> &nbsp;— Kampanya bugün sona eriyor, kaçırma!</span>
         <span class="sb-item"><span class="sb-dot"></span>🎁 <span class="sb-hl">Ücretsiz Kargo</span> &nbsp;— 150₺ üzeri tüm siparişlerde geçerli</span>
