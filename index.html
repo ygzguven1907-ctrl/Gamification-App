@@ -1561,17 +1561,18 @@ html, body {
   transform: translateY(-50%);
   z-index: 50;
   display: none;
+  overflow: hidden;
+  width: 42px;
+  border-radius: 12px 0 0 12px;
+  box-shadow: -6px 4px 32px #0008;
+  transition: width .38s cubic-bezier(.25,.46,.45,.94);
 }
 #page-kulakcik.active .tab-widget { display: flex; }
+.tab-widget.open { width: 302px; }
 .tab-inner {
   display: flex; flex-direction: row; align-items: stretch;
-  transform: translateX(calc(100% - 42px));
-  transition: transform .38s cubic-bezier(.25,.46,.45,.94);
-  border-radius: 12px 0 0 12px;
-  overflow: hidden;
-  box-shadow: -6px 4px 32px #0008;
+  width: 302px; flex-shrink: 0;
 }
-.tab-inner.open { transform: translateX(0); }
 
 /* Panel content */
 .tab-panel-content {
@@ -2756,9 +2757,9 @@ function showGame(id, name) {
   if (id === 'sidebar') { sidebarInit(); }
   if (id === 'kulakcik') {
     /* reset tab to closed state on each entry */
-    var ti = document.getElementById('tab-inner');
+    var tw = document.querySelector('.tab-widget');
     var ta = document.getElementById('tab-arrow');
-    if (ti) ti.classList.remove('open');
+    if (tw) tw.classList.remove('open');
     if (ta) ta.textContent = '‹';
     tabCdStop();
   }
@@ -2835,10 +2836,10 @@ function sidebarInit() {
 var _tabInterval = null;
 
 function toggleTab() {
-  var inner = document.getElementById('tab-inner');
+  var widget = document.querySelector('.tab-widget');
   var arrow = document.getElementById('tab-arrow');
-  if (!inner) return;
-  var isOpen = inner.classList.toggle('open');
+  if (!widget) return;
+  var isOpen = widget.classList.toggle('open');
   if (arrow) arrow.textContent = isOpen ? '›' : '‹';
   if (isOpen) { tabCdInit(); } else { tabCdStop(); }
 }
