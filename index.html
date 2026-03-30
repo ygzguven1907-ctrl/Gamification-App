@@ -1784,6 +1784,206 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════
+   ANKET (SURVEY POPUP)
+═══════════════════════════════════════════ */
+#page-anket {
+  padding: 0; align-items: stretch;
+}
+#page-anket .game-topbar {
+  max-width: none; width: 100%; padding: 12px 24px;
+  background: #07061a; border-bottom: 1px solid #7c3aed22;
+  position: sticky; top: 0; z-index: 20;
+}
+.anket-demo-area {
+  flex: 1; position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0e0b28 0%, #16103c 100%);
+  display: flex; flex-direction: column;
+}
+/* simulated site bg */
+.anket-sim-bg {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 48px 24px; text-align: center;
+  filter: blur(1px) brightness(.6);
+  pointer-events: none; user-select: none;
+}
+.anket-sim-bg h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.4rem,4vw,2.4rem); font-weight: 900;
+  background: linear-gradient(135deg,#fff 30%,#c4b5fd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.anket-sim-bg p { color: #a78bfa55; margin-top: 12px; font-size: .9rem; }
+
+/* overlay */
+.anket-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  background: rgba(7,6,26,.72); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s ease;
+}
+.anket-overlay.visible { opacity: 1; pointer-events: all; }
+
+/* modal box */
+.anket-modal {
+  background: #fff; border-radius: 18px;
+  width: 100%; max-width: 440px;
+  padding: 32px 28px 24px;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(124,58,237,.35);
+  transform: translateY(24px); opacity: 0;
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94), opacity .4s ease;
+}
+.anket-overlay.visible .anket-modal {
+  transform: translateY(0); opacity: 1;
+}
+.anket-close-btn {
+  position: absolute; top: 14px; right: 16px;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.25rem; color: #7c3aed; line-height: 1;
+  padding: 4px 6px; border-radius: 6px;
+  transition: background .2s;
+}
+.anket-close-btn:hover { background: #7c3aed18; }
+
+/* progress bar */
+.anket-progress-bar {
+  width: 100%; height: 4px; background: #e5e7eb;
+  border-radius: 4px; margin-bottom: 24px; overflow: hidden;
+}
+.anket-progress-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  transition: width .4s ease;
+}
+
+/* question */
+.anket-question {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem; font-weight: 700; color: #7c3aed;
+  text-align: center; line-height: 1.4; margin-bottom: 20px;
+}
+
+/* options container */
+.anket-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+/* single-choice option (radio style) */
+.anket-opt {
+  display: flex; align-items: center; gap: 12px;
+  border: 2px solid #e5e7eb; border-radius: 10px;
+  padding: 12px 16px; cursor: pointer;
+  font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 600;
+  color: #374151;
+  transition: border-color .2s, background .2s, color .2s;
+  user-select: none;
+}
+.anket-opt:hover { border-color: #7c3aed55; background: #7c3aed08; }
+.anket-opt.selected { border-color: #7c3aed; background: #7c3aed; color: #fff; }
+.anket-opt.selected .anket-opt-check { background: #fff; border-color: #fff; }
+.anket-opt.selected .anket-opt-check::after { opacity: 1; }
+
+.anket-opt-check {
+  width: 20px; height: 20px; border: 2px solid #d1d5db;
+  border-radius: 4px; flex-shrink: 0; position: relative;
+  transition: background .2s, border-color .2s;
+}
+.anket-opt-check::after {
+  content: '✓'; position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; color: #7c3aed; font-weight: 900;
+  opacity: 0; transition: opacity .15s;
+}
+.anket-opt.selected .anket-opt-check::after { color: #7c3aed; }
+
+/* tags layout (step 5) */
+.anket-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px; }
+.anket-tag {
+  border: 2px solid #e5e7eb; border-radius: 30px;
+  padding: 10px 20px; cursor: pointer;
+  font-family: 'Rajdhani', sans-serif; font-size: .95rem; font-weight: 600;
+  color: #374151; transition: border-color .2s, background .2s, color .2s;
+  user-select: none;
+}
+.anket-tag:hover { border-color: #7c3aed; }
+.anket-tag.selected { border-color: #7c3aed; background: #7c3aed; color: #fff; }
+
+/* email step */
+.anket-email-label {
+  font-family: 'Rajdhani', sans-serif; font-weight: 700;
+  font-size: .95rem; color: #374151; margin-bottom: 6px;
+}
+.anket-email-note {
+  font-family: 'Rajdhani', sans-serif; font-size: .88rem;
+  color: #6b7280; margin-bottom: 14px; line-height: 1.4;
+}
+.anket-email-input {
+  width: 100%; border: 2px solid #7c3aed;
+  border-radius: 10px; padding: 12px 16px;
+  font-family: 'Rajdhani', sans-serif; font-size: 1rem;
+  color: #374151; outline: none; margin-bottom: 12px;
+  transition: box-shadow .2s;
+}
+.anket-email-input:focus { box-shadow: 0 0 0 3px #7c3aed22; }
+.anket-kvkk { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+.anket-kvkk input[type=checkbox] { margin-top: 3px; accent-color: #7c3aed; flex-shrink: 0; }
+.anket-kvkk label {
+  font-family: 'Rajdhani', sans-serif; font-size: .85rem;
+  color: #6b7280; cursor: pointer; line-height: 1.4;
+}
+
+/* nav buttons */
+.anket-nav {
+  display: flex; gap: 10px; justify-content: center;
+  margin-top: 4px;
+}
+.anket-btn {
+  flex: 1; max-width: 160px;
+  padding: 13px 20px; border: none; border-radius: 10px;
+  font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+  cursor: pointer; transition: opacity .2s, transform .15s;
+}
+.anket-btn:active { transform: scale(.97); }
+.anket-btn-prev { background: #f3f4f6; color: #6b7280; }
+.anket-btn-next { background: linear-gradient(135deg,#7c3aed,#ec4899); color: #fff; }
+.anket-btn-next:hover { opacity: .9; }
+.anket-step-counter {
+  text-align: center; margin-top: 10px;
+  font-family: 'Rajdhani', sans-serif; font-size: .9rem;
+  color: #7c3aed; font-weight: 600;
+}
+
+/* thank you screen */
+.anket-thankyou {
+  text-align: center; display: none; padding: 12px 0;
+}
+.anket-thankyou.show { display: block; }
+.anket-ty-icon { font-size: 3rem; margin-bottom: 12px; }
+.anket-ty-title {
+  font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 900;
+  background: linear-gradient(135deg,#7c3aed,#ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 10px;
+}
+.anket-ty-desc {
+  font-family: 'Rajdhani', sans-serif; font-size: .95rem;
+  color: #6b7280; line-height: 1.5; max-width: 300px; margin: 0 auto;
+}
+.anket-ty-close {
+  margin-top: 20px; padding: 12px 32px;
+  background: linear-gradient(135deg,#7c3aed,#ec4899); color: #fff;
+  border: none; border-radius: 10px; cursor: pointer;
+  font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+}
+
+#page-anket .demo-chips {
+  max-width: none; padding: 14px 24px;
+  background: #07061a; border-top: 1px solid #7c3aed22;
+  margin-top: 0; width: 100%;
+}
+
+/* ═══════════════════════════════════════════
    NOTIFICATION DEMO PAGE
 ═══════════════════════════════════════════ */
 #page-notification {
@@ -2239,6 +2439,16 @@ html, body {
         <div class="kurgu-title">Bottom Banner</div>
         <div class="kurgu-desc">Sayfanın altında sabit duran, yukarı kayan 3 mesajlı banner. Scroll edilse de yerinde kalır.</div>
         <div class="kurgu-badge">Farkındalık Artışı</div>
+      </div>
+
+      <!-- 7. Anket -->
+      <div class="kurgu-card" onclick="showGame('anket','Anket')">
+        <div class="shimmer"></div>
+        <span class="kurgu-icon">📋</span>
+        <span class="kurgu-tag">YENİ</span>
+        <div class="kurgu-title">Anket</div>
+        <div class="kurgu-desc">Sayfa açıldıktan 1-2 saniye sonra merkeze çıkan çok adımlı anket pop-up'ı. Kullanıcı deneyimi & memnuniyet verisi toplayın.</div>
+        <div class="kurgu-badge">Veri Toplama</div>
       </div>
 
     </div>
@@ -2712,6 +2922,156 @@ html, body {
 </div>
 
 
+<!-- Anket -->
+<div class="game-page" id="page-anket">
+  <div class="game-topbar" style="max-width:none;width:100%;padding:12px 24px;background:#07061a;border-bottom:1px solid #7c3aed22;position:sticky;top:0;z-index:20;">
+    <button class="back-btn" onclick="showLanding()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Geri
+    </button>
+    <span class="topbar-title">Anket 📋</span>
+    <div style="width:80px"></div>
+  </div>
+
+  <div class="anket-demo-area">
+    <!-- blurred bg -->
+    <div class="anket-sim-bg">
+      <h2>BÜYÜME SENARYOLARI</h2>
+      <p>Related Scenarios — Oyunlar & Kurgular</p>
+    </div>
+
+    <!-- survey overlay -->
+    <div class="anket-overlay" id="anket-overlay">
+      <div class="anket-modal" id="anket-modal">
+        <button class="anket-close-btn" onclick="closeAnket()" title="Kapat">✕</button>
+
+        <!-- progress -->
+        <div class="anket-progress-bar">
+          <div class="anket-progress-fill" id="anket-progress" style="width:14%"></div>
+        </div>
+
+        <!-- steps wrapper -->
+        <div id="anket-steps">
+
+          <!-- Step 1: Tek seçim -->
+          <div class="anket-step" data-step="1" data-type="single">
+            <div class="anket-question">Related Scenarios platformunu nasıl buldunuz?</div>
+            <div class="anket-options">
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>Çok beğendim</div>
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>Beğendim</div>
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>Orta</div>
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>Beğenmedim</div>
+            </div>
+          </div>
+
+          <!-- Step 2: Çoklu seçim -->
+          <div class="anket-step" data-step="2" data-type="multi" style="display:none">
+            <div class="anket-question">Hangi oyunları denediniz? (Birden fazla seçebilirsiniz)</div>
+            <div class="anket-options">
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🃏 Scratch Card</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🎡 Spin & Win</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🎰 Jackpot Slot</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🧲 Claw Machine</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🟣 Kare Spin</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>😀 Emoji Match</div>
+            </div>
+          </div>
+
+          <!-- Step 3: Tek seçim -->
+          <div class="anket-step" data-step="3" data-type="single" style="display:none">
+            <div class="anket-question">En beğendiğiniz oyun hangisi?</div>
+            <div class="anket-options">
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>🃏 Scratch Card</div>
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>🎡 Spin & Win</div>
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>🎰 Jackpot Slot</div>
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>🧲 Claw Machine</div>
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>🟣 Kare Spin</div>
+              <div class="anket-opt" onclick="selectOpt(this)"><span class="anket-opt-check"></span>😀 Emoji Match</div>
+            </div>
+          </div>
+
+          <!-- Step 4: Çoklu seçim -->
+          <div class="anket-step" data-step="4" data-type="multi" style="display:none">
+            <div class="anket-question">Hangi kurguları ilginç buldunuz? (Birden fazla seçebilirsiniz)</div>
+            <div class="anket-options">
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>⏱️ Countdown Banner</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>📢 Sliding Banner</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🔔 Bildirim Paneli</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>📌 Sidebar Panel</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🏷️ Kulakçık</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>📺 Bottom Banner</div>
+            </div>
+          </div>
+
+          <!-- Step 5: Tag seçim -->
+          <div class="anket-step" data-step="5" data-type="single" style="display:none">
+            <div class="anket-question">Genel kullanıcı deneyiminizi nasıl değerlendirirsiniz?</div>
+            <div class="anket-tags">
+              <div class="anket-tag" onclick="selectTag(this)">Geliştirilmeli</div>
+              <div class="anket-tag" onclick="selectTag(this)">Orta</div>
+              <div class="anket-tag" onclick="selectTag(this)">İyi</div>
+              <div class="anket-tag" onclick="selectTag(this)">Çok İyi</div>
+              <div class="anket-tag" onclick="selectTag(this)">Mükemmel</div>
+            </div>
+          </div>
+
+          <!-- Step 6: Çoklu seçim -->
+          <div class="anket-step" data-step="6" data-type="multi" style="display:none">
+            <div class="anket-question">Hangi özelliklerin öncelikli geliştirilmesini istersiniz? (Birden fazla seçebilirsiniz)</div>
+            <div class="anket-options">
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🎮 Daha fazla oyun</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🧩 Daha fazla kurgu</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>📱 Mobil uyum</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>🎨 Özelleştirme seçenekleri</div>
+              <div class="anket-opt" onclick="toggleOpt(this)"><span class="anket-opt-check"></span>📊 Analitik & Raporlama</div>
+            </div>
+          </div>
+
+          <!-- Step 7: E-posta -->
+          <div class="anket-step" data-step="7" data-type="email" style="display:none">
+            <div class="anket-question">En çok tercih edeceğiniz ürünü hangisi?</div>
+            <div class="anket-email-note">Abone olup cevabınızı bizimle paylaşabilirsiniz</div>
+            <div class="anket-email-label">E-posta</div>
+            <input type="email" class="anket-email-input" id="anket-email" placeholder="ornek@email.com">
+            <div class="anket-kvkk">
+              <input type="checkbox" id="kvkk1">
+              <label for="kvkk1">KVKK metnini okudum, kabul ediyorum.</label>
+            </div>
+            <div class="anket-kvkk">
+              <input type="checkbox" id="kvkk2">
+              <label for="kvkk2">İletişim ve pazarlama iznini kabul ediyorum.</label>
+            </div>
+          </div>
+
+        </div><!-- /anket-steps -->
+
+        <!-- thank you -->
+        <div class="anket-thankyou" id="anket-thankyou">
+          <div class="anket-ty-icon">🎉</div>
+          <div class="anket-ty-title">Teşekkürler!</div>
+          <div class="anket-ty-desc">Değerli geri bildiriminiz için teşekkür ederiz. Görüşleriniz platformumuzu geliştirmemize büyük katkı sağlar.</div>
+          <button class="anket-ty-close" onclick="closeAnket()">Kapat</button>
+        </div>
+
+        <!-- nav -->
+        <div class="anket-nav" id="anket-nav">
+          <button class="anket-btn anket-btn-prev" id="anket-prev" onclick="anketPrev()" style="display:none">Önceki</button>
+          <button class="anket-btn anket-btn-next" id="anket-next" onclick="anketNext()">İleri</button>
+        </div>
+        <div class="anket-step-counter" id="anket-counter">1/7</div>
+
+      </div><!-- /anket-modal -->
+    </div><!-- /anket-overlay -->
+  </div><!-- /anket-demo-area -->
+
+  <div class="demo-chips">
+    <div class="demo-chip"><strong>7 Soru</strong><span>Adım adım anket</span></div>
+    <div class="demo-chip"><strong>1-2sn Gecikme</strong><span>Sayfa açılınca çıkar</span></div>
+    <div class="demo-chip"><strong>✕ Kapat</strong><span>Oturumda bir kez</span></div>
+  </div>
+</div>
+
+
 <!-- Kulakçık -->
 <div class="game-page" id="page-kulakcik">
   <div class="game-topbar" style="max-width:none;width:100%;padding:12px 24px;background:#07061a;border-bottom:1px solid #7c3aed22;position:sticky;top:0;z-index:20;">
@@ -3028,6 +3388,85 @@ function sidebarInit() {
   }, 1500);
 }
 
+/* ── Anket (Survey Popup) ── */
+var _anketStep = 1;
+var _anketTotal = 7;
+var _anketTimer = null;
+
+function openAnket() {
+  var overlay = document.getElementById('anket-overlay');
+  if (!overlay) return;
+  overlay.classList.add('visible');
+}
+
+function closeAnket() {
+  var overlay = document.getElementById('anket-overlay');
+  if (overlay) overlay.classList.remove('visible');
+  sessionStorage.setItem('anket-closed', '1');
+}
+
+function initAnket() {
+  _anketStep = 1;
+  renderAnketStep();
+  document.getElementById('anket-thankyou').classList.remove('show');
+  document.getElementById('anket-steps').style.display = '';
+  document.getElementById('anket-nav').style.display = '';
+  document.getElementById('anket-counter').style.display = '';
+  if (_anketTimer) clearTimeout(_anketTimer);
+  _anketTimer = setTimeout(function() {
+    if (!sessionStorage.getItem('anket-closed')) openAnket();
+  }, 1500);
+}
+
+function renderAnketStep() {
+  var steps = document.querySelectorAll('#anket-steps .anket-step');
+  steps.forEach(function(s) {
+    s.style.display = s.dataset.step == _anketStep ? '' : 'none';
+  });
+  var pct = Math.round((_anketStep / _anketTotal) * 100);
+  document.getElementById('anket-progress').style.width = pct + '%';
+  document.getElementById('anket-counter').textContent = _anketStep + '/' + _anketTotal;
+  var prev = document.getElementById('anket-prev');
+  if (prev) prev.style.display = _anketStep > 1 ? '' : 'none';
+  var next = document.getElementById('anket-next');
+  if (next) next.textContent = _anketStep === _anketTotal ? 'Abone Ol ve İlerle' : 'İleri';
+}
+
+function selectOpt(el) {
+  var opts = el.closest('.anket-options').querySelectorAll('.anket-opt');
+  opts.forEach(function(o) { o.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+function toggleOpt(el) {
+  el.classList.toggle('selected');
+}
+
+function selectTag(el) {
+  var tags = el.closest('.anket-tags').querySelectorAll('.anket-tag');
+  tags.forEach(function(t) { t.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+function anketNext() {
+  if (_anketStep === _anketTotal) {
+    document.getElementById('anket-steps').style.display = 'none';
+    document.getElementById('anket-nav').style.display = 'none';
+    document.getElementById('anket-counter').style.display = 'none';
+    document.getElementById('anket-progress').style.width = '100%';
+    document.getElementById('anket-thankyou').classList.add('show');
+    return;
+  }
+  _anketStep++;
+  renderAnketStep();
+}
+
+function anketPrev() {
+  if (_anketStep <= 1) return;
+  _anketStep--;
+  renderAnketStep();
+}
+
 /* ── Kulakçık ── */
 var _tabInterval = null;
 
@@ -3241,6 +3680,7 @@ showGame = function(id, name) {
     if (id === 'claw')       C_init();
     if (id === 'squarespin') sqInit();
     if (id === 'match')      matchInit();
+    if (id === 'anket')      initAnket();
   }, 50);
 };
 </script>
