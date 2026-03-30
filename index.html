@@ -933,6 +933,194 @@ html, body {
   .hero h1        { font-size: clamp(1.8rem, 10vw, 3rem); }
 }
 
+/* ═══════════════════════════════════════════
+   KURGULAR SECTION
+═══════════════════════════════════════════ */
+.kurgular-section {
+  width: 100%; max-width: 1100px;
+  margin-top: 72px;
+}
+.kurgular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+.kurgu-card {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff06 0%, #ec489908 100%);
+  border: 1px solid #ec489922;
+  border-radius: 20px;
+  padding: 32px 28px;
+  cursor: pointer;
+  transition: transform .3s ease, box-shadow .3s ease;
+  overflow: hidden;
+  animation: slideUp .5s ease both;
+}
+.kurgu-card::before {
+  content: '';
+  position: absolute; inset: -2px;
+  background: linear-gradient(135deg, #ec4899, #7c3aed, #a78bfa);
+  border-radius: 22px; z-index: -1;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.kurgu-card::after {
+  content: '';
+  position: absolute; inset: 1px;
+  background: linear-gradient(135deg, #0e0c2a 0%, #1a0f35 100%);
+  border-radius: 19px; z-index: -1;
+}
+.kurgu-card:hover::before { opacity: 1; }
+.kurgu-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 60px #ec489930, 0 8px 24px #7c3aed18;
+}
+.kurgu-card .shimmer {
+  position: absolute; top: 0; height: 100%; width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+  pointer-events: none;
+}
+.kurgu-card:hover .shimmer { animation: shimmer .6s ease; }
+
+.kurgu-tag {
+  display: inline-block;
+  font-size: .68rem; letter-spacing: 2px; text-transform: uppercase;
+  padding: 3px 12px; border-radius: 20px;
+  background: #ec489922; color: #f9a8d4;
+  border: 1px solid #ec489944;
+  margin-bottom: 10px;
+}
+.kurgu-icon {
+  font-size: 2.6rem; display: block;
+  margin-bottom: 12px; line-height: 1;
+  transition: transform .3s ease;
+}
+.kurgu-card:hover .kurgu-icon { transform: scale(1.15) rotate(-5deg); }
+.kurgu-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--white); margin-bottom: 8px;
+}
+.kurgu-desc {
+  font-size: .93rem; color: #a78bfa99;
+  line-height: 1.5; margin-bottom: 16px;
+}
+.kurgu-badge {
+  display: inline-block;
+  font-size: .72rem; font-weight: 700; letter-spacing: 1px;
+  padding: 4px 14px; border-radius: 20px;
+  background: linear-gradient(90deg, #ec4899, #7c3aed);
+  color: #fff;
+}
+
+/* ═══════════════════════════════════════════
+   COUNTDOWN BANNER PAGE
+═══════════════════════════════════════════ */
+.cd-preview-label {
+  font-size: .72rem; letter-spacing: 2px; text-transform: uppercase;
+  color: #7c3aed88; text-align: center;
+  margin-bottom: 20px;
+  border: 1px dashed #7c3aed33;
+  padding: 6px 16px; border-radius: 8px;
+  display: inline-block;
+}
+.cd-banner {
+  width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px #0008, 0 0 0 1px #ffffff10;
+}
+.cd-banner-topbar {
+  height: 5px;
+  background: linear-gradient(90deg, #f97316, #fb923c, #fdba74);
+}
+.cd-banner-inner {
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.cd-banner-text { flex: 1; min-width: 180px; }
+.cd-banner-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  color: #111; margin-bottom: 4px;
+}
+.cd-banner-sub {
+  font-size: .82rem; color: #555; line-height: 1.4;
+}
+.cd-digits {
+  display: flex; align-items: center; gap: 4px;
+}
+.cd-digit-group {
+  display: flex; flex-direction: column; align-items: center;
+}
+.cd-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.7rem; font-weight: 900;
+  color: #111;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px 14px;
+  min-width: 60px; text-align: center;
+  line-height: 1;
+  transition: color .2s ease;
+}
+.cd-num.tick { color: #f97316; }
+.cd-unit {
+  font-size: .58rem; letter-spacing: 1px; text-transform: uppercase;
+  color: #888; margin-top: 4px;
+  font-family: 'Rajdhani', sans-serif; font-weight: 600;
+}
+.cd-sep {
+  font-size: 1.6rem; font-weight: 900; color: #d1d5db;
+  padding-bottom: 12px; line-height: 1;
+}
+.cd-cta-btn {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #fff;
+  border: none; border-radius: 10px;
+  padding: 12px 24px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .2s, box-shadow .2s;
+  touch-action: manipulation;
+}
+.cd-cta-btn:hover { transform: scale(1.04); box-shadow: 0 4px 16px #16a34a55; }
+.cd-cta-btn:active { transform: scale(.97); }
+
+.cd-info-row {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin-top: 24px;
+}
+.cd-info-chip {
+  flex: 1; min-width: 140px;
+  background: #ffffff08;
+  border: 1px solid #7c3aed22;
+  border-radius: 12px;
+  padding: 14px 18px;
+  text-align: center;
+}
+.cd-info-chip strong {
+  display: block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem; color: var(--violet);
+  margin-bottom: 4px;
+}
+.cd-info-chip span { font-size: .8rem; color: #7c3aed88; }
+
+@media (max-width: 560px) {
+  .cd-banner-inner { flex-direction: column; align-items: flex-start; }
+  .cd-num { font-size: 1.3rem; padding: 5px 10px; min-width: 46px; }
+}
+
 </style>
 </head>
 <body>
@@ -1143,6 +1331,24 @@ html, body {
     </div>
 
   </div><!-- /game-grid -->
+
+  <!-- ── Kurgular Section ── -->
+  <div class="kurgular-section">
+    <p class="grid-title">— Kurgular —</p>
+    <div class="kurgular-grid">
+
+      <!-- 1. Countdown Banner -->
+      <div class="kurgu-card" onclick="showGame('countdown','Countdown Banner')">
+        <div class="shimmer"></div>
+        <span class="kurgu-icon">⏱️</span>
+        <span class="kurgu-tag">YENİ</span>
+        <div class="kurgu-title">Countdown Banner</div>
+        <div class="kurgu-desc">Her kullanıcıya özel 72 saatlik geri sayım. Aciliyet hissiyle dönüşüm oranını artır.</div>
+        <div class="kurgu-badge">Dönüşüm Artışı</div>
+      </div>
+
+    </div>
+  </div><!-- /kurgular -->
 
   <!-- Footer -->
   <footer class="site-footer">
@@ -1445,6 +1651,72 @@ html, body {
 </div>
 
 
+<!-- Countdown Banner -->
+<div class="game-page" id="page-countdown">
+  <div class="game-topbar">
+    <button class="back-btn" onclick="showLanding()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Geri
+    </button>
+    <span class="topbar-title">Countdown Banner ⏱️</span>
+    <div style="width:80px"></div>
+  </div>
+  <div class="game-card-wrap">
+    <div class="game-title">Countdown Banner ⏱️</div>
+    <div class="game-subtitle">Kullanıcı başına 72 saatlik kişisel geri sayım</div>
+
+    <div style="text-align:center;margin-bottom:20px">
+      <span class="cd-preview-label">Önizleme — Sitenizde Böyle Görünür</span>
+    </div>
+
+    <!-- The Banner -->
+    <div class="cd-banner">
+      <div class="cd-banner-topbar"></div>
+      <div class="cd-banner-inner">
+        <div class="cd-banner-text">
+          <div class="cd-banner-title">İndirim için kalan süre</div>
+          <div class="cd-banner-sub">Kampanyadan yararlanmak için acele edin. Süre dolduğunda teklif geçersiz sayılır.</div>
+        </div>
+        <div class="cd-digits">
+          <div class="cd-digit-group">
+            <span id="cd-h" class="cd-num">71</span>
+            <span class="cd-unit">SAAT</span>
+          </div>
+          <span class="cd-sep">:</span>
+          <div class="cd-digit-group">
+            <span id="cd-m" class="cd-num">59</span>
+            <span class="cd-unit">DAKİKA</span>
+          </div>
+          <span class="cd-sep">:</span>
+          <div class="cd-digit-group">
+            <span id="cd-s" class="cd-num">59</span>
+            <span class="cd-unit">SANİYE</span>
+          </div>
+        </div>
+        <button class="cd-cta-btn">Hemen Başvur →</button>
+      </div>
+    </div>
+
+    <!-- Info chips -->
+    <div class="cd-info-row">
+      <div class="cd-info-chip">
+        <strong>72 Saat</strong>
+        <span>Kullanıcı bazlı süre</span>
+      </div>
+      <div class="cd-info-chip">
+        <strong>LocalStorage</strong>
+        <span>Sayfa yenilense de devam eder</span>
+      </div>
+      <div class="cd-info-chip">
+        <strong>Sıfır Kod</strong>
+        <span>Sitenize tek satırla entegre</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <!-- ═══════════════════════════════════════════
      NAV + SHARED JS
 ═══════════════════════════════════════════ -->
@@ -1460,12 +1732,59 @@ function showGame(id, name) {
   page.classList.add('active');
   _activePage = page;
   document.title = name + ' — YGZ';
+  if (id === 'countdown') { cdInit(); }
 }
 
 function showLanding() {
   if (_activePage) { _activePage.classList.remove('active'); _activePage = null; }
   document.getElementById('landing').style.display = '';
   document.title = 'YGZ Gamification';
+  cdStop();
+}
+
+/* ── Countdown Banner Logic ── */
+var _cdInterval = null;
+
+function cdInit() {
+  var KEY = 'ygz_cd_start';
+  var stored = localStorage.getItem(KEY);
+  var start;
+  if (stored) {
+    start = parseInt(stored, 10);
+  } else {
+    start = Date.now();
+    localStorage.setItem(KEY, String(start));
+  }
+  var DURATION = 72 * 60 * 60 * 1000;
+
+  function pad(n) { return String(Math.floor(n)).padStart(2, '0'); }
+
+  function update() {
+    var elapsed = Date.now() - start;
+    var remaining = Math.max(0, DURATION - elapsed);
+    var h = Math.floor(remaining / 3600000);
+    var m = Math.floor((remaining % 3600000) / 60000);
+    var s = Math.floor((remaining % 60000) / 1000);
+    var elH = document.getElementById('cd-h');
+    var elM = document.getElementById('cd-m');
+    var elS = document.getElementById('cd-s');
+    if (!elH) return;
+    elH.textContent = pad(h);
+    elM.textContent = pad(m);
+    elS.textContent = pad(s);
+    /* tick flash on seconds digit */
+    elS.classList.add('tick');
+    setTimeout(function(){ elS.classList.remove('tick'); }, 200);
+    if (remaining === 0) { cdStop(); }
+  }
+
+  cdStop();
+  update();
+  _cdInterval = setInterval(update, 1000);
+}
+
+function cdStop() {
+  if (_cdInterval) { clearInterval(_cdInterval); _cdInterval = null; }
 }
 
 /* ── Confetti ── */
