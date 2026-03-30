@@ -1510,7 +1510,7 @@ html, body {
   position: sticky; top: 0; z-index: 20;
 }
 .kulakcik-demo-area {
-  flex: 1; position: relative; overflow: hidden;
+  flex: 1; position: relative; overflow: visible;
   display: flex; flex-direction: column;
   background: linear-gradient(180deg, #0e0b28 0%, #16103c 100%);
 }
@@ -1555,18 +1555,19 @@ html, body {
 
 /* THE TAB WIDGET */
 .tab-widget {
-  position: absolute;
-  right: 12px;
+  position: fixed;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
-  display: flex;
+  z-index: 50;
+  display: none;
 }
+#page-kulakcik.active .tab-widget { display: flex; }
 .tab-inner {
   display: flex; flex-direction: row; align-items: stretch;
-  transform: translateX(calc(100% - 44px));
+  transform: translateX(calc(100% - 42px));
   transition: transform .38s cubic-bezier(.25,.46,.45,.94);
-  border-radius: 12px 6px 6px 12px;
+  border-radius: 12px 0 0 12px;
   overflow: hidden;
   box-shadow: -6px 4px 32px #0008;
 }
