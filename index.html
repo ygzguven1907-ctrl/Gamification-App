@@ -1294,6 +1294,140 @@ html, body {
   margin-top: 0;
 }
 
+/* ═══════════════════════════════════════════
+   NOTIFICATION DEMO PAGE
+═══════════════════════════════════════════ */
+#page-notification {
+  padding: 0;
+  align-items: stretch;
+}
+#page-notification .game-topbar {
+  max-width: none; width: 100%;
+  padding: 16px 24px;
+  background: #07061a;
+  border-bottom: 1px solid #7c3aed22;
+  position: sticky; top: 0; z-index: 10;
+}
+
+/* Demo area */
+.notif-demo-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 48px 24px 32px;
+  position: relative;
+  background: linear-gradient(180deg, #0e0b28 0%, #16103c 60%, #07061a 100%);
+  min-height: 100vh;
+}
+.notif-demo-area::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, #7c3aed12, transparent);
+  pointer-events: none;
+}
+
+/* Bell button */
+.notif-bell-btn {
+  position: relative;
+  background: #ffffff0a;
+  border: 1px solid #7c3aed44;
+  border-radius: 50%;
+  width: 56px; height: 56px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  touch-action: manipulation;
+}
+.notif-bell-btn:hover { background: #7c3aed22; border-color: #7c3aed88; }
+.notif-bell-btn svg { animation: bellRing 2.5s ease-in-out infinite; transform-origin: top center; }
+@keyframes bellRing {
+  0%,100% { transform: rotate(0deg); }
+  5%       { transform: rotate(14deg); }
+  10%      { transform: rotate(-12deg); }
+  15%      { transform: rotate(10deg); }
+  20%      { transform: rotate(-8deg); }
+  25%      { transform: rotate(0deg); }
+}
+.notif-badge {
+  position: absolute; top: 6px; right: 6px;
+  width: 18px; height: 18px;
+  background: linear-gradient(135deg, #ec4899, #7c3aed);
+  border-radius: 50%;
+  font-size: .65rem; font-weight: 700; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #07061a;
+}
+
+/* Dropdown */
+.notif-dropdown {
+  position: absolute;
+  top: 130px;
+  width: min(380px, calc(100% - 48px));
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px #00000066, 0 0 0 1px #ffffff10;
+  overflow: hidden;
+  display: none;
+  animation: popIn .2s ease both;
+  z-index: 20;
+}
+.notif-dropdown.open { display: block; }
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(-10px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.notif-dd-header {
+  padding: 16px 20px 12px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem; font-weight: 700; color: #111;
+  border-bottom: 1px solid #f0f0f0;
+}
+.notif-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f5f5f5;
+  cursor: default;
+  transition: background .15s;
+}
+.notif-item:last-child { border-bottom: none; }
+.notif-item:hover { background: #fafafa; }
+.notif-img {
+  width: 52px; height: 52px; border-radius: 8px;
+  flex-shrink: 0; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+}
+.notif-img.game  { background: linear-gradient(135deg, #7c3aed, #4c1d95); }
+.notif-img.promo { background: linear-gradient(135deg, #f97316, #ea580c); }
+.notif-text { flex: 1; min-width: 0; }
+.notif-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: .95rem; font-weight: 700; color: #111;
+  margin-bottom: 3px;
+}
+.notif-body { font-size: .82rem; color: #555; line-height: 1.45; }
+.notif-body strong { color: #7c3aed; font-weight: 700; }
+.notif-time { font-size: .7rem; color: #aaa; margin-top: 4px; }
+
+/* hint label */
+.notif-hint {
+  margin-top: 20px;
+  font-size: .78rem; letter-spacing: 1.5px; text-transform: uppercase;
+  color: #7c3aed44;
+}
+
+/* info chips */
+#page-notification .demo-chips {
+  max-width: none;
+  padding: 16px 24px;
+  background: #07061a;
+  border-top: 1px solid #7c3aed22;
+  margin-top: 0;
+  width: 100%;
+}
+
 </style>
 </head>
 <body>
@@ -1528,6 +1662,16 @@ html, body {
         <div class="kurgu-title">Sliding Banner</div>
         <div class="kurgu-desc">3 farklı kampanya mesajı sağdan sola kayan şeritte. Kullanıcının dikkatini çek, mesajını ilet.</div>
         <div class="kurgu-badge">Farkındalık Artışı</div>
+      </div>
+
+      <!-- 3. Bildirim Paneli -->
+      <div class="kurgu-card" onclick="showGame('notification','Bildirim Paneli')">
+        <div class="shimmer"></div>
+        <span class="kurgu-icon">🔔</span>
+        <span class="kurgu-tag">YENİ</span>
+        <div class="kurgu-title">Bildirim Paneli</div>
+        <div class="kurgu-desc">Çan ikonu ve açılır bildirim dropdown'u. Kampanya ve yeni içerik duyurularını kullanıcıya ilet.</div>
+        <div class="kurgu-badge">Kullanıcı Bağlılığı</div>
       </div>
 
     </div>
@@ -1947,6 +2091,64 @@ html, body {
 </div>
 
 
+<!-- Bildirim Paneli -->
+<div class="game-page" id="page-notification">
+  <div class="game-topbar">
+    <button class="back-btn" onclick="showLanding()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Geri
+    </button>
+    <span class="topbar-title">Bildirim Paneli 🔔</span>
+    <div style="width:80px"></div>
+  </div>
+
+  <div class="notif-demo-area">
+
+    <!-- Bell button -->
+    <div class="notif-bell-btn" onclick="toggleNotif()" id="notif-bell">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <span class="notif-badge">2</span>
+    </div>
+
+    <p class="notif-hint">Çana tıkla</p>
+
+    <!-- Dropdown -->
+    <div class="notif-dropdown" id="notif-dropdown">
+      <div class="notif-dd-header">Bildirimler</div>
+
+      <div class="notif-item">
+        <div class="notif-img game">🎮</div>
+        <div class="notif-text">
+          <div class="notif-title">Yeni oyun eklendi!</div>
+          <div class="notif-body"><strong>Emoji Eşleştir</strong> oyunu yayına girdi. Hemen oyna, özel kupon kodunu kazan!</div>
+          <div class="notif-time">2 saat önce</div>
+        </div>
+      </div>
+
+      <div class="notif-item">
+        <div class="notif-img promo">🔥</div>
+        <div class="notif-text">
+          <div class="notif-title">İndirim başladı!</div>
+          <div class="notif-body">Seçili ürünlerde <strong>%30 indirim</strong> başladı. Kampanya sınırlı sürelidir, kaçırma!</div>
+          <div class="notif-time">5 saat önce</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Info chips -->
+  <div class="demo-chips">
+    <div class="demo-chip"><strong>Sallanıyor</strong><span>Çan dikkat çeker</span></div>
+    <div class="demo-chip"><strong>2 Bildirim</strong><span>Sabit içerik</span></div>
+    <div class="demo-chip"><strong>Dropdown</strong><span>Tıkla & görüntüle</span></div>
+  </div>
+</div>
+
+
 <!-- ═══════════════════════════════════════════
      NAV + SHARED JS
 ═══════════════════════════════════════════ -->
@@ -2016,6 +2218,23 @@ function cdInit() {
 function cdStop() {
   if (_cdInterval) { clearInterval(_cdInterval); _cdInterval = null; }
 }
+
+/* ── Notification Panel ── */
+function toggleNotif() {
+  var dd = document.getElementById('notif-dropdown');
+  if (!dd) return;
+  dd.classList.toggle('open');
+}
+
+/* Close dropdown when clicking outside */
+document.addEventListener('click', function(e) {
+  var bell = document.getElementById('notif-bell');
+  var dd   = document.getElementById('notif-dropdown');
+  if (!dd || !bell) return;
+  if (!bell.contains(e.target) && !dd.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
 
 /* ── Confetti ── */
 function confetti() {
