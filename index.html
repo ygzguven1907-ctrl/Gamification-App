@@ -1553,96 +1553,63 @@ html, body {
 }
 .kulakcik-sim-hero p { font-size: .9rem; color: #a78bfa66; max-width: 360px; }
 
-/* THE TAB WIDGET */
+/* ── TAB WIDGET ── */
 .tab-widget {
   position: fixed;
-  right: 0;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 50;
+  z-index: 9999;
   display: none;
+  flex-direction: row;
+  align-items: center;
+  filter: drop-shadow(-4px 4px 24px rgba(0,0,0,.55));
 }
-#page-kulakcik.active .tab-widget { display: block; }
+#page-kulakcik.active .tab-widget { display: flex; }
 
-/* Ear — always visible */
-.tab-ear {
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 42px;
-  background: linear-gradient(180deg, #7c3aed 0%, #9333ea 50%, #ec4899 100%);
-  border-radius: 12px 0 0 12px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 10px; cursor: pointer;
-  user-select: none; touch-action: manipulation;
-  box-shadow: -4px 0 20px #0006;
-  transition: filter .2s;
-  z-index: 2;
-}
-.tab-ear:hover { filter: brightness(1.15); }
-.tab-ear-arrow {
-  color: #fff; font-size: 1.3rem; font-weight: 900; line-height: 1;
-  font-family: Arial, sans-serif;
-}
-.tab-ear-label {
-  color: rgba(255,255,255,.9);
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .68rem; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase;
-  writing-mode: vertical-lr;
-  transform: rotate(180deg);
-}
-
-/* Panel — slides in from right */
-.tab-panel {
-  position: absolute;
-  right: 42px; top: 0; bottom: 0;
-  width: 260px;
-  transform: translateX(100%);
-  transition: transform .38s cubic-bezier(.25,.46,.45,.94);
-  border-radius: 12px 0 0 12px;
+/* Panel wrap — collapses to 0 width when closed */
+.tab-panel-wrap {
+  max-width: 0;
   overflow: hidden;
-  box-shadow: -6px 4px 32px #0008;
-  z-index: 1;
+  transition: max-width .42s cubic-bezier(.25,.46,.45,.94);
 }
-.tab-panel.open { transform: translateX(0); }
+.tab-panel-wrap.open { max-width: 280px; }
 
-/* Panel content */
+/* Panel inner */
 .tab-panel-content {
   background: #fff;
   width: 260px;
-  padding: 24px 20px 20px;
+  padding: 22px 18px 18px;
+  border-radius: 12px 0 0 12px;
   display: flex; flex-direction: column;
-  align-items: center; gap: 14px;
+  align-items: center; gap: 12px;
 }
 .tab-panel-title {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 1rem; font-weight: 700; color: #111;
+  font-size: .98rem; font-weight: 700; color: #111;
   text-align: center; line-height: 1.35;
 }
 .tab-panel-sub {
-  font-size: .78rem; color: #888;
-  text-align: center; line-height: 1.4; margin-top: -6px;
+  font-size: .76rem; color: #888;
+  text-align: center; line-height: 1.4; margin-top: -4px;
 }
-.tab-digits {
-  display: flex; align-items: center; gap: 4px;
-}
+.tab-digits { display: flex; align-items: center; gap: 4px; }
 .tab-digit-group { display: flex; flex-direction: column; align-items: center; }
 .tab-num {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem; font-weight: 900; color: #111;
+  font-size: 1.4rem; font-weight: 900; color: #111;
   background: #f3f4f6; border: 1px solid #e5e7eb;
-  border-radius: 6px; padding: 5px 10px;
-  min-width: 50px; text-align: center; line-height: 1;
+  border-radius: 6px; padding: 5px 9px;
+  min-width: 48px; text-align: center; line-height: 1;
   transition: color .15s;
 }
 .tab-num.tick { color: #7c3aed; }
 .tab-unit {
-  font-size: .5rem; letter-spacing: 1px; text-transform: uppercase;
-  color: #aaa; margin-top: 3px;
+  font-size: .48rem; letter-spacing: 1px; text-transform: uppercase;
+  color: #bbb; margin-top: 3px;
   font-family: 'Rajdhani', sans-serif; font-weight: 600;
 }
-.tab-sep { font-size: 1.4rem; font-weight: 900; color: #d1d5db; padding-bottom: 14px; }
+.tab-sep { font-size: 1.3rem; font-weight: 900; color: #d1d5db; padding-bottom: 14px; }
 .tab-cta-btn {
   width: 100%;
   background: linear-gradient(135deg, #7c3aed, #ec4899);
@@ -1651,10 +1618,36 @@ html, body {
   font-size: .95rem; font-weight: 700;
   cursor: pointer; touch-action: manipulation;
   transition: transform .2s, box-shadow .2s;
-  box-shadow: 0 4px 16px #7c3aed44;
+  box-shadow: 0 4px 14px #7c3aed44;
 }
-.tab-cta-btn:hover { transform: scale(1.03); box-shadow: 0 6px 20px #ec489955; }
+.tab-cta-btn:hover { transform: scale(1.03); }
 .tab-cta-btn:active { transform: scale(.97); }
+
+/* Ear */
+.tab-ear {
+  width: 40px;
+  height: 160px;
+  background: linear-gradient(180deg, #7c3aed 0%, #9333ea 50%, #ec4899 100%);
+  border-radius: 0 10px 10px 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; cursor: pointer; flex-shrink: 0;
+  user-select: none; touch-action: manipulation;
+  transition: filter .2s;
+}
+.tab-ear:hover { filter: brightness(1.15); }
+.tab-ear-arrow {
+  color: #fff; font-size: 1.4rem; font-weight: 900;
+  font-family: Arial, sans-serif; line-height: 1;
+}
+.tab-ear-label {
+  color: rgba(255,255,255,.9);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: .65rem; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+}
 
 
 #page-kulakcik .demo-chips {
@@ -2554,11 +2547,11 @@ html, body {
     <!-- THE TAB WIDGET -->
     <div class="tab-widget">
 
-      <!-- Panel slides in from right -->
-      <div class="tab-panel" id="tab-panel">
+      <!-- Panel: max-width collapses to 0 when closed -->
+      <div class="tab-panel-wrap" id="tab-panel-wrap">
         <div class="tab-panel-content">
-          <div class="tab-panel-title">Kampanyayı kaçırmayın!</div>
-          <div class="tab-panel-sub">İndirimden yararlanmak için kalan süre</div>
+          <div class="tab-panel-title">Kampanyay&#305; ka&#231;&#305;rmay&#305;n!</div>
+          <div class="tab-panel-sub">&#304;ndirimden yararlanmak i&#231;in kalan s&#252;re</div>
           <div class="tab-digits">
             <div class="tab-digit-group">
               <span id="tab-h" class="tab-num">01</span>
@@ -2567,22 +2560,22 @@ html, body {
             <span class="tab-sep">:</span>
             <div class="tab-digit-group">
               <span id="tab-m" class="tab-num">59</span>
-              <span class="tab-unit">DAKİKA</span>
+              <span class="tab-unit">DAK&#304;KA</span>
             </div>
             <span class="tab-sep">:</span>
             <div class="tab-digit-group">
               <span id="tab-s" class="tab-num">59</span>
-              <span class="tab-unit">SANİYE</span>
+              <span class="tab-unit">SAN&#304;YE</span>
             </div>
           </div>
           <button class="tab-cta-btn">Hemen Al &#8594;</button>
         </div>
       </div>
 
-      <!-- Ear — always visible -->
+      <!-- Ear — always visible on right -->
       <div class="tab-ear" onclick="toggleTab()">
         <span class="tab-ear-arrow" id="tab-arrow">&#8249;</span>
-        <span class="tab-ear-label">&#304;ndirim</span>
+        <span class="tab-ear-label">&#304;nd&#304;r&#304;m</span>
       </div>
 
     </div>
@@ -2768,7 +2761,7 @@ function showGame(id, name) {
   if (id === 'sidebar') { sidebarInit(); }
   if (id === 'kulakcik') {
     /* reset tab to closed state on each entry */
-    var tp = document.getElementById('tab-panel');
+    var tp = document.getElementById('tab-panel-wrap');
     var ta = document.getElementById('tab-arrow');
     if (tp) tp.classList.remove('open');
     if (ta) ta.innerHTML = '&#8249;';
@@ -2847,10 +2840,10 @@ function sidebarInit() {
 var _tabInterval = null;
 
 function toggleTab() {
-  var panel = document.getElementById('tab-panel');
+  var wrap = document.getElementById('tab-panel-wrap');
   var arrow = document.getElementById('tab-arrow');
-  if (!panel) return;
-  var isOpen = panel.classList.toggle('open');
+  if (!wrap) return;
+  var isOpen = wrap.classList.toggle('open');
   if (arrow) arrow.innerHTML = isOpen ? '&#8250;' : '&#8249;';
   if (isOpen) { tabCdInit(); } else { tabCdStop(); }
 }
