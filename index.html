@@ -349,6 +349,250 @@ html, body {
 .diff-dot.on { background: var(--violet); }
 .card-prize { font-size: .68rem; color: #ec489988; }
 
+/* ═══════════════════════════════════════════
+   SAAS DASHBOARD LAYOUT
+═══════════════════════════════════════════ */
+
+/* Override body scroll */
+body { overflow: hidden; }
+
+/* Override old landing styles */
+#landing {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  padding: 0 !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  background: #07061a !important;
+}
+
+/* Mobile top bar */
+.db-topbar {
+  display: none;
+  height: 56px; flex-shrink: 0;
+  align-items: center; justify-content: space-between;
+  padding: 0 16px;
+  background: #07061a;
+  border-bottom: 1px solid #7c3aed22;
+  position: relative; z-index: 5;
+}
+.db-topbar-logo {
+  font-family: 'Orbitron', sans-serif; font-size: .85rem; font-weight: 900;
+  background: linear-gradient(90deg, #a78bfa, #ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.db-hamburger {
+  background: none; border: none; cursor: pointer;
+  color: #a78bfa; padding: 6px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.db-hamburger:hover { background: #7c3aed22; }
+
+/* Mobile overlay */
+.db-mob-overlay {
+  display: none; position: fixed; inset: 0; z-index: 199;
+  background: rgba(7,6,26,.75); backdrop-filter: blur(4px);
+}
+.db-mob-overlay.show { display: block; }
+
+/* Main layout */
+.db-layout {
+  display: flex; flex: 1; overflow: hidden;
+}
+
+/* ── SIDEBAR ── */
+.db-sidebar {
+  width: 260px; flex-shrink: 0;
+  height: 100%; overflow-y: auto; overflow-x: hidden;
+  background: #07061a;
+  border-right: 1px solid #7c3aed1a;
+  display: flex; flex-direction: column;
+  scrollbar-width: thin; scrollbar-color: #7c3aed33 transparent;
+}
+.db-sidebar::-webkit-scrollbar { width: 4px; }
+.db-sidebar::-webkit-scrollbar-thumb { background: #7c3aed33; border-radius: 4px; }
+
+.db-logo-area {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid #7c3aed1a; flex-shrink: 0;
+}
+.db-logo-text {
+  font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900;
+  background: linear-gradient(90deg, #a78bfa, #ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: 3px;
+}
+.db-logo-sub {
+  font-family: 'Rajdhani', sans-serif; font-size: .7rem; font-weight: 600;
+  color: #7c3aed66; letter-spacing: 4px; margin-top: 2px;
+}
+
+.db-nav { flex: 1; padding: 16px 10px; }
+
+.db-section-label {
+  display: flex; align-items: center; gap: 7px;
+  font-family: 'Rajdhani', sans-serif; font-size: .68rem; font-weight: 700;
+  letter-spacing: 2px; color: #7c3aed66;
+  padding: 6px 10px 8px; text-transform: uppercase;
+}
+
+.db-nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 10px; cursor: pointer;
+  transition: background .15s, color .15s;
+  margin-bottom: 2px; position: relative;
+}
+.db-nav-item:hover {
+  background: #7c3aed18;
+}
+.db-nav-item.active {
+  background: linear-gradient(135deg, #7c3aed22, #ec489912);
+  border: 1px solid #7c3aed33;
+}
+.db-nav-item.active::before {
+  content: '';
+  position: absolute; left: 0; top: 20%; bottom: 20%;
+  width: 3px; border-radius: 3px;
+  background: linear-gradient(180deg, #7c3aed, #ec4899);
+}
+.db-item-icon { font-size: 1rem; flex-shrink: 0; width: 22px; text-align: center; }
+.db-item-text {
+  flex: 1; font-family: 'Rajdhani', sans-serif;
+  font-size: .92rem; font-weight: 600; color: #c4b5fd;
+}
+.db-nav-item:hover .db-item-text,
+.db-nav-item.active .db-item-text { color: #fff; }
+.db-item-pill {
+  font-size: .6rem; font-weight: 700; letter-spacing: 1px;
+  padding: 2px 7px; border-radius: 20px;
+  background: #7c3aed33; color: #a78bfa;
+  border: 1px solid #7c3aed44;
+}
+.db-item-pill.hot { background: #ec489922; color: #f9a8d4; border-color: #ec489944; }
+
+.db-sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #7c3aed1a; flex-shrink: 0;
+}
+.db-sf-logo {
+  font-family: 'Orbitron', sans-serif; font-size: .72rem;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 3px;
+}
+.db-sf-copy { font-size: .72rem; color: #7c3aed44; font-family: 'Rajdhani', sans-serif; }
+
+/* ── MAIN PANEL ── */
+.db-main {
+  flex: 1; height: 100%; overflow-y: auto; overflow-x: hidden;
+  background: linear-gradient(160deg, #0a0820 0%, #0e0b28 50%, #0a0820 100%);
+  position: relative;
+  scrollbar-width: thin; scrollbar-color: #7c3aed33 transparent;
+}
+.db-main::-webkit-scrollbar { width: 6px; }
+.db-main::-webkit-scrollbar-thumb { background: #7c3aed33; border-radius: 6px; }
+
+/* ── WELCOME SCREEN ── */
+.db-welcome {
+  padding: 56px 56px 40px;
+  max-width: 900px;
+  animation: slideUp .5s ease both;
+}
+.db-welcome-eyebrow {
+  font-family: 'Rajdhani', sans-serif; font-size: .8rem; font-weight: 700;
+  letter-spacing: 3px; color: #7c3aed; text-transform: uppercase; margin-bottom: 12px;
+}
+.db-welcome-title {
+  font-family: 'Orbitron', sans-serif; font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 900;
+  background: linear-gradient(135deg, #fff 30%, #c4b5fd 70%, #ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1.15; margin-bottom: 14px;
+}
+.db-welcome-desc {
+  font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: #a78bfa99;
+  line-height: 1.6; margin-bottom: 40px;
+}
+
+/* Stats row */
+.db-stat-row {
+  display: flex; gap: 16px; margin-bottom: 48px; flex-wrap: wrap;
+}
+.db-stat-box {
+  background: linear-gradient(135deg, #ffffff06, #7c3aed08);
+  border: 1px solid #7c3aed22; border-radius: 16px;
+  padding: 20px 28px; flex: 1; min-width: 120px; text-align: center;
+  transition: transform .25s, box-shadow .25s;
+}
+.db-stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px #7c3aed18;
+}
+.db-stat-icon { font-size: 1.6rem; margin-bottom: 8px; }
+.db-stat-num {
+  font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900;
+  color: #fff; margin-bottom: 4px;
+}
+.db-stat-lbl { font-family: 'Rajdhani', sans-serif; font-size: .82rem; color: #7c3aed88; }
+
+/* Popular label */
+.db-popular-label {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Rajdhani', sans-serif; font-size: .78rem; font-weight: 700;
+  letter-spacing: 2px; color: #7c3aed; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* Popular cards */
+.db-popular-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+.db-pop-card {
+  background: linear-gradient(135deg, #ffffff06, #7c3aed0a);
+  border: 1px solid #7c3aed22; border-radius: 16px;
+  padding: 22px 18px; cursor: pointer; position: relative; overflow: hidden;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.db-pop-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px #7c3aed28;
+  border-color: #7c3aed55;
+}
+.db-pop-icon { font-size: 2rem; margin-bottom: 10px; }
+.db-pop-name {
+  font-family: 'Orbitron', sans-serif; font-size: .82rem; font-weight: 700;
+  color: #fff; margin-bottom: 5px; line-height: 1.3;
+}
+.db-pop-desc { font-family: 'Rajdhani', sans-serif; font-size: .8rem; color: #a78bfa77; margin-bottom: 12px; }
+.db-pop-tag {
+  font-family: 'Rajdhani', sans-serif; font-size: .68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px;
+  background: #7c3aed22; color: #a78bfa;
+  border: 1px solid #7c3aed33; display: inline-block;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  body { overflow: hidden; }
+  .db-topbar { display: flex; }
+  .db-sidebar {
+    position: fixed; left: -260px; top: 0; bottom: 0; z-index: 200;
+    height: 100%; transition: left .3s cubic-bezier(.25,.46,.45,.94);
+    box-shadow: 4px 0 40px rgba(0,0,0,.5);
+  }
+  .db-sidebar.open { left: 0; }
+  .db-welcome { padding: 28px 20px 32px; }
+  .db-popular-grid { grid-template-columns: repeat(2, 1fr); }
+  .db-stat-row { gap: 10px; }
+  .db-stat-box { padding: 16px 12px; }
+}
+@media (max-width: 480px) {
+  .db-popular-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .db-welcome-title { font-size: 1.5rem; }
+}
+
 /* ── FOOTER ── */
 .site-footer {
   width: 100%; max-width: 1100px;
@@ -2349,296 +2593,180 @@ html, body {
 ═══════════════════════════════════════════ -->
 <div id="landing">
 
-  <!-- WebGL Shader Background -->
-  <canvas id="hero-shader"></canvas>
+  <!-- Mobile top bar -->
+  <div class="db-topbar" id="db-topbar">
+    <button class="db-hamburger" onclick="dbToggleSidebar()" aria-label="Menü">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <span class="db-topbar-logo">RELATED <span style="opacity:.5;font-size:.7em">SCENARIOS</span></span>
+    <div style="width:36px"></div>
+  </div>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="logo">RELATED</div>
-    <div class="header-badge">🚀 Markanızı Büyütün</div>
-  </header>
+  <!-- Mobile overlay -->
+  <div class="db-mob-overlay" id="db-mob-overlay" onclick="dbCloseSidebar()"></div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <span class="hero-eyebrow">✦ Oyunlar &amp; Kurgular</span>
-    <h1>BÜYÜME<br>SENARYOLARI</h1>
-    <p class="hero-desc">Oyunlar ve kurgularla büyüyün. Scratch, Spin, Slot ve Banner, Kulakçık, Bildirim gibi kurgularla müşteri bağlılığını artırın.</p>
-    <div class="hero-cta-row">
-      <button class="hero-cta-btn" onclick="document.querySelector('.game-grid').scrollIntoView({behavior:'smooth'})">
-        Senaryoları Keşfet
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <span class="hero-cta-note">↓ Oyunlar &amp; Kurgular · sıfır kod</span>
-    </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num">🎮</div>
-        <div class="stat-label">Oyunlar</div>
-      </div>
-      <div class="stat">
-        <div class="stat-divider"></div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">🧩</div>
-        <div class="stat-label">Kurgular</div>
-      </div>
-      <div class="stat">
-        <div class="stat-divider"></div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">📈</div>
-        <div class="stat-label">Büyüme Odaklı</div>
-      </div>
-    </div>
-  </section>
+  <!-- Dashboard layout -->
+  <div class="db-layout">
 
-  <!-- Grid title -->
-  <p class="grid-title">— Oyunlar —</p>
+    <!-- ══ SIDEBAR ══ -->
+    <nav class="db-sidebar" id="db-sidebar">
 
-  <!-- Game Grid -->
-  <div class="game-grid">
+      <div class="db-logo-area">
+        <div class="db-logo-text">RELATED</div>
+        <div class="db-logo-sub">SCENARIOS</div>
+      </div>
 
-    <!-- 1. Scratch To Win -->
-    <div class="game-card" onclick="showGame('scratch','Scratch To Win')">
-      <div class="shimmer"></div>
-      <span class="card-icon">🪙</span>
-      <span class="card-tag hot">🔥 Popüler</span>
-      <div class="card-title">Scratch To Win</div>
-      <div class="card-desc">Kartı kazı, altındaki ödülü bul! Özel indirim kodun seni bekliyor.</div>
-      <button class="card-btn">
-        Oyna
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <div class="card-meta">
-        <div class="card-diff">
-          <span>Kolay</span>
-          <div class="diff-dots">
-            <div class="diff-dot on"></div>
-            <div class="diff-dot"></div>
-            <div class="diff-dot"></div>
+      <div class="db-nav">
+
+        <div class="db-section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          OYUNLAR
+        </div>
+
+        <div class="db-nav-item" data-id="scratch" onclick="showGame('scratch','Scratch To Win');dbCloseSidebar()">
+          <span class="db-item-icon">🪙</span>
+          <span class="db-item-text">Scratch To Win</span>
+          <span class="db-item-pill hot">Popüler</span>
+        </div>
+        <div class="db-nav-item" data-id="spin" onclick="showGame('spin','Spin To Win');dbCloseSidebar()">
+          <span class="db-item-icon">🎡</span>
+          <span class="db-item-text">Spin To Win</span>
+        </div>
+        <div class="db-nav-item" data-id="jackpot" onclick="showGame('jackpot','Jackpot Slot');dbCloseSidebar()">
+          <span class="db-item-icon">🎰</span>
+          <span class="db-item-text">Jackpot Slot</span>
+        </div>
+        <div class="db-nav-item" data-id="claw" onclick="showGame('claw','Claw Machine');dbCloseSidebar()">
+          <span class="db-item-icon">🕹️</span>
+          <span class="db-item-text">Claw Machine</span>
+        </div>
+        <div class="db-nav-item" data-id="squarespin" onclick="showGame('squarespin','Kare Spin');dbCloseSidebar()">
+          <span class="db-item-icon">🔲</span>
+          <span class="db-item-text">Kare Spin</span>
+        </div>
+        <div class="db-nav-item" data-id="match" onclick="showGame('match','Emoji Eşleştir');dbCloseSidebar()">
+          <span class="db-item-icon">😀</span>
+          <span class="db-item-text">Emoji Eşleştir</span>
+        </div>
+
+        <div class="db-section-label" style="margin-top:20px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+          KURGULAR
+        </div>
+
+        <div class="db-nav-item" data-id="countdown" onclick="showGame('countdown','Countdown Banner');dbCloseSidebar()">
+          <span class="db-item-icon">⏱️</span>
+          <span class="db-item-text">Countdown Banner</span>
+        </div>
+        <div class="db-nav-item" data-id="slidingbanner" onclick="showGame('slidingbanner','Sliding Banner');dbCloseSidebar()">
+          <span class="db-item-icon">📢</span>
+          <span class="db-item-text">Sliding Banner</span>
+        </div>
+        <div class="db-nav-item" data-id="notification" onclick="showGame('notification','Bildirim Paneli');dbCloseSidebar()">
+          <span class="db-item-icon">🔔</span>
+          <span class="db-item-text">Bildirim Paneli</span>
+        </div>
+        <div class="db-nav-item" data-id="sidebar" onclick="showGame('sidebar','Sidebar Panel');dbCloseSidebar()">
+          <span class="db-item-icon">📌</span>
+          <span class="db-item-text">Sidebar Panel</span>
+        </div>
+        <div class="db-nav-item" data-id="kulakcik" onclick="showGame('kulakcik','Kulakçık');dbCloseSidebar()">
+          <span class="db-item-icon">🏷️</span>
+          <span class="db-item-text">Kulakçık</span>
+        </div>
+        <div class="db-nav-item" data-id="bottombanner" onclick="showGame('bottombanner','Bottom Banner');dbCloseSidebar()">
+          <span class="db-item-icon">📺</span>
+          <span class="db-item-text">Bottom Banner</span>
+        </div>
+        <div class="db-nav-item" data-id="popupscratch" onclick="showGame('popupscratch','Pop-up Kazı Kazan');dbCloseSidebar()">
+          <span class="db-item-icon">🪙</span>
+          <span class="db-item-text">Pop-up Kazı Kazan</span>
+          <span class="db-item-pill">Yeni</span>
+        </div>
+        <div class="db-nav-item" data-id="anket" onclick="showGame('anket','Anket');dbCloseSidebar()">
+          <span class="db-item-icon">📋</span>
+          <span class="db-item-text">Anket</span>
+          <span class="db-item-pill">Yeni</span>
+        </div>
+
+      </div><!-- /db-nav -->
+
+      <div class="db-sidebar-footer">
+        <div class="db-sf-logo">Related Scenarios</div>
+        <div class="db-sf-copy">© 2026</div>
+      </div>
+
+    </nav><!-- /db-sidebar -->
+
+    <!-- ══ MAIN PANEL ══ -->
+    <main class="db-main" id="db-main">
+
+      <!-- Welcome Screen -->
+      <div class="db-welcome">
+
+        <div class="db-welcome-top">
+          <div class="db-welcome-eyebrow">✦ Büyüme Senaryoları</div>
+          <h1 class="db-welcome-title">Hoş Geldiniz 👋</h1>
+          <p class="db-welcome-desc">Oyunlar ve kurgularla müşteri bağlılığını ve dönüşüm oranlarını artırın.<br>Başlamak için sol menüden bir senaryo seçin.</p>
+        </div>
+
+        <div class="db-stat-row">
+          <div class="db-stat-box">
+            <div class="db-stat-icon">🎮</div>
+            <div class="db-stat-num">6</div>
+            <div class="db-stat-lbl">Oyun</div>
+          </div>
+          <div class="db-stat-box">
+            <div class="db-stat-icon">🧩</div>
+            <div class="db-stat-num">8</div>
+            <div class="db-stat-lbl">Kurgu</div>
+          </div>
+          <div class="db-stat-box">
+            <div class="db-stat-icon">📈</div>
+            <div class="db-stat-num">∞</div>
+            <div class="db-stat-lbl">Büyüme</div>
           </div>
         </div>
-        <div class="card-prize">Max %30 İndirim</div>
-      </div>
-    </div>
 
-    <!-- 2. Spin To Win -->
-    <div class="game-card" onclick="showGame('spin','Spin To Win')">
-      <div class="shimmer"></div>
-      <span class="card-icon">🎡</span>
-      <span class="card-tag">✨ Klasik</span>
-      <div class="card-title">Spin To Win</div>
-      <div class="card-desc">Çarkı çevir, şansını dene! Her dilimde sürpriz bir ödül var.</div>
-      <button class="card-btn">
-        Oyna
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <div class="card-meta">
-        <div class="card-diff">
-          <span>Kolay</span>
-          <div class="diff-dots">
-            <div class="diff-dot on"></div>
-            <div class="diff-dot"></div>
-            <div class="diff-dot"></div>
+        <div class="db-popular-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          En Çok Tercih Edilenler
+        </div>
+
+        <div class="db-popular-grid">
+          <div class="db-pop-card" onclick="showGame('scratch','Scratch To Win')">
+            <div class="db-pop-icon">🪙</div>
+            <div class="db-pop-name">Scratch To Win</div>
+            <div class="db-pop-desc">Kartı kazı, ödülü bul</div>
+            <div class="db-pop-tag">🔥 En Popüler</div>
+          </div>
+          <div class="db-pop-card" onclick="showGame('spin','Spin To Win')">
+            <div class="db-pop-icon">🎡</div>
+            <div class="db-pop-name">Spin To Win</div>
+            <div class="db-pop-desc">Çarkı çevir, şansını dene</div>
+            <div class="db-pop-tag">✨ Klasik</div>
+          </div>
+          <div class="db-pop-card" onclick="showGame('countdown','Countdown Banner')">
+            <div class="db-pop-icon">⏱️</div>
+            <div class="db-pop-name">Countdown Banner</div>
+            <div class="db-pop-desc">Aciliyet hissiyle dönüşüm artır</div>
+            <div class="db-pop-tag">⚡ Dönüşüm</div>
+          </div>
+          <div class="db-pop-card" onclick="showGame('anket','Anket')">
+            <div class="db-pop-icon">📋</div>
+            <div class="db-pop-name">Anket</div>
+            <div class="db-pop-desc">Kullanıcı verisini topla</div>
+            <div class="db-pop-tag">📊 Veri</div>
           </div>
         </div>
-        <div class="card-prize">Ücretsiz Kargo dahil</div>
-      </div>
-    </div>
 
-    <!-- 3. Jackpot Slot -->
-    <div class="game-card" onclick="showGame('jackpot','Jackpot Slot')">
-      <div class="shimmer"></div>
-      <span class="card-icon">🎰</span>
-      <span class="card-tag hot">⚡ Heyecanlı</span>
-      <div class="card-title">Jackpot Slot</div>
-      <div class="card-desc">3 makarayı hizala, jackpot'u vur! Ses efektleri ve ışıklarla tam casino hissi.</div>
-      <button class="card-btn">
-        Oyna
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <div class="card-meta">
-        <div class="card-diff">
-          <span>Orta</span>
-          <div class="diff-dots">
-            <div class="diff-dot on"></div>
-            <div class="diff-dot on"></div>
-            <div class="diff-dot"></div>
-          </div>
-        </div>
-        <div class="card-prize">Büyük Ödül Şansı</div>
-      </div>
-    </div>
+      </div><!-- /db-welcome -->
 
-    <!-- 4. Claw Machine -->
-    <div class="game-card" onclick="showGame('claw','Claw Machine')">
-      <div class="shimmer"></div>
-      <span class="card-icon">🕹️</span>
-      <span class="card-tag new">🆕 Yeni</span>
-      <div class="card-title">Claw Machine</div>
-      <div class="card-desc">Kolunu yönet, oyuncağı yakala! Her oyuncakta farklı bir sürpriz seni bekliyor.</div>
-      <button class="card-btn">
-        Oyna
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <div class="card-meta">
-        <div class="card-diff">
-          <span>Zor</span>
-          <div class="diff-dots">
-            <div class="diff-dot on"></div>
-            <div class="diff-dot on"></div>
-            <div class="diff-dot on"></div>
-          </div>
-        </div>
-        <div class="card-prize">Sürpriz Ödül</div>
-      </div>
-    </div>
+    </main><!-- /db-main -->
 
-    <!-- 5. Kare Spin -->
-    <div class="game-card" onclick="showGame('squarespin','Kare Spin')">
-      <div class="shimmer"></div>
-      <span class="card-icon">🔲</span>
-      <span class="card-tag">🌀 Unique</span>
-      <div class="card-title">Kare Spin To Win</div>
-      <div class="card-desc">Klasik çarkın kare versiyonu — farklı bir deneyim, aynı heyecan!</div>
-      <button class="card-btn">
-        Oyna
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <div class="card-meta">
-        <div class="card-diff">
-          <span>Kolay</span>
-          <div class="diff-dots">
-            <div class="diff-dot on"></div>
-            <div class="diff-dot"></div>
-            <div class="diff-dot"></div>
-          </div>
-        </div>
-        <div class="card-prize">İndirim Kuponu</div>
-      </div>
-    </div>
-
-    <!-- 6. Emoji Eşleştir -->
-    <div class="game-card" onclick="showGame('match','Emoji Eşleştir')">
-      <div class="shimmer"></div>
-      <span class="card-icon">🧩</span>
-      <span class="card-tag new">🧠 Skill</span>
-      <div class="card-title">Emoji Eşleştir</div>
-      <div class="card-desc">30 saniyede tüm emoji çiftlerini bul! Hafıza oyunu kazananı ödüllendiriyor.</div>
-      <button class="card-btn">
-        Oyna
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <div class="card-meta">
-        <div class="card-diff">
-          <span>Zor</span>
-          <div class="diff-dots">
-            <div class="diff-dot on"></div>
-            <div class="diff-dot on"></div>
-            <div class="diff-dot on"></div>
-          </div>
-        </div>
-        <div class="card-prize">Kupon Kodu</div>
-      </div>
-    </div>
-
-  </div><!-- /game-grid -->
-
-  <!-- ── Kurgular Section ── -->
-  <div class="kurgular-section">
-    <p class="grid-title">— Kurgular —</p>
-
-    <div class="kurgular-grid">
-
-      <!-- 1. Countdown Banner -->
-      <div class="kurgu-card" onclick="showGame('countdown','Countdown Banner')">
-        <div class="shimmer"></div>
-        <span class="kurgu-icon">⏱️</span>
-        <span class="kurgu-tag">YENİ</span>
-        <div class="kurgu-title">Countdown Banner</div>
-        <div class="kurgu-desc">Her kullanıcıya özel 2 saatlik geri sayım. Aciliyet hissiyle dönüşüm oranını artır.</div>
-        <div class="kurgu-badge">Dönüşüm Artışı</div>
-      </div>
-
-      <!-- 2. Sliding Banner -->
-      <div class="kurgu-card" onclick="showGame('slidingbanner','Sliding Banner')">
-        <div class="shimmer"></div>
-        <span class="kurgu-icon">📢</span>
-        <span class="kurgu-tag">YENİ</span>
-        <div class="kurgu-title">Sliding Banner</div>
-        <div class="kurgu-desc">3 farklı kampanya mesajı sağdan sola kayan şeritte. Kullanıcının dikkatini çek, mesajını ilet.</div>
-        <div class="kurgu-badge">Farkındalık Artışı</div>
-      </div>
-
-      <!-- 3. Bildirim Paneli -->
-      <div class="kurgu-card" onclick="showGame('notification','Bildirim Paneli')">
-        <div class="shimmer"></div>
-        <span class="kurgu-icon">🔔</span>
-        <span class="kurgu-tag">YENİ</span>
-        <div class="kurgu-title">Bildirim Paneli</div>
-        <div class="kurgu-desc">Çan ikonu ve açılır bildirim dropdown'u. Kampanya ve yeni içerik duyurularını kullanıcıya ilet.</div>
-        <div class="kurgu-badge">Kullanıcı Bağlılığı</div>
-      </div>
-
-      <!-- 4. Sidebar Panel -->
-      <div class="kurgu-card" onclick="showGame('sidebar','Sidebar Panel')">
-        <div class="shimmer"></div>
-        <span class="kurgu-icon">📌</span>
-        <span class="kurgu-tag">YENİ</span>
-        <div class="kurgu-title">Sidebar Panel</div>
-        <div class="kurgu-desc">Sağdan kayan tam ekran panel. Kupon kodu, özellik listesi ve CTA ile kullanıcıyı harekete geçir.</div>
-        <div class="kurgu-badge">Dönüşüm Artışı</div>
-      </div>
-
-      <!-- 5. Kulakçık -->
-      <div class="kurgu-card" onclick="showGame('kulakcik','Kulakçık')">
-        <div class="shimmer"></div>
-        <span class="kurgu-icon">🏷️</span>
-        <span class="kurgu-tag">YENİ</span>
-        <div class="kurgu-title">Kulakçık</div>
-        <div class="kurgu-desc">Sayfanın sağında gizlenen geri sayımlı tab. Tıklayınca açılır, tekrar tıklayınca kapanır.</div>
-        <div class="kurgu-badge">Dikkat Çekici</div>
-      </div>
-
-      <!-- 6. Bottom Banner -->
-      <div class="kurgu-card" onclick="showGame('bottombanner','Bottom Banner')">
-        <div class="shimmer"></div>
-        <span class="kurgu-icon">📺</span>
-        <span class="kurgu-tag">YENİ</span>
-        <div class="kurgu-title">Bottom Banner</div>
-        <div class="kurgu-desc">Sayfanın altında sabit duran, yukarı kayan 3 mesajlı banner. Scroll edilse de yerinde kalır.</div>
-        <div class="kurgu-badge">Farkındalık Artışı</div>
-      </div>
-
-      <!-- 7. Pop-up Kazı Kazan -->
-      <div class="kurgu-card" onclick="showGame('popupscratch','Pop-up Kazı Kazan')">
-        <div class="shimmer"></div>
-        <span class="kurgu-icon">🪙</span>
-        <span class="kurgu-tag">YENİ</span>
-        <div class="kurgu-title">Pop-up Kazı Kazan</div>
-        <div class="kurgu-desc">Sayfa açılınca 1 saniye sonra kazı-kazan oyunu pop-up olarak ekrana gelir. Kullanıcı kazır, ödülü öğrenir.</div>
-        <div class="kurgu-badge">Dönüşüm Artışı</div>
-      </div>
-
-      <!-- 8. Anket -->
-      <div class="kurgu-card" onclick="showGame('anket','Anket')">
-        <div class="shimmer"></div>
-        <span class="kurgu-icon">📋</span>
-        <span class="kurgu-tag">YENİ</span>
-        <div class="kurgu-title">Anket</div>
-        <div class="kurgu-desc">Sayfa açıldıktan 1-2 saniye sonra merkeze çıkan çok adımlı anket pop-up'ı. Kullanıcı deneyimi & memnuniyet verisi toplayın.</div>
-        <div class="kurgu-badge">Veri Toplama</div>
-      </div>
-
-    </div>
-  </div><!-- /kurgular -->
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-logo">Related Scenarios</div>
-    <div>Oyunlar ve kurgularla büyüme senaryolarını keşfedin.</div>
-    <div>© 2026 Related Scenarios</div>
-  </footer>
+  </div><!-- /db-layout -->
 
 </div><!-- /landing -->
 
@@ -3554,6 +3682,7 @@ function showGame(id, name) {
   _activePage = page;
   document.title = name + ' — Related Scenarios';
   if (!_historyNav) history.pushState({ page: id, name: name }, '', '#' + id);
+  dbSetActive(id);
   if (id === 'countdown') { cdInit(); }
   if (id === 'sidebar') { sidebarInit(); }
   if (id === 'kulakcik') {
@@ -3578,6 +3707,27 @@ function showLanding() {
   if (_psTimer) { clearTimeout(_psTimer); _psTimer = null; }
   closePsPopup();
   if (!_historyNav) history.pushState(null, '', location.pathname);
+  dbSetActive(null);
+}
+
+/* ── Dashboard Sidebar ── */
+function dbToggleSidebar() {
+  var s = document.getElementById('db-sidebar');
+  var o = document.getElementById('db-mob-overlay');
+  if (!s) return;
+  s.classList.toggle('open');
+  if (o) o.classList.toggle('show', s.classList.contains('open'));
+}
+function dbCloseSidebar() {
+  var s = document.getElementById('db-sidebar');
+  var o = document.getElementById('db-mob-overlay');
+  if (s) s.classList.remove('open');
+  if (o) o.classList.remove('show');
+}
+function dbSetActive(id) {
+  document.querySelectorAll('.db-nav-item').forEach(function(el) {
+    el.classList.toggle('active', el.dataset.id === id);
+  });
 }
 
 /* ── Tarayıcı geri/ileri tuşu ── */
