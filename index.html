@@ -366,6 +366,7 @@ body { overflow: hidden; }
   height: 100vh !important;
   overflow: hidden !important;
   background: #07061a !important;
+  position: relative !important;
 }
 
 /* Mobile top bar */
@@ -407,8 +408,8 @@ body { overflow: hidden; }
 .db-sidebar {
   width: 260px; flex-shrink: 0;
   height: 100%; overflow-y: auto; overflow-x: hidden;
-  background: #07061a;
-  border-right: 1px solid #7c3aed1a;
+  background: rgba(7,6,26,.92);
+  border-right: 1px solid #7c3aed22;
   display: flex; flex-direction: column;
   scrollbar-width: thin; scrollbar-color: #7c3aed33 transparent;
 }
@@ -488,7 +489,7 @@ body { overflow: hidden; }
 /* ── MAIN PANEL ── */
 .db-main {
   flex: 1; height: 100%; overflow-y: auto; overflow-x: hidden;
-  background: linear-gradient(160deg, #0a0820 0%, #0e0b28 50%, #0a0820 100%);
+  background: rgba(10,8,32,.78);
   position: relative;
   scrollbar-width: thin; scrollbar-color: #7c3aed33 transparent;
 }
@@ -2603,6 +2604,9 @@ body { overflow: hidden; }
     <span class="db-topbar-logo">RELATED <span style="opacity:.5;font-size:.7em">SCENARIOS</span></span>
     <div style="width:36px"></div>
   </div>
+
+  <!-- WebGL Shader Background -->
+  <canvas id="hero-shader"></canvas>
 
   <!-- Mobile overlay -->
   <div class="db-mob-overlay" id="db-mob-overlay" onclick="dbCloseSidebar()"></div>
