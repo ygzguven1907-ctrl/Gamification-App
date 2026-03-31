@@ -119,7 +119,7 @@ html, body {
   mix-blend-mode: screen;
   transition: opacity 1.2s ease;
 }
-#hero-shader.ready { opacity: .45; }
+#hero-shader.ready { opacity: .72; }
 /* Ensure all landing children sit above the shader */
 #landing > *:not(#hero-shader) { position: relative; z-index: 1; }
 
@@ -4129,7 +4129,7 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && _activePage) showLanding();
 });
 
-/* ── Hero WebGL Shader ── */
+/* ── Mesh Gradient Shader ── */
 (function() {
   var canvas = document.getElementById('hero-shader');
   if (!canvas) return;
@@ -4137,26 +4137,76 @@ document.addEventListener('keydown', function(e) {
   var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
   if (!gl) return;
 
-  var VS = [
-    'attribute vec2 a_pos;',
-    'void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }'
-  ].join('\n');
+  var VS = 'attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.,1.); }';
 
   var FS = [
-    'precision highp float;',
-    'uniform vec2  u_res;',
-    'uniform float u_time;',
-    'void main(){',
-    '  vec2 p = (gl_FragCoord.xy * 2.0 - u_res) / min(u_res.x, u_res.y);',
-    '  float d  = length(p) * 0.06;',
-    '  float rx = p.x * (1.0 + d);',
-    '  float gx = p.x;',
-    '  float bx = p.x * (1.0 - d);',
-    '  float r = 0.05 / abs(p.y + sin((rx + u_time) * 1.0) * 0.5);',
-    '  float g = 0.05 / abs(p.y + sin((gx + u_time) * 1.0) * 0.5);',
-    '  float b = 0.05 / abs(p.y + sin((bx + u_time) * 1.0) * 0.5);',
-    '  gl_FragColor = vec4(r, g, b, 1.0);',
-    '}'
+'precision highp float;',
+'uniform vec2  u_res;',
+'uniform float u_time;',
+
+/* ── smooth noise helpers ── */
+'float h21(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }',
+'float snoise(vec2 p){',
+'  vec2 i=floor(p); vec2 f=fract(p);',
+'  vec2 u=f*f*(3.-2.*f);',
+'  return mix(mix(h21(i),h21(i+vec2(1,0)),u.x),',
+'             mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),u.x),u.y);',
+'}',
+
+'void main(){',
+'  vec2 uv = gl_FragCoord.xy / u_res;',
+'  float ar = u_res.x / u_res.y;',
+'  float t  = u_time * 0.22;',
+
+/* ── 7 colour blobs ── */
+/* site palette + softer tones */
+'  vec3 C0 = vec3(0.027, 0.024, 0.102);', /* #07061a  dark navy   */
+'  vec3 C1 = vec3(0.298, 0.114, 0.584);', /* #4c1d95  deep indigo */
+'  vec3 C2 = vec3(0.486, 0.227, 0.929);', /* #7c3aed  violet      */
+'  vec3 C3 = vec3(0.925, 0.282, 0.600);', /* #ec4899  pink        */
+'  vec3 C4 = vec3(0.655, 0.545, 0.980);', /* #a78bfa  soft purple */
+'  vec3 C5 = vec3(0.769, 0.710, 0.992);', /* #c4b5fd  lavender    */
+'  vec3 C6 = vec3(0.580, 0.200, 0.700);', /* #9433b3  mid purple  */
+
+/* ── blob positions (aspect-corrected) ── */
+'  vec2 b0 = vec2((0.10+0.08*cos(t*0.50))*ar, 0.15+0.10*sin(t*0.40));',
+'  vec2 b1 = vec2((0.30+0.22*sin(t*0.70))*ar, 0.40+0.22*cos(t*0.55));',
+'  vec2 b2 = vec2((0.65+0.18*cos(t*0.60))*ar, 0.65+0.18*sin(t*0.45));',
+'  vec2 b3 = vec2((0.50+0.28*sin(t*0.80+1.0))*ar, 0.22+0.18*cos(t*0.65));',
+'  vec2 b4 = vec2((0.80+0.12*cos(t*0.55+2.0))*ar, 0.78+0.14*sin(t*0.50));',
+'  vec2 b5 = vec2((0.20+0.16*sin(t*0.90+0.5))*ar, 0.82+0.12*cos(t*0.70));',
+'  vec2 b6 = vec2((0.90+0.08*cos(t*0.45+1.5))*ar, 0.45+0.18*sin(t*0.60));',
+
+/* ── swirl distortion ── */
+'  vec2 centre = vec2(0.5*ar, 0.5);',
+'  vec2 d = uv*vec2(ar,1.0) - centre;',
+'  float dist = length(d);',
+'  float ang  = 0.55 * exp(-dist * 1.8) + t * 0.05;',
+'  float ca = cos(ang); float sa = sin(ang);',
+'  vec2 uvd = vec2(ca*d.x - sa*d.y, sa*d.x + ca*d.y) + centre;',
+
+/* ── inverse-distance weighting ── */
+'  float pw = 3.2; float eps = 0.0002;',
+'  float w0=1./(pow(length(uvd-b0),pw)+eps);',
+'  float w1=1./(pow(length(uvd-b1),pw)+eps);',
+'  float w2=1./(pow(length(uvd-b2),pw)+eps);',
+'  float w3=1./(pow(length(uvd-b3),pw)+eps);',
+'  float w4=1./(pow(length(uvd-b4),pw)+eps);',
+'  float w5=1./(pow(length(uvd-b5),pw)+eps);',
+'  float w6=1./(pow(length(uvd-b6),pw)+eps);',
+'  float ws = w0+w1+w2+w3+w4+w5+w6;',
+'  vec3 col = (C0*w0+C1*w1+C2*w2+C3*w3+C4*w4+C5*w5+C6*w6)/ws;',
+
+/* ── subtle film grain ── */
+'  float grain = (snoise(uv*380.+t*8.)*2.-1.) * 0.018;',
+'  col = clamp(col + grain, 0., 1.);',
+
+/* ── slight vignette ── */
+'  float vig = 1.0 - 0.45*pow(length((uv-0.5)*1.6),2.0);',
+'  col *= vig;',
+
+'  gl_FragColor = vec4(col, 1.0);',
+'}'
   ].join('\n');
 
   function mkShader(type, src) {
@@ -4175,7 +4225,7 @@ document.addEventListener('keydown', function(e) {
 
   var buf = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
   var aPos = gl.getAttribLocation(prog, 'a_pos');
   gl.enableVertexAttribArray(aPos);
   gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
@@ -4193,7 +4243,7 @@ document.addEventListener('keydown', function(e) {
   }
 
   function render() {
-    t += 0.008;
+    t += 0.007;
     gl.uniform1f(uTime, t);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     rafId = requestAnimationFrame(render);
@@ -4201,12 +4251,10 @@ document.addEventListener('keydown', function(e) {
 
   resize();
   render();
-  /* Fade in after first frame */
   setTimeout(function(){ canvas.classList.add('ready'); }, 80);
-
   window.addEventListener('resize', resize);
 
-  /* Pause when landing hidden, resume when shown */
+  /* Pause when a game page is open, resume on landing */
   var _origSG2 = showGame;
   showGame = function(id, name) {
     _origSG2(id, name);
