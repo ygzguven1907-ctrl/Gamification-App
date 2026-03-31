@@ -226,8 +226,8 @@ html, body {
 }
 .game-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
   width: 100%; max-width: 1100px;
 }
 
@@ -235,8 +235,8 @@ html, body {
 .game-card {
   position: relative;
   background: linear-gradient(135deg, #ffffff08 0%, #7c3aed0a 100%);
-  border-radius: 20px;
-  padding: 32px 28px 28px;
+  border-radius: 18px;
+  padding: 22px 18px 20px;
   cursor: pointer;
   overflow: hidden;
   transition: transform .25s ease, box-shadow .25s ease;
@@ -287,7 +287,7 @@ html, body {
 .game-card:nth-child(6) { animation-delay: .30s; }
 
 .card-icon {
-  font-size: 2.8rem; margin-bottom: 16px;
+  font-size: 2.2rem; margin-bottom: 12px;
   display: block;
   filter: drop-shadow(0 4px 12px #7c3aed66);
   transition: transform .3s ease;
@@ -307,13 +307,15 @@ html, body {
 
 .card-title {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.15rem; font-weight: 700;
-  color: #fff; margin-bottom: 8px;
+  font-size: .95rem; font-weight: 700;
+  color: #fff; margin-bottom: 6px;
 }
 .card-desc {
-  font-size: .92rem; color: #a78bfa99; line-height: 1.5;
-  margin-bottom: 20px;
+  font-size: .82rem; color: #a78bfa99; line-height: 1.4;
+  margin-bottom: 12px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
+.card-btn { display: none; }
 .card-btn {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 11px 24px; border-radius: 12px;
@@ -338,14 +340,14 @@ html, body {
 /* Card difficulty dots */
 .card-meta {
   display: flex; align-items: center; justify-content: space-between;
-  margin-top: 16px; padding-top: 16px;
+  margin-top: 10px; padding-top: 10px;
   border-top: 1px solid #7c3aed22;
 }
-.card-diff { display: flex; align-items: center; gap: 6px; font-size: .75rem; color: #7c3aed88; }
+.card-diff { display: flex; align-items: center; gap: 5px; font-size: .68rem; color: #7c3aed88; }
 .diff-dots { display: flex; gap: 3px; }
-.diff-dot { width: 6px; height: 6px; border-radius: 50%; background: #7c3aed33; }
+.diff-dot { width: 5px; height: 5px; border-radius: 50%; background: #7c3aed33; }
 .diff-dot.on { background: var(--violet); }
-.card-prize { font-size: .75rem; color: #ec489988; }
+.card-prize { font-size: .68rem; color: #ec489988; }
 
 /* ── FOOTER ── */
 .site-footer {
@@ -918,6 +920,17 @@ html, body {
 .j-reel-label   { font-size: .72rem; }
 .jackpot-counter { font-size: .78rem; }
 
+/* ── Grid responsive breakpoints ── */
+@media (max-width: 900px) {
+  .game-grid    { grid-template-columns: repeat(3, 1fr); }
+  .kurgular-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .game-grid    { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .kurgular-grid{ grid-template-columns: 1fr; }
+  .card-meta    { display: none; }
+}
+
 /* Small screens (≤ 380px) */
 @media (max-width: 380px) {
   .game-card-wrap { padding: 20px 16px; }
@@ -939,16 +952,16 @@ html, body {
 }
 .kurgular-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   width: 100%;
 }
 .kurgu-card {
   position: relative;
   background: linear-gradient(135deg, #ffffff06 0%, #ec489908 100%);
   border: 1px solid #ec489922;
-  border-radius: 20px;
-  padding: 32px 28px;
+  border-radius: 18px;
+  padding: 22px 18px 20px;
   cursor: pointer;
   transition: transform .3s ease, box-shadow .3s ease;
   overflow: hidden;
@@ -989,19 +1002,20 @@ html, body {
   margin-bottom: 10px;
 }
 .kurgu-icon {
-  font-size: 2.6rem; display: block;
-  margin-bottom: 12px; line-height: 1;
+  font-size: 2.2rem; display: block;
+  margin-bottom: 10px; line-height: 1;
   transition: transform .3s ease;
 }
 .kurgu-card:hover .kurgu-icon { transform: scale(1.15) rotate(-5deg); }
 .kurgu-title {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem; font-weight: 700;
-  color: var(--white); margin-bottom: 8px;
+  font-size: .95rem; font-weight: 700;
+  color: var(--white); margin-bottom: 6px;
 }
 .kurgu-desc {
-  font-size: .93rem; color: #a78bfa99;
-  line-height: 1.5; margin-bottom: 16px;
+  font-size: .82rem; color: #a78bfa99;
+  line-height: 1.4; margin-bottom: 12px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .kurgu-badge {
   display: inline-block;
@@ -3529,6 +3543,7 @@ html, body {
 <script>
 /* ── Navigasyon ── */
 var _activePage = null;
+var _historyNav = false;
 
 function showGame(id, name) {
   var page = document.getElementById('page-' + id);
@@ -3538,6 +3553,7 @@ function showGame(id, name) {
   page.classList.add('active');
   _activePage = page;
   document.title = name + ' — Related Scenarios';
+  if (!_historyNav) history.pushState({ page: id, name: name }, '', '#' + id);
   if (id === 'countdown') { cdInit(); }
   if (id === 'sidebar') { sidebarInit(); }
   if (id === 'kulakcik') {
@@ -3561,7 +3577,19 @@ function showLanding() {
   closeAnket();
   if (_psTimer) { clearTimeout(_psTimer); _psTimer = null; }
   closePsPopup();
+  if (!_historyNav) history.pushState(null, '', location.pathname);
 }
+
+/* ── Tarayıcı geri/ileri tuşu ── */
+window.addEventListener('popstate', function(e) {
+  _historyNav = true;
+  if (e.state && e.state.page) {
+    showGame(e.state.page, e.state.name);
+  } else {
+    showLanding();
+  }
+  _historyNav = false;
+});
 
 /* ── Countdown Banner Logic ── */
 var _cdInterval = null;
