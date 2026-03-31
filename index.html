@@ -119,7 +119,7 @@ html, body {
   mix-blend-mode: screen;
   transition: opacity 1.2s ease;
 }
-#hero-shader.ready { opacity: 1.0; }
+#hero-shader.ready { opacity: .45; }
 /* Ensure all landing children sit above the shader */
 #landing > *:not(#hero-shader) { position: relative; z-index: 1; }
 
@@ -365,11 +365,9 @@ body { overflow: hidden; }
   padding: 0 !important;
   height: 100vh !important;
   overflow: hidden !important;
-  background: transparent !important;
+  background: #07061a !important;
   position: relative !important;
 }
-/* Hide mesh gradient canvas — orbs handle the background */
-#hero-shader { display: none !important; }
 
 /* Mobile top bar */
 .db-topbar {
@@ -4142,76 +4140,21 @@ document.addEventListener('keydown', function(e) {
 
   var VS = 'attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.,1.); }';
 
-  /* ── paper-design MeshGradient faithful replica ── */
-  var FS = '\n' + [
+  /* ── Original wave/plasma shader (navy + screen blend) ── */
+  var FS = [
     'precision highp float;',
     'uniform vec2  u_res;',
     'uniform float u_time;',
-
-    // hash + value noise
-    'float h21(vec2 p){p=fract(p*vec2(234.34,435.345));p+=dot(p,p+34.23);return fract(p.x*p.y);}',
-    'float vn(vec2 p){',
-    '  vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);',
-    '  return mix(mix(h21(i),h21(i+vec2(1,0)),u.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),u.x),u.y);}',
-
-    // FBM – 5 octaves (paper-design uses multi-octave distortion)
-    'float fbm(vec2 p){',
-    '  float v=0.,a=.5;',
-    '  v+=a*vn(p);p=p*2.1+vec2(3.7,8.1);a*=.5;',
-    '  v+=a*vn(p);p=p*2.1+vec2(3.7,8.1);a*=.5;',
-    '  v+=a*vn(p);p=p*2.1+vec2(3.7,8.1);a*=.5;',
-    '  v+=a*vn(p);p=p*2.1+vec2(3.7,8.1);a*=.5;',
-    '  v+=a*vn(p);return v;}',
-
     'void main(){',
-    '  vec2 uv=gl_FragCoord.xy/u_res;',
-    '  float t=u_time;',   // increments 0.007/frame ≈ 0.42/s at 60fps
-
-    // offsetX=0.08
-    '  uv.x+=0.08;',
-
-    // distortion=0.8 via FBM warp (organic layered look)
-    '  float q0=fbm(uv*2.5+t*.08);',
-    '  float q1=fbm(uv*2.5+vec2(5.2,1.3)+t*.08);',
-    '  vec2 wuv=uv+(vec2(q0,q1)-.5)*.8*.35;',
-
-    // swirl=0.6
-    '  vec2 sc=wuv-.5;',
-    '  float sl=length(sc);',
-    '  float sa=.6*(1.-smoothstep(0.,.85,sl));',
-    '  float cs=cos(sa),ss=sin(sa);',
-    '  vec2 suv=vec2(cs*sc.x-ss*sc.y,ss*sc.x+cs*sc.y)+.5;',
-
-    // colors #72b9bb #b5d9d9 #ffd1bd #ffebe0 #8cc5b8 #dbf4a4
-    '  vec3 C0=vec3(.447,.725,.733);',
-    '  vec3 C1=vec3(.710,.851,.851);',
-    '  vec3 C2=vec3(1.,.820,.741);',
-    '  vec3 C3=vec3(1.,.922,.878);',
-    '  vec3 C4=vec3(.549,.773,.722);',
-    '  vec3 C5=vec3(.859,.957,.643);',
-
-    // static control points in UV space (animation = noise field moving)
-    '  vec2 b0=vec2(.20,.20);',
-    '  vec2 b1=vec2(.60,.15);',
-    '  vec2 b2=vec2(.90,.45);',
-    '  vec2 b3=vec2(.75,.82);',
-    '  vec2 b4=vec2(.25,.82);',
-    '  vec2 b5=vec2(.05,.50);',
-
-    // Shepard interpolation power=2 (softer, wider transitions)
-    '  float eps=1e-5,pw=2.;',
-    '  float w0=1./pow(max(distance(suv,b0),eps),pw);',
-    '  float w1=1./pow(max(distance(suv,b1),eps),pw);',
-    '  float w2=1./pow(max(distance(suv,b2),eps),pw);',
-    '  float w3=1./pow(max(distance(suv,b3),eps),pw);',
-    '  float w4=1./pow(max(distance(suv,b4),eps),pw);',
-    '  float w5=1./pow(max(distance(suv,b5),eps),pw);',
-    '  float ws=w0+w1+w2+w3+w4+w5;',
-    '  vec3 col=(C0*w0+C1*w1+C2*w2+C3*w3+C4*w4+C5*w5)/ws;',
-
-    // white veil bg-white/20
-    '  col=mix(col,vec3(1.),.20);',
-    '  gl_FragColor=vec4(col,1.);',
+    '  vec2 p = (gl_FragCoord.xy * 2.0 - u_res) / min(u_res.x, u_res.y);',
+    '  float d  = length(p) * 0.06;',
+    '  float rx = p.x * (1.0 + d);',
+    '  float gx = p.x;',
+    '  float bx = p.x * (1.0 - d);',
+    '  float r = 0.05 / abs(p.y + sin((rx + u_time) * 1.0) * 0.5);',
+    '  float g = 0.05 / abs(p.y + sin((gx + u_time) * 1.0) * 0.5);',
+    '  float b = 0.05 / abs(p.y + sin((bx + u_time) * 1.0) * 0.5);',
+    '  gl_FragColor = vec4(r, g, b, 1.0);',
     '}'
   ].join('\n');
 
@@ -4249,7 +4192,7 @@ document.addEventListener('keydown', function(e) {
   }
 
   function render() {
-    t += 0.007;
+    t += 0.008;
     gl.uniform1f(uTime, t);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     rafId = requestAnimationFrame(render);
