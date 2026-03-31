@@ -1784,6 +1784,161 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════
+   POPUP KAZI KAZAN
+═══════════════════════════════════════════ */
+#page-popupscratch {
+  padding: 0; align-items: stretch;
+}
+#page-popupscratch .game-topbar {
+  max-width: none; width: 100%; padding: 12px 24px;
+  background: #07061a; border-bottom: 1px solid #7c3aed22;
+  position: sticky; top: 0; z-index: 20;
+}
+.ps-demo-area {
+  flex: 1; position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #0e0b28 0%, #16103c 100%);
+  display: flex; flex-direction: column;
+}
+.ps-sim-bg {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 48px 24px; text-align: center;
+  filter: blur(2px) brightness(.55);
+  pointer-events: none; user-select: none;
+}
+.ps-sim-bg h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.4rem,4vw,2.4rem); font-weight: 900;
+  background: linear-gradient(135deg,#fff 30%,#c4b5fd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.ps-sim-bg p { color: #a78bfa55; margin-top: 12px; }
+
+/* overlay */
+.ps-overlay {
+  position: absolute; inset: 0; z-index: 10;
+  background: rgba(7,6,26,.78); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s ease;
+}
+.ps-overlay.visible { opacity: 1; pointer-events: all; }
+
+/* modal */
+.ps-modal {
+  background: #fff; border-radius: 20px;
+  width: 100%; max-width: 460px;
+  padding: 32px 28px 24px;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(124,58,237,.4);
+  transform: translateY(28px); opacity: 0;
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94), opacity .4s ease;
+}
+.ps-overlay.visible .ps-modal {
+  transform: translateY(0); opacity: 1;
+}
+.ps-close-btn {
+  position: absolute; top: 14px; right: 16px;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.3rem; color: #374151; line-height: 1;
+  padding: 4px 6px; border-radius: 6px;
+  transition: background .2s; font-weight: 700;
+}
+.ps-close-btn:hover { background: #f3f4f6; }
+
+.ps-modal-title {
+  font-family: 'Orbitron', sans-serif; font-size: 1.35rem; font-weight: 900;
+  color: #111827; text-align: center; line-height: 1.25; margin-bottom: 10px;
+}
+.ps-modal-desc {
+  text-align: center; font-family: 'Rajdhani', sans-serif;
+  font-size: .9rem; color: #6b7280; margin-bottom: 18px; line-height: 1.5;
+}
+
+/* scratch card inside popup */
+.ps-card-wrap {
+  position: relative; width: 100%; height: 180px;
+  border-radius: 14px; overflow: hidden;
+  background: linear-gradient(135deg,#0e0b28,#1e0a3c);
+  margin-bottom: 18px;
+}
+.ps-prize-display {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 6px;
+  pointer-events: none;
+}
+.ps-prize-icon { font-size: 2.2rem; }
+.ps-prize-name {
+  font-family: 'Orbitron', sans-serif; font-size: 1.1rem;
+  font-weight: 900; color: #c4b5fd;
+}
+.ps-prize-code {
+  font-family: 'Rajdhani', sans-serif; font-size: .9rem;
+  color: #a78bfa88;
+}
+#popup-scratch-canvas {
+  position: absolute; inset: 0; border-radius: 14px; cursor: crosshair;
+}
+
+/* progress */
+.ps-progress-bar {
+  width: 100%; height: 5px; background: #e5e7eb; border-radius: 5px;
+  margin-bottom: 14px; overflow: hidden;
+}
+.ps-progress-fill {
+  height: 100%; background: linear-gradient(90deg,#7c3aed,#ec4899);
+  border-radius: 5px; width: 0%; transition: width .1s linear;
+}
+
+/* result row */
+.ps-result {
+  display: none; align-items: center; justify-content: center; gap: 12px;
+  background: linear-gradient(135deg,#7c3aed11,#ec489911);
+  border: 1px solid #7c3aed33; border-radius: 12px;
+  padding: 12px 16px; margin-bottom: 14px;
+}
+.ps-result.show { display: flex; }
+.ps-res-icon { font-size: 1.6rem; }
+.ps-res-info { display: flex; flex-direction: column; }
+.ps-res-code {
+  font-family: 'Orbitron', sans-serif; font-size: 1rem;
+  font-weight: 900; color: #7c3aed; letter-spacing: 1px;
+}
+.ps-res-desc { font-family: 'Rajdhani', sans-serif; font-size: .85rem; color: #6b7280; }
+
+/* copy btn */
+.ps-copy-btn {
+  margin-left: auto; padding: 7px 14px;
+  background: linear-gradient(135deg,#7c3aed,#ec4899); color: #fff;
+  border: none; border-radius: 8px; cursor: pointer;
+  font-family: 'Rajdhani', sans-serif; font-size: .85rem; font-weight: 700;
+  white-space: nowrap; transition: opacity .2s;
+}
+.ps-copy-btn:hover { opacity: .85; }
+
+/* reset & footer */
+.ps-reset-btn {
+  display: block; width: 100%; padding: 12px;
+  background: linear-gradient(135deg,#7c3aed,#ec4899); color: #fff;
+  border: none; border-radius: 12px; cursor: pointer;
+  font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+  margin-bottom: 12px; transition: opacity .2s;
+}
+.ps-reset-btn:hover { opacity: .88; }
+.ps-footer-note {
+  font-family: 'Rajdhani', sans-serif; font-size: .78rem;
+  color: #9ca3af; text-align: center; line-height: 1.5;
+}
+
+#page-popupscratch .demo-chips {
+  max-width: none; padding: 14px 24px;
+  background: #07061a; border-top: 1px solid #7c3aed22;
+  margin-top: 0; width: 100%;
+}
+
+/* ═══════════════════════════════════════════
    ANKET (SURVEY POPUP)
 ═══════════════════════════════════════════ */
 #page-anket {
@@ -2441,7 +2596,17 @@ html, body {
         <div class="kurgu-badge">Farkındalık Artışı</div>
       </div>
 
-      <!-- 7. Anket -->
+      <!-- 7. Pop-up Kazı Kazan -->
+      <div class="kurgu-card" onclick="showGame('popupscratch','Pop-up Kazı Kazan')">
+        <div class="shimmer"></div>
+        <span class="kurgu-icon">🪙</span>
+        <span class="kurgu-tag">YENİ</span>
+        <div class="kurgu-title">Pop-up Kazı Kazan</div>
+        <div class="kurgu-desc">Sayfa açılınca 1 saniye sonra kazı-kazan oyunu pop-up olarak ekrana gelir. Kullanıcı kazır, ödülü öğrenir.</div>
+        <div class="kurgu-badge">Dönüşüm Artışı</div>
+      </div>
+
+      <!-- 8. Anket -->
       <div class="kurgu-card" onclick="showGame('anket','Anket')">
         <div class="shimmer"></div>
         <span class="kurgu-icon">📋</span>
@@ -2922,6 +3087,70 @@ html, body {
 </div>
 
 
+<!-- Pop-up Kazı Kazan -->
+<div class="game-page" id="page-popupscratch">
+  <div class="game-topbar" style="max-width:none;width:100%;padding:12px 24px;background:#07061a;border-bottom:1px solid #7c3aed22;position:sticky;top:0;z-index:20;">
+    <button class="back-btn" onclick="showLanding()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Geri
+    </button>
+    <span class="topbar-title">Pop-up Kazı Kazan 🪙</span>
+    <div style="width:80px"></div>
+  </div>
+
+  <div class="ps-demo-area">
+    <!-- blurred bg -->
+    <div class="ps-sim-bg">
+      <h2>BÜYÜME SENARYOLARI</h2>
+      <p>Related Scenarios — Oyunlar & Kurgular</p>
+    </div>
+
+    <!-- popup overlay -->
+    <div class="ps-overlay" id="ps-overlay">
+      <div class="ps-modal">
+        <button class="ps-close-btn" onclick="closePsPopup()">✕</button>
+
+        <div class="ps-modal-title">Related Scenarios'a özel<br>kazı-kazan</div>
+        <div class="ps-modal-desc">Kazıdığınız alanda özel indirim kodunuz yer alıyor.<br>Şansınızı deneyin!</div>
+
+        <!-- scratch card -->
+        <div class="ps-card-wrap">
+          <div class="ps-prize-display">
+            <div class="ps-prize-icon" id="ps-icon">🎉</div>
+            <div class="ps-prize-name" id="ps-name">???</div>
+            <div class="ps-prize-code" id="ps-code"></div>
+          </div>
+          <canvas id="popup-scratch-canvas" width="404" height="180"></canvas>
+        </div>
+
+        <div class="ps-progress-bar">
+          <div class="ps-progress-fill" id="ps-progress"></div>
+        </div>
+
+        <!-- result -->
+        <div class="ps-result" id="ps-result">
+          <div class="ps-res-icon" id="ps-res-icon"></div>
+          <div class="ps-res-info">
+            <div class="ps-res-code" id="ps-res-code"></div>
+            <div class="ps-res-desc" id="ps-res-desc"></div>
+          </div>
+          <button class="ps-copy-btn" onclick="doCopy(document.getElementById('ps-res-code').textContent, this)">Kopyala</button>
+        </div>
+
+        <button class="ps-reset-btn" onclick="psReset()">Tekrar Oyna</button>
+        <div class="ps-footer-note">Kampanya sınırlı süre için geçerlidir. Kupon tek kullanımlıktır, nakde çevrilemez.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-chips">
+    <div class="demo-chip"><strong>1sn Gecikme</strong><span>Sayfa açılınca çıkar</span></div>
+    <div class="demo-chip"><strong>Kazı & Kazan</strong><span>%70 kazınınca ödül</span></div>
+    <div class="demo-chip"><strong>✕ Kapat</strong><span>Kullanıcı kapatabilir</span></div>
+  </div>
+</div>
+
+
 <!-- Anket -->
 <div class="game-page" id="page-anket">
   <div class="game-topbar" style="max-width:none;width:100%;padding:12px 24px;background:#07061a;border-bottom:1px solid #7c3aed22;position:sticky;top:0;z-index:20;">
@@ -3330,6 +3559,8 @@ function showLanding() {
   tabCdStop();
   if (_anketTimer) { clearTimeout(_anketTimer); _anketTimer = null; }
   closeAnket();
+  if (_psTimer) { clearTimeout(_psTimer); _psTimer = null; }
+  closePsPopup();
 }
 
 /* ── Countdown Banner Logic ── */
@@ -3388,6 +3619,142 @@ function sidebarInit() {
     if (panel) panel.classList.add('open');
     if (overlay) overlay.classList.add('visible');
   }, 1500);
+}
+
+/* ── Pop-up Kazı Kazan ── */
+var _psW = 404, _psH = 180;
+var _psDone = false, _psPrize = null, _psLX = null, _psLY = null, _psCtx = null;
+var _psScraping = false;
+var _psPrizes = [
+  { icon:'🎉', name:'%20 İndirim',    code:'WIN20',    desc:'Tüm ürünlerde geçerli' },
+  { icon:'🚚', name:'Ücretsiz Kargo', code:'FREESHIP', desc:'Minimum sepet şartı yok' },
+  { icon:'⚡', name:'%10 İndirim',    code:'FLASH10',  desc:'Anlık indirim kuponu'   },
+  { icon:'🏆', name:'%30 İndirim',    code:'BIG30',    desc:'En büyük indirim fırsatı' }
+];
+var _psTimer = null;
+
+function openPsPopup() {
+  var o = document.getElementById('ps-overlay');
+  if (o) o.classList.add('visible');
+}
+function closePsPopup() {
+  var o = document.getElementById('ps-overlay');
+  if (o) o.classList.remove('visible');
+}
+function initPsPopup() {
+  closePsPopup();
+  psInit();
+  if (_psTimer) clearTimeout(_psTimer);
+  _psTimer = setTimeout(openPsPopup, 1000);
+}
+
+function psInit() {
+  var canvas = document.getElementById('popup-scratch-canvas');
+  if (!canvas) return;
+  canvas.removeEventListener('mousedown',  _psDown);
+  canvas.removeEventListener('mousemove',  _psMove);
+  canvas.removeEventListener('mouseup',    _psUp);
+  canvas.removeEventListener('touchstart', _psTDown);
+  canvas.removeEventListener('touchmove',  _psTMove);
+  canvas.removeEventListener('touchend',   _psUp);
+
+  _psDone = false; _psLX = null; _psLY = null; _psScraping = false;
+  _psPrize = _psPrizes[Math.floor(Math.random() * _psPrizes.length)];
+
+  document.getElementById('ps-icon').textContent = _psPrize.icon;
+  document.getElementById('ps-name').textContent = _psPrize.name;
+  document.getElementById('ps-code').textContent = '';
+  document.getElementById('ps-progress').style.width = '0%';
+  document.getElementById('ps-result').classList.remove('show');
+
+  /* resize canvas to actual rendered width */
+  var rect = canvas.parentElement.getBoundingClientRect();
+  if (rect.width > 0) { _psW = rect.width; canvas.width = _psW; }
+
+  _psCtx = canvas.getContext('2d');
+  _psCtx.clearRect(0, 0, _psW, _psH);
+
+  var grd = _psCtx.createLinearGradient(0, 0, _psW, _psH);
+  grd.addColorStop(0,   '#4c1d95');
+  grd.addColorStop(0.5, '#7c3aed');
+  grd.addColorStop(1,   '#6d28d9');
+  _psCtx.fillStyle = grd;
+  _psCtx.fillRect(0, 0, _psW, _psH);
+
+  _psCtx.globalAlpha = .08;
+  for (var i = 0; i < 60; i++) {
+    _psCtx.fillStyle = '#fff';
+    _psCtx.beginPath();
+    _psCtx.arc(Math.random()*_psW, Math.random()*_psH, Math.random()*3+1, 0, Math.PI*2);
+    _psCtx.fill();
+  }
+  _psCtx.globalAlpha = 1;
+  _psCtx.fillStyle = 'rgba(255,255,255,.55)';
+  _psCtx.font = 'bold 17px Rajdhani, sans-serif';
+  _psCtx.textAlign = 'center';
+  _psCtx.fillText('🪙  KAZIMAK İÇİN SÜRÜKLE', _psW/2, _psH/2 - 10);
+  _psCtx.font = '13px Rajdhani, sans-serif';
+  _psCtx.fillStyle = 'rgba(255,255,255,.3)';
+  _psCtx.fillText('Ödülünü keşfet!', _psW/2, _psH/2 + 16);
+
+  canvas.addEventListener('mousedown',  _psDown);
+  canvas.addEventListener('mousemove',  _psMove);
+  canvas.addEventListener('mouseup',    _psUp);
+  canvas.addEventListener('touchstart', _psTDown, {passive:true});
+  canvas.addEventListener('touchmove',  _psTMove, {passive:true});
+  canvas.addEventListener('touchend',   _psUp);
+}
+
+function psReset() { psInit(); }
+
+function _psDown(e)  { _psScraping = true; _psLX = null; _psLY = null; _psScratch(e); }
+function _psMove(e)  { if (_psScraping) _psScratch(e); }
+function _psUp()     { _psScraping = false; _psLX = null; _psLY = null; }
+function _psTDown(e) { _psScraping = true; _psLX = null; _psLY = null; _psScratchT(e); }
+function _psTMove(e) { if (_psScraping) _psScratchT(e); }
+
+function _psScratchT(e) {
+  var r = e.target.getBoundingClientRect();
+  var t = e.touches[0];
+  _psScratchXY(t.clientX - r.left, t.clientY - r.top);
+}
+function _psScratch(e) {
+  var r = e.target.getBoundingClientRect();
+  _psScratchXY(e.clientX - r.left, e.clientY - r.top);
+}
+function _psScratchXY(x, y) {
+  if (_psDone) return;
+  _psCtx.globalCompositeOperation = 'destination-out';
+  _psCtx.lineWidth = 72; _psCtx.lineCap = 'round'; _psCtx.lineJoin = 'round';
+  if (_psLX !== null) {
+    _psCtx.beginPath(); _psCtx.moveTo(_psLX, _psLY); _psCtx.lineTo(x, y); _psCtx.stroke();
+  }
+  _psCtx.beginPath();
+  var g = _psCtx.createRadialGradient(x, y, 0, x, y, 36);
+  g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  _psCtx.fillStyle = g; _psCtx.arc(x, y, 36, 0, Math.PI*2); _psCtx.fill();
+  _psLX = x; _psLY = y;
+  _psCtx.globalCompositeOperation = 'source-over';
+  _psCheckProgress();
+}
+function _psCheckProgress() {
+  var data = _psCtx.getImageData(0, 0, _psW, _psH).data;
+  var total = 0, transparent = 0;
+  for (var i = 3; i < data.length; i += 32) { total++; if (data[i] < 128) transparent++; }
+  var pct = transparent / total;
+  document.getElementById('ps-progress').style.width = Math.min(pct*100,100) + '%';
+  if (pct > 0.70 && !_psDone) { _psDone = true; _psReveal(); }
+}
+function _psReveal() {
+  _psCtx.clearRect(0, 0, _psW, _psH);
+  document.getElementById('ps-progress').style.width = '100%';
+  var code = sRnd(_psPrize.code);
+  document.getElementById('ps-code').textContent = code;
+  document.getElementById('ps-res-icon').textContent = _psPrize.icon;
+  document.getElementById('ps-res-code').textContent = code;
+  document.getElementById('ps-res-desc').textContent = _psPrize.desc;
+  document.getElementById('ps-result').classList.add('show');
+  confetti();
 }
 
 /* ── Anket (Survey Popup) ── */
@@ -3681,7 +4048,8 @@ showGame = function(id, name) {
     if (id === 'claw')       C_init();
     if (id === 'squarespin') sqInit();
     if (id === 'match')      matchInit();
-    if (id === 'anket')      initAnket();
+    if (id === 'anket')        initAnket();
+    if (id === 'popupscratch') initPsPopup();
   }, 50);
 };
 </script>
