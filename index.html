@@ -91,7 +91,7 @@ html, body {
    BACKGROUND ORBS
 ═══════════════════════════════════════════ */
 #bg-orbs {
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
   overflow: hidden;
 }
 .orb {
@@ -111,17 +111,8 @@ html, body {
   padding: 0 16px 60px;
   overflow: hidden;
 }
-#hero-shader {
-  position: absolute;
-  inset: 0; width: 100%; height: 100%;
-  z-index: 0; pointer-events: none;
-  opacity: 0;
-  mix-blend-mode: screen;
-  transition: opacity 1.2s ease;
-}
-#hero-shader.ready { opacity: .45; }
-/* Ensure all landing children sit above the shader */
-#landing > *:not(#hero-shader) { position: relative; z-index: 1; }
+/* landing children above background */
+#landing > * { position: relative; z-index: 1; }
 
 /* ── HEADER ── */
 .site-header {
@@ -2583,17 +2574,17 @@ body { overflow: hidden; }
 </head>
 <body>
 
-<!-- ═══ BACKGROUND ═══ -->
-<div id="bg-orbs">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-</div>
-
 <!-- ═══════════════════════════════════════════
      LANDING PAGE
 ═══════════════════════════════════════════ -->
 <div id="landing">
+
+  <!-- Background orbs -->
+  <div id="bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
 
   <!-- Mobile top bar -->
   <div class="db-topbar" id="db-topbar">
@@ -2605,9 +2596,6 @@ body { overflow: hidden; }
     <span class="db-topbar-logo">RELATED <span style="opacity:.5;font-size:.7em">SCENARIOS</span></span>
     <div style="width:36px"></div>
   </div>
-
-  <!-- WebGL Shader Background -->
-  <canvas id="hero-shader"></canvas>
 
   <!-- Mobile overlay -->
   <div class="db-mob-overlay" id="db-mob-overlay" onclick="dbCloseSidebar()"></div>
@@ -4130,91 +4118,6 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && _activePage) showLanding();
 });
 
-/* ── Mesh Gradient Shader (paper-design style) ── */
-(function() {
-  var canvas = document.getElementById('hero-shader');
-  if (!canvas) return;
-
-  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-  if (!gl) return;
-
-  var VS = 'attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.,1.); }';
-
-  /* ── Original wave/plasma shader (navy + screen blend) ── */
-  var FS = [
-    'precision highp float;',
-    'uniform vec2  u_res;',
-    'uniform float u_time;',
-    'void main(){',
-    '  vec2 p = (gl_FragCoord.xy * 2.0 - u_res) / min(u_res.x, u_res.y);',
-    '  float d  = length(p) * 0.06;',
-    '  float rx = p.x * (1.0 + d);',
-    '  float gx = p.x;',
-    '  float bx = p.x * (1.0 - d);',
-    '  float r = 0.05 / abs(p.y + sin((rx + u_time) * 1.0) * 0.5);',
-    '  float g = 0.05 / abs(p.y + sin((gx + u_time) * 1.0) * 0.5);',
-    '  float b = 0.05 / abs(p.y + sin((bx + u_time) * 1.0) * 0.5);',
-    '  gl_FragColor = vec4(r, g, b, 1.0);',
-    '}'
-  ].join('\n');
-
-  function mkShader(type, src) {
-    var s = gl.createShader(type);
-    gl.shaderSource(s, src); gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
-    return s;
-  }
-
-  var prog = gl.createProgram();
-  gl.attachShader(prog, mkShader(gl.VERTEX_SHADER,   VS));
-  gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, FS));
-  gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
-  gl.useProgram(prog);
-
-  var buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-  var aPos = gl.getAttribLocation(prog, 'a_pos');
-  gl.enableVertexAttribArray(aPos);
-  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-  var uRes  = gl.getUniformLocation(prog, 'u_res');
-  var uTime = gl.getUniformLocation(prog, 'u_time');
-  var t = 0, rafId;
-
-  function resize() {
-    var w = canvas.offsetWidth  || window.innerWidth;
-    var h = canvas.offsetHeight || window.innerHeight;
-    canvas.width = w; canvas.height = h;
-    gl.viewport(0, 0, w, h);
-    gl.uniform2f(uRes, w, h);
-  }
-
-  function render() {
-    t += 0.008;
-    gl.uniform1f(uTime, t);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
-    rafId = requestAnimationFrame(render);
-  }
-
-  resize();
-  render();
-  setTimeout(function(){ canvas.classList.add('ready'); }, 80);
-  window.addEventListener('resize', resize);
-
-  /* Pause when a game page is open, resume on landing */
-  var _origSG2 = showGame;
-  showGame = function(id, name) {
-    _origSG2(id, name);
-    cancelAnimationFrame(rafId);
-  };
-  var _origSL2 = showLanding;
-  showLanding = function() {
-    _origSL2();
-    render();
-  };
-})();
 
 /* ── showGame hook: init oyunları ── */
 var _origShowGame = showGame;
