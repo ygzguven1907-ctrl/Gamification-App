@@ -3739,14 +3739,8 @@ var _cdInterval = null;
 
 function cdInit() {
   var KEY = 'ygz_cd_start';
-  var stored = localStorage.getItem(KEY);
-  var start;
-  if (stored) {
-    start = parseInt(stored, 10);
-  } else {
-    start = Date.now();
-    localStorage.setItem(KEY, String(start));
-  }
+  var start = Date.now();
+  localStorage.setItem(KEY, String(start));
   var DURATION = 2 * 60 * 60 * 1000;
 
   function pad(n) { return String(Math.floor(n)).padStart(2, '0'); }
@@ -3816,7 +3810,7 @@ function initPsPopup() {
   closePsPopup();
   psInit();
   if (_psTimer) clearTimeout(_psTimer);
-  _psTimer = setTimeout(openPsPopup, 1000);
+  _psTimer = setTimeout(openPsPopup, 300);
 }
 
 function psInit() {
@@ -3954,7 +3948,7 @@ function initAnket() {
   /* close any previously open overlay instantly before re-opening */
   closeAnket();
   if (_anketTimer) clearTimeout(_anketTimer);
-  _anketTimer = setTimeout(openAnket, 1000);
+  _anketTimer = setTimeout(openAnket, 300);
 }
 
 function renderAnketStep() {
@@ -4020,9 +4014,8 @@ function toggleTab() {
 
 function tabCdInit() {
   var KEY = 'ygz_tab_start';
-  var stored = localStorage.getItem(KEY);
-  var start = stored ? parseInt(stored, 10) : Date.now();
-  if (!stored) localStorage.setItem(KEY, String(start));
+  var start = Date.now();
+  localStorage.setItem(KEY, String(start));
   var DURATION = 2 * 60 * 60 * 1000;
   function pad(n) { return String(Math.floor(n)).padStart(2,'0'); }
   function update() {
