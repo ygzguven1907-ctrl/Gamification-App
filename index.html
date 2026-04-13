@@ -114,6 +114,16 @@ html, body {
 /* landing children above background */
 #landing > * { position: relative; z-index: 1; }
 
+#hero-shader {
+  position: absolute;
+  inset: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 1.2s ease;
+}
+#hero-shader.ready { opacity: .45; }
+
 /* ── HEADER ── */
 .site-header {
   width: 100%; max-width: 1100px;
@@ -586,6 +596,613 @@ body { overflow: hidden; }
   .db-welcome-title { font-size: 1.5rem; }
 }
 
+/* ── Top-right action bar ── */
+#top-right-bar {
+  position: absolute; top: 16px; right: 24px; z-index: 10;
+  display: none; align-items: center; gap: 8px;
+}
+#top-right-bar.visible { display: flex; }
+
+/* TR/EN Lang Toggle */
+.db-lang-toggle {
+  display: flex; gap: 4px;
+  background: rgba(7,6,26,.7); border: 1px solid #7c3aed33;
+  border-radius: 20px; padding: 4px;
+  backdrop-filter: blur(8px);
+}
+.db-lang-btn {
+  background: none; border: none; cursor: pointer;
+  font-family: 'Rajdhani', sans-serif; font-size: .8rem; font-weight: 700;
+  letter-spacing: 1px; color: #7c3aed88;
+  padding: 4px 12px; border-radius: 16px;
+  transition: background .15s, color .15s;
+}
+.db-lang-btn.active {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff;
+}
+@media (max-width: 768px) {
+  #top-right-bar { top: 8px; right: 10px; gap: 5px; }
+}
+
+/* ── Web Story circles in sim header ── */
+.sim-story-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.sim-story-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem; cursor: pointer;
+  box-shadow: 0 0 0 2px #7c3aed88;
+  transition: transform .18s, box-shadow .18s;
+  flex-shrink: 0;
+}
+.sim-story-circle:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 2px #ec489988, 0 4px 16px #7c3aed55;
+}
+
+/* ── WEB STORY ── */
+.ws-sim-wrap {
+  background: #0e0b28;
+  min-height: calc(100vh - 57px);
+  display: flex; flex-direction: column;
+}
+.ws-sim-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 32px;
+  background: #07061a;
+  border-bottom: 1px solid #7c3aed22;
+}
+.ws-sim-logo {
+  font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 900;
+  background: linear-gradient(90deg, #a78bfa, #ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: 2px;
+}
+.ws-sim-cta {
+  background: linear-gradient(135deg, #7c3aed33, #ec489922);
+  border: 1px solid #7c3aed55; border-radius: 30px;
+  padding: 8px 18px;
+  font-family: 'Rajdhani', sans-serif; font-size: .88rem; font-weight: 700;
+  color: #a78bfa;
+}
+.ws-story-section {
+  padding: 24px 32px 20px;
+  border-bottom: 1px solid #7c3aed1a;
+  background: #07061a;
+}
+.ws-story-title {
+  font-family: 'Rajdhani', sans-serif; font-size: .78rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #7c3aed88; margin-bottom: 16px;
+}
+.ws-sim-hero {
+  padding: 48px 32px 32px;
+  text-align: center;
+}
+.ws-sim-hero h2 {
+  font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem,4vw,3rem); font-weight: 900;
+  background: linear-gradient(135deg,#fff 0%,#a78bfa 50%,#ec4899 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1.1; margin-bottom: 16px;
+}
+.ws-sim-hero p {
+  font-family: 'Rajdhani', sans-serif; color: #a78bfa88; font-size: 1rem;
+  max-width: 480px; margin: 0 auto 24px; line-height: 1.6;
+}
+.ws-sim-cards {
+  display: flex; gap: 16px; flex-wrap: wrap; padding: 0 32px 40px;
+  justify-content: center;
+}
+.ws-sim-card {
+  background: linear-gradient(135deg,#ffffff06,#7c3aed0a);
+  border: 1px solid #7c3aed22; border-radius: 14px;
+  padding: 18px 24px; font-family: 'Rajdhani', sans-serif;
+  font-size: .95rem; font-weight: 600; color: #c4b5fd;
+  min-width: 160px; text-align: center;
+}
+
+.ws-circles {
+  display: flex; gap: 24px; flex-wrap: wrap; justify-content: center;
+}
+.ws-circle {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  cursor: pointer;
+}
+.ws-circle-inner {
+  width: 100px; height: 100px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 3px solid transparent;
+  box-shadow: 0 0 0 3px #7c3aed88;
+  transition: transform .2s, box-shadow .2s;
+}
+.ws-circle:hover .ws-circle-inner {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 3px #ec489988, 0 8px 32px #7c3aed44;
+}
+.ws-circle-label {
+  font-family: 'Rajdhani', sans-serif; font-size: .85rem; font-weight: 700;
+  color: #c4b5fd; letter-spacing: .5px;
+}
+#ws-cta:hover { background: rgba(255,255,255,.28) !important; }
+
+/* ══════════════════════════════════════
+   AR-GE MERKEZİ
+══════════════════════════════════════ */
+.arge-btn {
+  display: none; align-items: center; gap: 7px;
+  background: linear-gradient(135deg,#7c3aed22,#ec489911);
+  border: 1px solid #7c3aed44; border-radius: 20px;
+  padding: 7px 16px; cursor: pointer;
+  font-family: 'Rajdhani',sans-serif; font-size:.82rem; font-weight:700;
+  color: #a78bfa; letter-spacing:.5px;
+  transition: background .2s, border-color .2s;
+}
+.arge-btn:hover { background: linear-gradient(135deg,#7c3aed33,#ec489922); border-color:#7c3aed77; }
+.arge-btn.visible { display: flex; }
+
+/* ── Brand Search ── */
+.brand-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.brand-search-input {
+  background: rgba(255,255,255,.06);
+  border: 1px solid #7c3aed44;
+  border-radius: 20px;
+  color: #f1f0ff;
+  padding: 6px 28px 6px 12px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: .82rem; font-weight: 600;
+  width: 148px; outline: none;
+  transition: border .2s, width .2s, background .2s;
+}
+.brand-search-input::placeholder { color: #7c3aed88; }
+.brand-search-input:focus {
+  border-color: #7c3aed;
+  background: rgba(124,58,237,.08);
+  width: 188px;
+}
+.brand-search-icon-btn {
+  position: absolute; right: 9px; top: 50%;
+  transform: translateY(-50%);
+  color: #7c3aed88; font-size: .82rem; pointer-events: none;
+}
+.brand-search-dd {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  min-width: 210px;
+  background: #13102e;
+  border: 1px solid #7c3aed44;
+  border-radius: 12px; padding: 6px;
+  display: none; z-index: 999;
+  box-shadow: 0 8px 32px rgba(0,0,0,.6);
+}
+.brand-search-dd.open { display: block; }
+.brand-dd-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: .9rem; font-weight: 600; color: #c4b5fd;
+  transition: background .15s;
+}
+.brand-dd-item:hover { background: #7c3aed22; }
+.brand-dd-emoji { font-size: 1rem; width: 24px; text-align: center; }
+
+/* ── Under Armour Brand Page ── */
+#page-brand-ua {
+  background: #07061a;
+  overflow: hidden !important;
+  padding: 0 !important;
+  align-items: stretch !important;
+  flex-direction: row !important;
+}
+/* Left sidebar */
+.bua-sidebar {
+  width: 260px; flex-shrink: 0;
+  background: #07061a;
+  border-right: 1px solid #7c3aed22;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: #7c3aed33 transparent;
+}
+.bua-topbar {
+  width: 100%; padding: 12px 16px;
+  background: #07061a; border-bottom: 1px solid #7c3aed22;
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.bua-sidebar-brand {
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid #7c3aed11;
+  flex-shrink: 0;
+}
+.bua-sidebar-brand-name {
+  font-family: 'Orbitron', sans-serif; font-size: .75rem; font-weight: 900;
+  color: #fff; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.bua-sidebar-brand-tag {
+  font-size: .68rem; color: #7c3aed99; letter-spacing: 2px; text-transform: uppercase;
+}
+.bua-sidebar-section {
+  padding: 12px 0; border-bottom: 1px solid #7c3aed11;
+  flex-shrink: 0;
+}
+.bua-sidebar-section-label {
+  font-size: .6rem; font-weight: 700; letter-spacing: 3px;
+  color: #7c3aed55; text-transform: uppercase;
+  padding: 0 16px; margin-bottom: 6px;
+}
+.bua-sc-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 16px; cursor: pointer;
+  transition: background .15s; position: relative;
+}
+.bua-sc-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: #e31837;
+  transform: scaleX(0); transform-origin: left; transition: transform .2s;
+}
+.bua-sc-item:hover { background: rgba(255,255,255,.03); }
+.bua-sc-item:hover::before, .bua-sc-item.active::before { transform: scaleX(1); }
+.bua-sc-item.active { background: rgba(227,24,55,.07); }
+.bua-sc-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: #111; border: 1px solid #222;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+  transition: background .15s;
+}
+.bua-sc-item:hover .bua-sc-icon,
+.bua-sc-item.active .bua-sc-icon { background: rgba(227,24,55,.15); border-color: rgba(227,24,55,.3); }
+.bua-sc-info { flex: 1; min-width: 0; }
+.bua-sc-name {
+  font-family: 'Rajdhani', sans-serif; font-size: .85rem; font-weight: 700;
+  color: #ddd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.bua-sc-item.active .bua-sc-name { color: #ff3355; }
+.bua-sc-desc { font-size: .68rem; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bua-sc-badge {
+  font-size: .58rem; font-weight: 700; letter-spacing: 1px;
+  padding: 2px 6px; border-radius: 3px; flex-shrink: 0;
+}
+.bua-sc-badge.hot  { background: rgba(227,24,55,.2); color: #ff3355; border: 1px solid rgba(227,24,55,.3); }
+.bua-sc-badge.new  { background: rgba(0,180,100,.12); color: #00c46a; border: 1px solid rgba(0,180,100,.25); }
+.bua-sidebar-footer {
+  margin-top: auto; padding: 14px 16px;
+  border-top: 1px solid #7c3aed11; flex-shrink: 0;
+}
+.bua-sidebar-footer-label { font-size: .6rem; color: #333; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+.bua-sidebar-footer-logo {
+  font-family: 'Orbitron', sans-serif; font-size: .78rem; font-weight: 900;
+  background: linear-gradient(90deg, #a78bfa, #ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* Right: screenshot area */
+.bua-sim {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+/* Actual screenshot as background */
+.bua-site-bg {
+  position: absolute; inset: 0;
+  background: url('Ekran görüntüsü 2026-04-13 102418.png') center top / cover no-repeat;
+}
+/* Legacy mock elements — hidden now */
+.bua-site-promo-bar,
+.bua-site-nav,
+.bua-site-logo,
+.bua-site-nav-links,
+.bua-site-nav-icons,
+.bua-site-hero,
+.bua-hero-left,
+.bua-hero-right,
+.bua-hero-center-card,
+.bua-hero-center-logo,
+.bua-hero-center-text1,
+.bua-hero-center-text2 { display: none !important; }
+
+/* Countdown banner scenario */
+.bua-cd-banner {
+  position: absolute; top: 0; left: 0; right: 0;
+  background: #e31837; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 10px 40px 10px 20px;
+  z-index: 20; font-family: Arial, sans-serif; flex-wrap: wrap;
+}
+.bua-cd-text { font-size: .8rem; font-weight: 700; letter-spacing: .3px; white-space: nowrap; }
+.bua-cd-timer { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.bua-cd-unit {
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba(0,0,0,.25); border-radius: 4px;
+  padding: 3px 8px; min-width: 36px;
+}
+.bua-cd-unit span { font-size: 1rem; font-weight: 900; line-height: 1.2; }
+.bua-cd-unit small { font-size: .56rem; letter-spacing: 1px; opacity: .7; }
+.bua-cd-sep { font-size: 1.1rem; font-weight: 900; opacity: .6; }
+.bua-cd-close {
+  position: absolute; right: 12px;
+  background: none; border: none; color: #fff;
+  font-size: 1rem; cursor: pointer; opacity: .65; transition: opacity .2s;
+}
+.bua-cd-close:hover { opacity: 1; }
+
+/* Sliding banner scenario */
+.bua-sb-wrap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,.88);
+  z-index: 20; display: flex; align-items: center; overflow: hidden;
+}
+.bua-sb-label {
+  background: #e31837; color: #fff;
+  font-family: Arial, sans-serif; font-size: .7rem; font-weight: 700;
+  padding: 10px 14px; white-space: nowrap; letter-spacing: 1px; flex-shrink: 0;
+}
+.bua-sb-track {
+  display: flex; gap: 48px;
+  animation: buaSbScroll 20s linear infinite;
+  padding: 10px 0; white-space: nowrap; flex-shrink: 0;
+}
+.bua-sb-item { color: #fff; font-size: .78rem; font-family: Arial, sans-serif; opacity: .9; }
+.bua-sb-item strong { color: #f5c518; }
+@keyframes buaSbScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.bua-sb-close {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: #fff;
+  cursor: pointer; font-size: 1rem; opacity: .5; transition: opacity .2s;
+}
+.bua-sb-close:hover { opacity: 1; }
+
+/* Pop-up Kazı Kazan scenario */
+.bua-popup-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.52);
+  backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 25;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.bua-popup-overlay.open { opacity: 1; pointer-events: auto; }
+.bua-popup {
+  background: #fff; border-radius: 14px;
+  padding: 24px 22px 18px; width: 360px; max-width: 92%;
+  position: relative; box-shadow: 0 20px 70px rgba(0,0,0,.5);
+  font-family: Arial, sans-serif;
+}
+.bua-popup-close {
+  position: absolute; top: 10px; right: 12px;
+  background: none; border: none; font-size: 1.3rem;
+  cursor: pointer; color: #555; line-height: 1; transition: color .15s;
+}
+.bua-popup-close:hover { color: #000; }
+.bua-popup-logo { text-align: center; font-weight: 900; letter-spacing: 2px; font-size: .88rem; color: #000; margin-bottom: 5px; }
+.bua-popup-title { text-align: center; font-size: .92rem; font-weight: 700; color: #222; margin-bottom: 2px; }
+.bua-popup-desc { text-align: center; font-size: .75rem; color: #777; margin-bottom: 14px; }
+.bua-card-wrap { position: relative; border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+.bua-prize-display {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: #f8f8f8;
+}
+.bua-prize-icon { font-size: 1.8rem; }
+.bua-prize-name { font-size: .93rem; font-weight: 800; color: #e31837; margin-top: 4px; }
+.bua-prize-code { font-size: .73rem; color: #999; margin-top: 2px; letter-spacing: 2px; }
+.bua-scratch-canvas { display: block; position: relative; z-index: 2; cursor: crosshair; }
+.bua-progress-bar { height: 3px; background: #eee; border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+.bua-progress-fill { height: 100%; background: #e31837; width: 0%; border-radius: 2px; transition: width .1s; }
+.bua-result {
+  background: #fff3f3; border-radius: 8px; padding: 10px 14px;
+  display: none; align-items: center; gap: 10px;
+  border: 1px solid #e3183733; margin-bottom: 8px;
+}
+.bua-result.show { display: flex; }
+.bua-res-icon { font-size: 1.4rem; }
+.bua-res-info { flex: 1; }
+.bua-res-code { font-size: 1rem; font-weight: 800; color: #e31837; letter-spacing: 2px; }
+.bua-res-desc { font-size: .73rem; color: #888; }
+.bua-copy-btn {
+  background: #e31837; color: #fff; border: none;
+  border-radius: 6px; padding: 6px 12px; font-size: .78rem; font-weight: 700; cursor: pointer;
+}
+.bua-reset-btn {
+  width: 100%; background: none; border: 1px solid #e31837;
+  color: #e31837; border-radius: 8px; padding: 7px;
+  font-size: .82rem; font-weight: 700; cursor: pointer; transition: background .2s;
+}
+.bua-reset-btn:hover { background: #e3183710; }
+
+#page-arge {
+  background: #07061a;
+}
+.arge-topbar {
+  width:100%; padding:12px 24px;
+  background:#07061a; border-bottom:1px solid #7c3aed22;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:20;
+}
+.arge-body {
+  display:flex; height:calc(100vh - 57px); overflow:hidden;
+}
+/* Left: settings panel */
+.arge-left {
+  width:320px; flex-shrink:0; overflow-y:auto;
+  border-right:1px solid #7c3aed1a;
+  padding:24px 20px;
+  scrollbar-width:thin; scrollbar-color:#7c3aed33 transparent;
+}
+.arge-tabs {
+  display:flex; gap:6px; margin-bottom:24px; flex-wrap:wrap;
+}
+.arge-tab {
+  padding:6px 14px; border-radius:20px; cursor:pointer;
+  font-family:'Rajdhani',sans-serif; font-size:.82rem; font-weight:700;
+  border:1px solid #7c3aed33; color:#a78bfa88;
+  transition:all .15s;
+}
+.arge-tab.active {
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  border-color:transparent; color:#fff;
+}
+.arge-section { margin-bottom:20px; }
+.arge-section-title {
+  font-family:'Rajdhani',sans-serif; font-size:.72rem; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase; color:#7c3aed66;
+  margin-bottom:10px;
+}
+.arge-field { margin-bottom:12px; }
+.arge-field label {
+  display:block; font-family:'Rajdhani',sans-serif; font-size:.78rem;
+  font-weight:700; color:#a78bfa88; letter-spacing:1px; margin-bottom:5px;
+}
+.arge-input {
+  width:100%; padding:9px 12px; border-radius:8px;
+  background:rgba(124,58,237,.08); border:1px solid #7c3aed22;
+  color:#fff; font-family:'Rajdhani',sans-serif; font-size:.9rem;
+  outline:none; transition:border-color .2s;
+}
+.arge-input:focus { border-color:#7c3aed66; }
+.arge-textarea {
+  width:100%; padding:9px 12px; border-radius:8px;
+  background:rgba(124,58,237,.08); border:1px solid #7c3aed22;
+  color:#fff; font-family:'Rajdhani',sans-serif; font-size:.85rem;
+  outline:none; resize:vertical; min-height:90px; line-height:1.5;
+  transition:border-color .2s;
+}
+.arge-textarea:focus { border-color:#7c3aed66; }
+.arge-color-row { display:flex; align-items:center; gap:10px; }
+.arge-color-row input[type=color] {
+  width:36px; height:36px; border-radius:8px; border:1px solid #7c3aed33;
+  background:none; cursor:pointer; padding:2px;
+}
+.arge-color-row .arge-input { flex:1; }
+.arge-actions { display:flex; gap:8px; margin-top:8px; }
+.arge-save-btn {
+  flex:1; padding:10px; border-radius:10px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  border:none; color:#fff; font-family:'Rajdhani',sans-serif;
+  font-size:.9rem; font-weight:700; cursor:pointer;
+  transition:opacity .2s;
+}
+.arge-save-btn:hover { opacity:.85; }
+.arge-reset-btn {
+  padding:10px 16px; border-radius:10px;
+  background:rgba(248,113,113,.1); border:1px solid rgba(248,113,113,.25);
+  color:#f87171; font-family:'Rajdhani',sans-serif;
+  font-size:.9rem; font-weight:700; cursor:pointer;
+  transition:background .2s;
+}
+.arge-reset-btn:hover { background:rgba(248,113,113,.2); }
+.arge-saved-msg {
+  font-family:'Rajdhani',sans-serif; font-size:.8rem; color:#34d399;
+  text-align:center; margin-top:8px; display:none;
+}
+.arge-q-block {
+  border:1px solid #7c3aed22; border-radius:10px; padding:12px 14px;
+  margin-bottom:12px; background:rgba(124,58,237,.04);
+}
+.arge-q-num {
+  font-family:'Rajdhani',sans-serif; font-size:.72rem; font-weight:700;
+  color:#7c3aed88; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px;
+}
+.arge-q-type {
+  width:100%; background:rgba(124,58,237,.08); border:1px solid #7c3aed33;
+  border-radius:8px; padding:8px 12px; color:#e2e8f0;
+  font-family:'Rajdhani',sans-serif; font-size:.9rem; outline:none;
+}
+.arge-duration-row {
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+}
+.arge-duration-row input[type=number] {
+  width:72px; background:rgba(124,58,237,.08); border:1px solid #7c3aed33;
+  border-radius:8px; padding:8px 10px; color:#e2e8f0;
+  font-family:'Rajdhani',sans-serif; font-size:.95rem; text-align:center; outline:none;
+}
+.arge-duration-lbl {
+  font-family:'Rajdhani',sans-serif; font-size:.88rem; color:#a78bfa88;
+}
+.arge-savename-row {
+  margin-bottom:12px;
+}
+.arge-savename-row label {
+  display:block; font-family:'Rajdhani',sans-serif; font-size:.75rem;
+  color:#7c3aed88; letter-spacing:1px; text-transform:uppercase; margin-bottom:5px;
+}
+.arge-savename-row input {
+  width:100%; background:rgba(124,58,237,.08); border:1px solid #7c3aed33;
+  border-radius:8px; padding:8px 12px; color:#e2e8f0;
+  font-family:'Rajdhani',sans-serif; font-size:.9rem; outline:none;
+  transition:border-color .2s;
+}
+.arge-savename-row input:focus { border-color:#7c3aed77; }
+.arge-savename-row input::placeholder { color:#7c3aed55; }
+
+/* Kaydedilenler list */
+.arge-saves-empty {
+  font-family:'Rajdhani',sans-serif; font-size:.88rem; color:#7c3aed55;
+  text-align:center; padding:40px 20px; line-height:1.7;
+}
+.arge-save-item {
+  background:rgba(124,58,237,.08); border:1px solid #7c3aed22;
+  border-radius:12px; padding:14px 16px; margin-bottom:10px;
+  transition:border-color .2s;
+}
+.arge-save-item:hover { border-color:#7c3aed44; }
+.arge-save-item-top {
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;
+}
+.arge-save-item-name {
+  font-family:'Orbitron',sans-serif; font-size:.78rem; font-weight:700;
+  color:#c4b5fd; letter-spacing:.5px;
+}
+.arge-save-item-meta {
+  font-family:'Rajdhani',sans-serif; font-size:.75rem; color:#7c3aed66;
+  margin-bottom:10px;
+}
+.arge-save-item-btns {
+  display:flex; gap:8px;
+}
+.arge-save-run-btn {
+  flex:1; background:linear-gradient(135deg,#7c3aed33,#ec489922);
+  border:1px solid #7c3aed55; border-radius:8px;
+  color:#a78bfa; font-family:'Rajdhani',sans-serif; font-size:.82rem;
+  font-weight:700; letter-spacing:.5px; padding:7px 0; cursor:pointer;
+  transition:background .2s, border-color .2s;
+}
+.arge-save-run-btn:hover { background:linear-gradient(135deg,#7c3aed55,#ec489933); border-color:#7c3aed88; }
+.arge-save-del-btn {
+  background:rgba(248,113,113,.1); border:1px solid #f8717133;
+  border-radius:8px; color:#f87171; font-family:'Rajdhani',sans-serif;
+  font-size:.82rem; font-weight:700; padding:7px 14px; cursor:pointer;
+  transition:background .2s;
+}
+.arge-save-del-btn:hover { background:rgba(248,113,113,.22); }
+
+/* Right: preview */
+.arge-right {
+  flex:1; overflow-y:auto; padding:32px;
+  display:flex; flex-direction:column; align-items:center;
+  background:rgba(0,0,0,.18);
+}
+.arge-preview-label {
+  font-family:'Rajdhani',sans-serif; font-size:.75rem; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase; color:#7c3aed66;
+  margin-bottom:16px; align-self:flex-start;
+}
+.arge-preview-box {
+  width:100%; max-width:480px; border-radius:20px;
+  overflow:hidden; border:1px solid #7c3aed22;
+  background:#0e0b28;
+  box-shadow:0 8px 40px rgba(0,0,0,.4);
+}
 /* ── FOOTER ── */
 .site-footer {
   width: 100%; max-width: 1100px;
@@ -2570,14 +3187,184 @@ body { overflow: hidden; }
   margin-top: 0; width: 100%;
 }
 
+/* ═══════════════════════════════════════════
+   LOGIN SCREEN
+═══════════════════════════════════════════ */
+#login-screen {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex;
+  background: #07061a;
+}
+
+/* Left panel */
+.login-left {
+  width: 420px; flex-shrink: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 56px 48px;
+  background: rgba(7,6,26,.97);
+  border-right: 1px solid #7c3aed22;
+  position: relative; z-index: 2;
+}
+@media (max-width: 768px) {
+  .login-left { width: 100%; border-right: none; padding: 40px 28px; }
+  .login-right { display: none !important; }
+}
+
+.login-logo {
+  font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900;
+  background: linear-gradient(90deg, #a78bfa, #ec4899);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: 3px; margin-bottom: 8px;
+}
+.login-logo-sub {
+  font-family: 'Rajdhani', sans-serif; font-size: .72rem; font-weight: 600;
+  color: #7c3aed55; letter-spacing: 4px; margin-bottom: 48px;
+}
+.login-title {
+  font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 900;
+  color: #fff; margin-bottom: 8px;
+}
+.login-subtitle {
+  font-family: 'Rajdhani', sans-serif; font-size: .95rem; color: #7c3aed88;
+  margin-bottom: 36px; line-height: 1.5;
+}
+.login-label {
+  font-family: 'Rajdhani', sans-serif; font-size: .8rem; font-weight: 700;
+  letter-spacing: 1.5px; color: #a78bfa88; text-transform: uppercase;
+  margin-bottom: 6px; display: block;
+}
+.login-input {
+  width: 100%; padding: 12px 16px; border-radius: 10px;
+  background: rgba(124,58,237,.08); border: 1px solid #7c3aed33;
+  color: #fff; font-family: 'Rajdhani', sans-serif; font-size: 1rem;
+  margin-bottom: 18px; outline: none;
+  transition: border-color .2s;
+}
+.login-input:focus { border-color: #7c3aed88; }
+.login-input::placeholder { color: #7c3aed44; }
+.login-btn {
+  width: 100%; padding: 13px; border-radius: 12px;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  border: none; color: #fff;
+  font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+  letter-spacing: 1.5px; cursor: pointer; margin-bottom: 16px;
+  transition: opacity .2s, transform .2s;
+}
+.login-btn:hover { opacity: .9; transform: translateY(-1px); }
+.login-error {
+  font-family: 'Rajdhani', sans-serif; font-size: .85rem;
+  color: #f87171; margin-bottom: 14px; display: none;
+  padding: 10px 14px; border-radius: 8px;
+  background: rgba(248,113,113,.1); border: 1px solid rgba(248,113,113,.2);
+}
+.login-guest {
+  text-align: center;
+  font-family: 'Rajdhani', sans-serif; font-size: .88rem;
+  color: #7c3aed66; cursor: pointer;
+  padding: 10px; border-radius: 8px;
+  border: 1px solid #7c3aed22;
+  transition: background .2s, color .2s;
+}
+.login-guest:hover { background: #7c3aed11; color: #a78bfa; }
+
+/* Right panel */
+.login-right {
+  flex: 1; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+#login-shader {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: .55; mix-blend-mode: screen;
+}
+.login-right-content {
+  position: relative; z-index: 2; text-align: center; padding: 40px;
+}
+.login-right-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; line-height: 1.1;
+  background: linear-gradient(135deg, #fff 0%, #a78bfa 40%, #ec4899 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 20px;
+}
+.login-right-desc {
+  font-family: 'Rajdhani', sans-serif; font-size: 1.1rem;
+  color: rgba(255,255,255,.55); max-width: 400px; margin: 0 auto 36px;
+  line-height: 1.6;
+}
+.login-right-pills {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+}
+.login-right-pill {
+  background: rgba(124,58,237,.2); border: 1px solid #7c3aed44;
+  border-radius: 20px; padding: 7px 16px;
+  font-family: 'Rajdhani', sans-serif; font-size: .85rem; font-weight: 700;
+  color: #c4b5fd; letter-spacing: .5px;
+}
+/* User badge top-right of dashboard */
+.db-user-badge {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(124,58,237,.15); border: 1px solid #7c3aed33;
+  border-radius: 20px; padding: 6px 14px;
+  font-family: 'Rajdhani', sans-serif; font-size: .82rem; font-weight: 700;
+  color: #a78bfa; cursor: pointer;
+  transition: background .2s;
+}
+.db-user-badge:hover { background: rgba(124,58,237,.28); }
 </style>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════
+     LOGIN SCREEN
+═══════════════════════════════════════════ -->
+<div id="login-screen">
+
+  <!-- Left: form -->
+  <div class="login-left">
+    <div class="login-logo">RELATED</div>
+    <div class="login-logo-sub">SCENARIOS</div>
+    <div class="login-title">Hoş Geldiniz</div>
+    <div class="login-subtitle">Devam etmek için giriş yapın.</div>
+
+    <label class="login-label">Kullanıcı Adı</label>
+    <input class="login-input" id="login-user" type="text" placeholder="kullanıcı adı" autocomplete="username">
+
+    <label class="login-label">Şifre</label>
+    <input class="login-input" id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+
+    <div class="login-error" id="login-error">Kullanıcı adı veya şifre hatalı.</div>
+
+    <button class="login-btn" onclick="doLogin()">Giriş Yap →</button>
+
+    <div class="login-guest" onclick="doGuest()">👁 Hesapsız Giriş — Ön İzleme</div>
+  </div>
+
+  <!-- Right: preview -->
+  <div class="login-right">
+    <canvas id="login-shader"></canvas>
+    <div class="login-right-content">
+      <div class="login-right-title">RELATED<br>İLE BÜYÜ</div>
+      <div class="login-right-desc">Oyunlar ve kurgularla müşteri bağlılığını artır. Scratch, Spin, Slot ve büyüme senaryolarını keşfet.</div>
+      <div class="login-right-pills">
+        <div class="login-right-pill">🪙 Scratch To Win</div>
+        <div class="login-right-pill">🎡 Spin To Win</div>
+        <div class="login-right-pill">⏱️ Countdown</div>
+        <div class="login-right-pill">📋 Anket</div>
+        <div class="login-right-pill">📖 Web Story</div>
+        <div class="login-right-pill">🔔 Bildirim</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
      LANDING PAGE
 ═══════════════════════════════════════════ -->
 <div id="landing">
+
+  <!-- WebGL wave shader -->
+  <canvas id="hero-shader"></canvas>
 
   <!-- Background orbs -->
   <div id="bg-orbs">
@@ -2683,6 +3470,11 @@ body { overflow: hidden; }
           <span class="db-item-text">Anket</span>
           <span class="db-item-pill">Yeni</span>
         </div>
+        <div class="db-nav-item" data-id="webstory" onclick="showGame('webstory','Web Story');dbCloseSidebar()">
+          <span class="db-item-icon">📖</span>
+          <span class="db-item-text">Web Story</span>
+          <span class="db-item-pill">Yeni</span>
+        </div>
 
       </div><!-- /db-nav -->
 
@@ -2696,62 +3488,84 @@ body { overflow: hidden; }
     <!-- ══ MAIN PANEL ══ -->
     <main class="db-main" id="db-main">
 
+      <!-- Top-right action bar -->
+      <div id="top-right-bar">
+        <div class="brand-search-wrap">
+          <input type="text" class="brand-search-input" id="brand-search-input"
+            placeholder="🔍 Marka ara..."
+            oninput="brandSearch(this.value)"
+            onblur="setTimeout(brandCloseDD,180)">
+          <div class="brand-search-dd" id="brand-search-dd"></div>
+        </div>
+        <button class="arge-btn" id="arge-btn" onclick="showGame('arge','Ar-Ge Merkezi')">
+          🔬 Ar-Ge Merkezi
+        </button>
+        <div class="db-lang-toggle">
+          <button id="lang-tr" class="db-lang-btn active" onclick="setLang('tr')">TR</button>
+          <button id="lang-en" class="db-lang-btn" onclick="setLang('en')">EN</button>
+        </div>
+        <div class="db-user-badge" id="db-user-badge" onclick="doLogout()">
+          <span id="db-user-name">👤</span>
+          <span style="color:#7c3aed88;font-size:.75rem;">Çıkış Yap</span>
+        </div>
+      </div>
+
       <!-- Welcome Screen -->
       <div class="db-welcome">
 
         <div class="db-welcome-top">
-          <div class="db-welcome-eyebrow">✦ Büyüme Senaryoları</div>
-          <h1 class="db-welcome-title">Hoş Geldiniz 👋</h1>
-          <p class="db-welcome-desc">Oyunlar ve kurgularla müşteri bağlılığını ve dönüşüm oranlarını artırın.<br>Başlamak için sol menüden bir senaryo seçin.</p>
+          <div class="db-welcome-eyebrow" data-tr="✦ Büyüme Senaryoları" data-en="✦ Growth Scenarios">✦ Büyüme Senaryoları</div>
+          <h1 class="db-welcome-title" data-tr="Hoş Geldiniz 👋" data-en="Welcome 👋">Hoş Geldiniz 👋</h1>
+          <p class="db-welcome-desc" data-tr="Oyunlar ve kurgularla müşteri bağlılığını ve dönüşüm oranlarını artırın.<br>Başlamak için sol menüden bir senaryo seçin." data-en="Boost customer engagement and conversion rates with games and scenarios.<br>Select a scenario from the left menu to get started.">Oyunlar ve kurgularla müşteri bağlılığını ve dönüşüm oranlarını artırın.<br>Başlamak için sol menüden bir senaryo seçin.</p>
         </div>
 
         <div class="db-stat-row">
           <div class="db-stat-box">
             <div class="db-stat-icon">🎮</div>
             <div class="db-stat-num">6</div>
-            <div class="db-stat-lbl">Oyun</div>
+            <div class="db-stat-lbl" data-tr="Oyun" data-en="Game">Oyun</div>
           </div>
           <div class="db-stat-box">
             <div class="db-stat-icon">🧩</div>
             <div class="db-stat-num">8</div>
-            <div class="db-stat-lbl">Kurgu</div>
+            <div class="db-stat-lbl" data-tr="Kurgu" data-en="Scenario">Kurgu</div>
           </div>
           <div class="db-stat-box">
             <div class="db-stat-icon">📈</div>
             <div class="db-stat-num">∞</div>
-            <div class="db-stat-lbl">Büyüme</div>
+            <div class="db-stat-lbl" data-tr="Büyüme" data-en="Growth">Büyüme</div>
           </div>
         </div>
 
         <div class="db-popular-label">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          En Çok Tercih Edilenler
+          <span data-tr="En Çok Tercih Edilenler" data-en="Most Popular">En Çok Tercih Edilenler</span>
         </div>
 
         <div class="db-popular-grid">
           <div class="db-pop-card" onclick="showGame('scratch','Scratch To Win')">
             <div class="db-pop-icon">🪙</div>
             <div class="db-pop-name">Scratch To Win</div>
-            <div class="db-pop-desc">Kartı kazı, ödülü bul</div>
-            <div class="db-pop-tag">🔥 En Popüler</div>
+            <div class="db-pop-desc" data-tr="Kartı kazı, ödülü bul" data-en="Scratch the card, find the prize">Kartı kazı, ödülü bul</div>
+            <div class="db-pop-tag" data-tr="🔥 En Popüler" data-en="🔥 Most Popular">🔥 En Popüler</div>
           </div>
           <div class="db-pop-card" onclick="showGame('spin','Spin To Win')">
             <div class="db-pop-icon">🎡</div>
             <div class="db-pop-name">Spin To Win</div>
-            <div class="db-pop-desc">Çarkı çevir, şansını dene</div>
-            <div class="db-pop-tag">✨ Klasik</div>
+            <div class="db-pop-desc" data-tr="Çarkı çevir, şansını dene" data-en="Spin the wheel, try your luck">Çarkı çevir, şansını dene</div>
+            <div class="db-pop-tag" data-tr="✨ Klasik" data-en="✨ Classic">✨ Klasik</div>
           </div>
           <div class="db-pop-card" onclick="showGame('countdown','Countdown Banner')">
             <div class="db-pop-icon">⏱️</div>
             <div class="db-pop-name">Countdown Banner</div>
-            <div class="db-pop-desc">Aciliyet hissiyle dönüşüm artır</div>
-            <div class="db-pop-tag">⚡ Dönüşüm</div>
+            <div class="db-pop-desc" data-tr="Aciliyet hissiyle dönüşüm artır" data-en="Boost conversions with urgency">Aciliyet hissiyle dönüşüm artır</div>
+            <div class="db-pop-tag" data-tr="⚡ Dönüşüm" data-en="⚡ Conversion">⚡ Dönüşüm</div>
           </div>
           <div class="db-pop-card" onclick="showGame('anket','Anket')">
             <div class="db-pop-icon">📋</div>
-            <div class="db-pop-name">Anket</div>
-            <div class="db-pop-desc">Kullanıcı verisini topla</div>
-            <div class="db-pop-tag">📊 Veri</div>
+            <div class="db-pop-name" data-tr="Anket" data-en="Survey">Anket</div>
+            <div class="db-pop-desc" data-tr="Kullanıcı verisini topla" data-en="Collect user data">Kullanıcı verisini topla</div>
+            <div class="db-pop-tag" data-tr="📊 Veri" data-en="📊 Data">📊 Veri</div>
           </div>
         </div>
 
@@ -3286,6 +4100,618 @@ body { overflow: hidden; }
 </div>
 
 
+<!-- Web Story -->
+<div class="game-page" id="page-webstory">
+  <div class="game-topbar" style="max-width:none;width:100%;padding:12px 24px;background:#07061a;border-bottom:1px solid #7c3aed22;position:sticky;top:0;z-index:20;">
+    <button class="back-btn" onclick="showLanding()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Geri
+    </button>
+    <span style="font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;color:#a78bfa;letter-spacing:2px;">WEB STORY</span>
+    <span></span>
+  </div>
+
+  <!-- Simulated website -->
+  <div class="ws-sim-wrap">
+
+    <!-- Sim header -->
+    <div class="ws-sim-header">
+      <div class="ws-sim-logo">RELATED</div>
+      <div class="ws-sim-cta">🚀 Markanızı Büyütün</div>
+    </div>
+
+    <!-- Story row -->
+    <div class="ws-story-section">
+      <div class="ws-story-title">Favori Oyunlar ve Kurgular</div>
+      <div class="ws-circles">
+        <div class="ws-circle" onclick="wsOpen(0)">
+          <div class="ws-circle-inner" style="background:linear-gradient(135deg,#7c3aed,#ec4899);">
+            <span>🪙</span>
+          </div>
+          <span class="ws-circle-label">Scratch</span>
+        </div>
+        <div class="ws-circle" onclick="wsOpen(1)">
+          <div class="ws-circle-inner" style="background:linear-gradient(135deg,#f59e0b,#ec4899);">
+            <span>🎡</span>
+          </div>
+          <span class="ws-circle-label">Spin</span>
+        </div>
+        <div class="ws-circle" onclick="wsOpen(2)">
+          <div class="ws-circle-inner" style="background:linear-gradient(135deg,#10b981,#3b82f6);">
+            <span>🎰</span>
+          </div>
+          <span class="ws-circle-label">Kazı Kazan</span>
+        </div>
+        <div class="ws-circle" onclick="wsOpen(3)">
+          <div class="ws-circle-inner" style="background:linear-gradient(135deg,#6366f1,#06b6d4);">
+            <span>📋</span>
+          </div>
+          <span class="ws-circle-label">Anket</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sim hero -->
+    <div class="ws-sim-hero">
+      <div class="sim-hero-eyebrow">✦ Büyüme Senaryoları</div>
+      <h2>GAMIFICATION<br>İLE BÜYÜ</h2>
+      <p>Oyunlar ve kurgularla büyüyün. Scratch, Spin, Slot ve daha fazlasıyla müşteri bağlılığını artırın.</p>
+      <button class="sim-hero-btn">Oyunları Keşfet →</button>
+    </div>
+
+    <!-- Mock cards -->
+    <div class="ws-sim-cards">
+      <div class="ws-sim-card">🎮 Scratch To Win</div>
+      <div class="ws-sim-card">🎡 Spin To Win</div>
+      <div class="ws-sim-card">🎰 Jackpot Slot</div>
+      <div class="ws-sim-card">😀 Emoji Match</div>
+    </div>
+
+  </div>
+
+  <!-- Info chips -->
+  <div class="demo-chips" style="padding:14px 32px;border-top:1px solid #7c3aed22;">
+    <div class="demo-chip"><strong>Story Daireleri</strong><span>Tıkla, story aç</span></div>
+    <div class="demo-chip"><strong>4 Story</strong><span>Her oyun için</span></div>
+    <div class="demo-chip"><strong>Keşfet</strong><span>Oyuna yönlendir</span></div>
+  </div>
+</div>
+
+<!-- Web Story Overlay -->
+<div id="ws-overlay" onclick="wsClose()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(6px);">
+  <div id="ws-card" onclick="event.stopPropagation()" style="position:relative;width:360px;height:640px;border-radius:20px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.7);display:flex;flex-direction:column;">
+    <!-- Progress bar -->
+    <div style="position:absolute;top:14px;left:14px;right:14px;z-index:10;display:flex;gap:4px;">
+      <div style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.3);overflow:hidden;">
+        <div id="ws-prog" style="height:100%;background:#fff;width:0%;transition:width linear;"></div>
+      </div>
+    </div>
+    <!-- Close -->
+    <button onclick="wsClose()" style="position:absolute;top:10px;right:14px;z-index:11;background:rgba(0,0,0,.4);border:none;color:#fff;font-size:1.2rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+    <!-- BG -->
+    <div id="ws-bg" style="position:absolute;inset:0;"></div>
+    <!-- Content -->
+    <div style="position:relative;z-index:5;display:flex;flex-direction:column;justify-content:flex-end;height:100%;padding:36px 28px 40px;">
+      <div id="ws-icon" style="font-size:4rem;margin-bottom:16px;text-align:center;"></div>
+      <h2 id="ws-title" style="font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:12px;line-height:1.2;"></h2>
+      <p id="ws-desc" style="font-family:'Rajdhani',sans-serif;font-size:1rem;color:rgba(255,255,255,.85);line-height:1.6;margin-bottom:28px;"></p>
+      <button id="ws-cta" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:12px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;cursor:pointer;backdrop-filter:blur(8px);transition:background .2s;">
+        Keşfet <span style="font-size:1.1rem;">›</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Ar-Ge Önizleme Sayfası -->
+<div class="game-page" id="page-arge-preview" style="flex-direction:column;padding:0;background:#07061a;">
+  <div class="arge-topbar">
+    <button class="back-btn" onclick="showGame('arge','Ar-Ge Merkezi')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Geri
+    </button>
+    <span id="arge-preview-title" style="font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;color:#a78bfa;letter-spacing:2px;"></span>
+    <span></span>
+  </div>
+  <iframe id="arge-preview-frame" style="flex:1;width:100%;border:none;min-height:calc(100vh - 56px);" src="about:blank"></iframe>
+</div>
+
+<!-- Under Armour Brand Scenario Page -->
+<div class="game-page" id="page-brand-ua">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="bua-sidebar">
+    <!-- Topbar inside sidebar -->
+    <div class="bua-topbar">
+      <button class="back-btn" onclick="showLanding()" style="padding:8px 12px;font-size:.8rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Geri
+      </button>
+    </div>
+
+    <!-- Brand header -->
+    <div class="bua-sidebar-brand">
+      <div class="bua-sidebar-brand-name">Under Armour</div>
+      <div class="bua-sidebar-brand-tag">Senaryolar & Oyunlar</div>
+    </div>
+
+    <!-- Oyunlar -->
+    <div class="bua-sidebar-section">
+      <div class="bua-sidebar-section-label">Oyunlar</div>
+
+      <div class="bua-sc-item active" id="bua-item-scratch" onclick="buaShowScenario('scratch')">
+        <div class="bua-sc-icon">🎴</div>
+        <div class="bua-sc-info">
+          <div class="bua-sc-name">Pop-up Kazı Kazan</div>
+          <div class="bua-sc-desc">%30'a kadar indirim</div>
+        </div>
+        <span class="bua-sc-badge hot">HOT</span>
+      </div>
+
+      <div class="bua-sc-item" id="bua-item-spin" onclick="buaShowScenario('spin')">
+        <div class="bua-sc-icon">🎡</div>
+        <div class="bua-sc-info">
+          <div class="bua-sc-name">Çark Çevir</div>
+          <div class="bua-sc-desc">Şansını dene</div>
+        </div>
+        <span class="bua-sc-badge new">YAKINDA</span>
+      </div>
+
+      <div class="bua-sc-item" id="bua-item-slot" onclick="buaShowScenario('slot')">
+        <div class="bua-sc-icon">🎰</div>
+        <div class="bua-sc-info">
+          <div class="bua-sc-name">Jackpot Slot</div>
+          <div class="bua-sc-desc">3 eşleştir, kazan</div>
+        </div>
+        <span class="bua-sc-badge new">YAKINDA</span>
+      </div>
+    </div>
+
+    <!-- Kurgular -->
+    <div class="bua-sidebar-section">
+      <div class="bua-sidebar-section-label">Kurgular</div>
+
+      <div class="bua-sc-item" id="bua-item-countdown" onclick="buaShowScenario('countdown')">
+        <div class="bua-sc-icon">⏱️</div>
+        <div class="bua-sc-info">
+          <div class="bua-sc-name">Countdown Banner</div>
+          <div class="bua-sc-desc">Geri sayım — üst bant</div>
+        </div>
+      </div>
+
+      <div class="bua-sc-item" id="bua-item-sliding" onclick="buaShowScenario('sliding')">
+        <div class="bua-sc-icon">📢</div>
+        <div class="bua-sc-info">
+          <div class="bua-sc-name">Kayan Banner</div>
+          <div class="bua-sc-desc">Alt bant — sürekli kaydırma</div>
+        </div>
+      </div>
+
+      <div class="bua-sc-item" id="bua-item-both" onclick="buaShowScenario('both')">
+        <div class="bua-sc-icon">✨</div>
+        <div class="bua-sc-info">
+          <div class="bua-sc-name">Tümünü Göster</div>
+          <div class="bua-sc-desc">Tüm senaryolar birlikte</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="bua-sidebar-footer">
+      <div class="bua-sidebar-footer-label">Powered by</div>
+      <div class="bua-sidebar-footer-logo">YGZ Gamification</div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: Screenshot area -->
+  <div class="bua-sim">
+    <!-- Actual screenshot as background -->
+    <div class="bua-site-bg"></div>
+
+    <!-- SENARYO 1: Countdown Banner (üstte) -->
+    <div class="bua-cd-banner" id="bua-cd-banner" style="display:none;">
+      <span class="bua-cd-text">⏱️ Kampanya Bitiyor — Fırsatı Kaçırma!</span>
+      <div class="bua-cd-timer">
+        <div class="bua-cd-unit"><span id="bcd-h">02</span><small>SAAT</small></div>
+        <div class="bua-cd-sep">:</div>
+        <div class="bua-cd-unit"><span id="bcd-m">00</span><small>DAK</small></div>
+        <div class="bua-cd-sep">:</div>
+        <div class="bua-cd-unit"><span id="bcd-s">00</span><small>SN</small></div>
+      </div>
+      <button class="bua-cd-close" onclick="this.parentElement.style.display='none'">✕</button>
+    </div>
+
+    <!-- SENARYO 2: Sliding Banner (altta) -->
+    <div class="bua-sb-wrap" id="bua-sb" style="display:none;">
+      <div class="bua-sb-label">🔥 FIRSAT</div>
+      <div class="bua-sb-track">
+        <span class="bua-sb-item">⚡ Bahar İndirimi — Seçili ürünlerde <strong>%30 indirim</strong> başladı!</span>
+        <span class="bua-sb-item">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span class="bua-sb-item">🚚 Ücretsiz Kargo — <strong>500₺</strong> üzeri tüm siparişlerde geçerli</span>
+        <span class="bua-sb-item">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span class="bua-sb-item">🎁 Kazı Kazan oyna, <strong>ekstra indirim</strong> kazan!</span>
+        <span class="bua-sb-item">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span class="bua-sb-item">⚡ Bahar İndirimi — Seçili ürünlerde <strong>%30 indirim</strong> başladı!</span>
+        <span class="bua-sb-item">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span class="bua-sb-item">🚚 Ücretsiz Kargo — <strong>500₺</strong> üzeri tüm siparişlerde geçerli</span>
+        <span class="bua-sb-item">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span class="bua-sb-item">🎁 Kazı Kazan oyna, <strong>ekstra indirim</strong> kazan!</span>
+      </div>
+      <button class="bua-sb-close" onclick="document.getElementById('bua-sb').style.display='none'">✕</button>
+    </div>
+
+    <!-- SENARYO 3: Pop-up Kazı Kazan -->
+    <div class="bua-popup-overlay" id="bua-popup-overlay">
+      <div class="bua-popup">
+        <button class="bua-popup-close" onclick="buaClosePopup()">✕</button>
+        <div class="bua-popup-logo">⬦ UNDER ARMOUR</div>
+        <div class="bua-popup-title">Özel İndirim Fırsatı!</div>
+        <div class="bua-popup-desc">Kazı-Kazan kartını kazı, indirim kodunu hemen kazan.</div>
+        <div class="bua-card-wrap">
+          <div class="bua-prize-display">
+            <div class="bua-prize-icon" id="bua-prize-icon">🎉</div>
+            <div class="bua-prize-name" id="bua-prize-name">???</div>
+            <div class="bua-prize-code" id="bua-prize-code"></div>
+          </div>
+          <canvas id="bua-scratch-canvas" class="bua-scratch-canvas" width="316" height="140"></canvas>
+        </div>
+        <div class="bua-progress-bar">
+          <div class="bua-progress-fill" id="bua-progress"></div>
+        </div>
+        <div class="bua-result" id="bua-result">
+          <div class="bua-res-icon" id="bua-res-icon"></div>
+          <div class="bua-res-info">
+            <div class="bua-res-code" id="bua-res-code"></div>
+            <div class="bua-res-desc" id="bua-res-desc"></div>
+          </div>
+          <button class="bua-copy-btn" onclick="doCopy(document.getElementById('bua-res-code').textContent,this)">Kopyala</button>
+        </div>
+        <button class="bua-reset-btn" onclick="buaReset()">Tekrar Oyna</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Ar-Ge Merkezi -->
+<div class="game-page" id="page-arge">
+  <div class="arge-topbar">
+    <button class="back-btn" onclick="showLanding()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Geri
+    </button>
+    <span style="font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;color:#a78bfa;letter-spacing:2px;">🔬 AR-GE MERKEZİ</span>
+    <span></span>
+  </div>
+  <div class="arge-body">
+
+    <!-- LEFT: Settings -->
+    <div class="arge-left">
+      <!-- Game tabs -->
+      <div class="arge-tabs">
+        <div class="arge-tab active" onclick="argeSetTab('scratch',this)">🪙 Scratch</div>
+        <div class="arge-tab" onclick="argeSetTab('spin',this)">🎡 Spin</div>
+        <div class="arge-tab" onclick="argeSetTab('countdown',this)">⏱️ Countdown</div>
+        <div class="arge-tab" onclick="argeSetTab('anket',this)">📋 Anket</div>
+        <div class="arge-tab" onclick="argeSetTab('saves',this)">📁 Kaydedilenler</div>
+      </div>
+
+      <!-- Scratch settings -->
+      <div id="arge-form-scratch">
+        <div class="arge-section">
+          <div class="arge-section-title">Renkler</div>
+          <div class="arge-field">
+            <label>Kart Arka Planı</label>
+            <div class="arge-color-row">
+              <input type="color" id="sc-bg-color" value="#1a0a2e" oninput="argePreview()">
+              <input class="arge-input" id="sc-bg-hex" value="#1a0a2e" oninput="syncColor('sc-bg-color','sc-bg-hex')">
+            </div>
+          </div>
+          <div class="arge-field">
+            <label>Kazı Katmanı Rengi</label>
+            <div class="arge-color-row">
+              <input type="color" id="sc-scratch-color" value="#7c3aed" oninput="argePreview()">
+              <input class="arge-input" id="sc-scratch-hex" value="#7c3aed" oninput="syncColor('sc-scratch-color','sc-scratch-hex')">
+            </div>
+          </div>
+        </div>
+        <div class="arge-section">
+          <div class="arge-section-title">Metinler</div>
+          <div class="arge-field">
+            <label>Oyun Başlığı</label>
+            <input class="arge-input" id="sc-title" value="Scratch To Win" oninput="argePreview()">
+          </div>
+          <div class="arge-field">
+            <label>Alt Başlık</label>
+            <input class="arge-input" id="sc-subtitle" value="Kartı kazıyarak ödülünü bul" oninput="argePreview()">
+          </div>
+          <div class="arge-field">
+            <label>Kazı İpucu</label>
+            <input class="arge-input" id="sc-hint" value="✦ Parmağınla veya mouse ile kazı" oninput="argePreview()">
+          </div>
+        </div>
+        <div class="arge-section">
+          <div class="arge-section-title">Ödül Listesi (her satıra bir ödül)</div>
+          <div class="arge-field">
+            <textarea class="arge-textarea" id="sc-prizes" oninput="argePreview()">%10 İndirim — KOD: SCRATCH10
+%20 İndirim — KOD: SCRATCH20
+Ücretsiz Kargo — KOD: FREESHIP
+%30 İndirim — KOD: BIG30
+Sürpriz Ödül — KOD: SURPRISE
+Çarşamba İndirimi — KOD: WED15</textarea>
+          </div>
+        </div>
+        <div class="arge-savename-row">
+          <label>Kayıt Adı</label>
+          <input id="sc-savename" placeholder="örn: Yaz Kampanyası">
+        </div>
+        <div class="arge-actions">
+          <button class="arge-save-btn" onclick="argeSave('scratch')">💾 Kaydet</button>
+          <button class="arge-reset-btn" onclick="argeReset('scratch')">🗑 Sıfırla</button>
+        </div>
+        <div class="arge-saved-msg" id="arge-saved-scratch">✓ Kaydedildi!</div>
+      </div>
+
+      <!-- Spin settings -->
+      <div id="arge-form-spin" style="display:none">
+        <div class="arge-section">
+          <div class="arge-section-title">Renkler</div>
+          <div class="arge-field">
+            <label>Renk 1 (Tek dilimler)</label>
+            <div class="arge-color-row">
+              <input type="color" id="sp-color1" value="#7c3aed" oninput="argePreview()">
+              <input class="arge-input" id="sp-color1-hex" value="#7c3aed" oninput="syncColor('sp-color1','sp-color1-hex')">
+            </div>
+          </div>
+          <div class="arge-field">
+            <label>Renk 2 (Çift dilimler)</label>
+            <div class="arge-color-row">
+              <input type="color" id="sp-color2" value="#ec4899" oninput="argePreview()">
+              <input class="arge-input" id="sp-color2-hex" value="#ec4899" oninput="syncColor('sp-color2','sp-color2-hex')">
+            </div>
+          </div>
+        </div>
+        <div class="arge-section">
+          <div class="arge-section-title">Metinler</div>
+          <div class="arge-field">
+            <label>Oyun Başlığı</label>
+            <input class="arge-input" id="sp-title" value="Spin To Win" oninput="argePreview()">
+          </div>
+          <div class="arge-field">
+            <label>Çevir Butonu</label>
+            <input class="arge-input" id="sp-btn" value="ÇEVİR" oninput="argePreview()">
+          </div>
+        </div>
+        <div class="arge-section">
+          <div class="arge-section-title">Ödül Listesi (her satıra bir ödül)</div>
+          <div class="arge-field">
+            <textarea class="arge-textarea" id="sp-prizes" oninput="argePreview()">%10 İndirim
+%20 İndirim
+Ücretsiz Kargo
+%30 İndirim
+Çarşamba İndirimi
+Sürpriz Ödül
+%15 İndirim
+Özel Teklif</textarea>
+          </div>
+        </div>
+        <div class="arge-savename-row">
+          <label>Kayıt Adı</label>
+          <input id="sp-savename" placeholder="örn: Haftalık Çark">
+        </div>
+        <div class="arge-actions">
+          <button class="arge-save-btn" onclick="argeSave('spin')">💾 Kaydet</button>
+          <button class="arge-reset-btn" onclick="argeReset('spin')">🗑 Sıfırla</button>
+        </div>
+        <div class="arge-saved-msg" id="arge-saved-spin">✓ Kaydedildi!</div>
+      </div>
+
+      <!-- Countdown settings -->
+      <div id="arge-form-countdown" style="display:none">
+        <div class="arge-section">
+          <div class="arge-section-title">Renkler</div>
+          <div class="arge-field">
+            <label>Banner Arka Plan</label>
+            <div class="arge-color-row">
+              <input type="color" id="cd-bg" value="#0f0a1e" oninput="argePreview()">
+              <input class="arge-input" id="cd-bg-hex" value="#0f0a1e" oninput="syncColor('cd-bg','cd-bg-hex')">
+            </div>
+          </div>
+          <div class="arge-field">
+            <label>Vurgu Rengi</label>
+            <div class="arge-color-row">
+              <input type="color" id="cd-accent" value="#7c3aed" oninput="argePreview()">
+              <input class="arge-input" id="cd-accent-hex" value="#7c3aed" oninput="syncColor('cd-accent','cd-accent-hex')">
+            </div>
+          </div>
+        </div>
+        <div class="arge-section">
+          <div class="arge-section-title">Metinler</div>
+          <div class="arge-field">
+            <label>Banner Başlığı</label>
+            <input class="arge-input" id="cd-title" value="İndirim için kalan süre" oninput="argePreview()">
+          </div>
+          <div class="arge-field">
+            <label>Alt Açıklama</label>
+            <textarea class="arge-textarea" id="cd-subtitle" style="min-height:60px" oninput="argePreview()">Kampanyadan yararlanmak için acele edin.</textarea>
+          </div>
+          <div class="arge-field">
+            <label>CTA Butonu</label>
+            <input class="arge-input" id="cd-cta" value="Hemen Başvur →" oninput="argePreview()">
+          </div>
+        </div>
+        <div class="arge-section">
+          <div class="arge-section-title">Süre</div>
+          <div class="arge-field">
+            <label>Geri Sayım Süresi</label>
+            <div class="arge-duration-row">
+              <input type="number" id="cd-hours" value="2" min="0" max="99" oninput="argePreview()">
+              <span class="arge-duration-lbl">saat</span>
+              <input type="number" id="cd-mins" value="0" min="0" max="59" oninput="argePreview()">
+              <span class="arge-duration-lbl">dakika</span>
+            </div>
+          </div>
+        </div>
+        <div class="arge-savename-row">
+          <label>Kayıt Adı</label>
+          <input id="cd-savename" placeholder="örn: Ekim Kampanyası">
+        </div>
+        <div class="arge-actions">
+          <button class="arge-save-btn" onclick="argeSave('countdown')">💾 Kaydet</button>
+          <button class="arge-reset-btn" onclick="argeReset('countdown')">🗑 Sıfırla</button>
+        </div>
+        <div class="arge-saved-msg" id="arge-saved-countdown">✓ Kaydedildi!</div>
+      </div>
+
+      <!-- Anket settings -->
+      <div id="arge-form-anket" style="display:none">
+        <div class="arge-section">
+          <div class="arge-section-title">Renkler</div>
+          <div class="arge-field">
+            <label>Vurgu Rengi</label>
+            <div class="arge-color-row">
+              <input type="color" id="ak-color" value="#7c3aed" oninput="argePreview()">
+              <input class="arge-input" id="ak-color-hex" value="#7c3aed" oninput="syncColor('ak-color','ak-color-hex')">
+            </div>
+          </div>
+        </div>
+        <div class="arge-section">
+          <div class="arge-section-title">Genel</div>
+          <div class="arge-field">
+            <label>Popup Başlığı</label>
+            <input class="arge-input" id="ak-title" value="Görüşünüz bizim için değerli!" oninput="argePreview()">
+          </div>
+          <div class="arge-field">
+            <label>Sayfa Sayısı (1–5)</label>
+            <input type="number" class="arge-input" id="ak-count" value="1" min="1" max="5" oninput="argeQCount()">
+          </div>
+        </div>
+        <div class="arge-section">
+          <div class="arge-section-title">Sorular</div>
+          <!-- Soru 1 -->
+          <div class="arge-q-block" id="arge-q-1">
+            <div class="arge-q-num">Soru 1</div>
+            <div class="arge-field">
+              <label>Soru Metni</label>
+              <input class="arge-input" id="ak-q1" value="Related Scenarios platformunu nasıl buldunuz?" oninput="argePreview()">
+            </div>
+            <div class="arge-field">
+              <label>Seçenekler (her satıra bir)</label>
+              <textarea class="arge-textarea" id="ak-opts1" oninput="argePreview()">Çok beğendim
+Beğendim
+Orta
+Beğenmedim</textarea>
+            </div>
+            <div class="arge-field">
+              <label>Seçim Tipi</label>
+              <select class="arge-q-type" id="ak-type1" onchange="argePreview()">
+                <option value="single">Tek Seçim</option>
+                <option value="multi">Çoklu Seçim</option>
+              </select>
+            </div>
+          </div>
+          <!-- Soru 2 -->
+          <div class="arge-q-block" id="arge-q-2" style="display:none">
+            <div class="arge-q-num">Soru 2</div>
+            <div class="arge-field">
+              <label>Soru Metni</label>
+              <input class="arge-input" id="ak-q2" value="" oninput="argePreview()">
+            </div>
+            <div class="arge-field">
+              <label>Seçenekler (her satıra bir)</label>
+              <textarea class="arge-textarea" id="ak-opts2" oninput="argePreview()"></textarea>
+            </div>
+            <div class="arge-field">
+              <label>Seçim Tipi</label>
+              <select class="arge-q-type" id="ak-type2" onchange="argePreview()">
+                <option value="single">Tek Seçim</option>
+                <option value="multi">Çoklu Seçim</option>
+              </select>
+            </div>
+          </div>
+          <!-- Soru 3 -->
+          <div class="arge-q-block" id="arge-q-3" style="display:none">
+            <div class="arge-q-num">Soru 3</div>
+            <div class="arge-field">
+              <label>Soru Metni</label>
+              <input class="arge-input" id="ak-q3" value="" oninput="argePreview()">
+            </div>
+            <div class="arge-field">
+              <label>Seçenekler (her satıra bir)</label>
+              <textarea class="arge-textarea" id="ak-opts3" oninput="argePreview()"></textarea>
+            </div>
+            <div class="arge-field">
+              <label>Seçim Tipi</label>
+              <select class="arge-q-type" id="ak-type3" onchange="argePreview()">
+                <option value="single">Tek Seçim</option>
+                <option value="multi">Çoklu Seçim</option>
+              </select>
+            </div>
+          </div>
+          <!-- Soru 4 -->
+          <div class="arge-q-block" id="arge-q-4" style="display:none">
+            <div class="arge-q-num">Soru 4</div>
+            <div class="arge-field">
+              <label>Soru Metni</label>
+              <input class="arge-input" id="ak-q4" value="" oninput="argePreview()">
+            </div>
+            <div class="arge-field">
+              <label>Seçenekler (her satıra bir)</label>
+              <textarea class="arge-textarea" id="ak-opts4" oninput="argePreview()"></textarea>
+            </div>
+            <div class="arge-field">
+              <label>Seçim Tipi</label>
+              <select class="arge-q-type" id="ak-type4" onchange="argePreview()">
+                <option value="single">Tek Seçim</option>
+                <option value="multi">Çoklu Seçim</option>
+              </select>
+            </div>
+          </div>
+          <!-- Soru 5 -->
+          <div class="arge-q-block" id="arge-q-5" style="display:none">
+            <div class="arge-q-num">Soru 5</div>
+            <div class="arge-field">
+              <label>Soru Metni</label>
+              <input class="arge-input" id="ak-q5" value="" oninput="argePreview()">
+            </div>
+            <div class="arge-field">
+              <label>Seçenekler (her satıra bir)</label>
+              <textarea class="arge-textarea" id="ak-opts5" oninput="argePreview()"></textarea>
+            </div>
+            <div class="arge-field">
+              <label>Seçim Tipi</label>
+              <select class="arge-q-type" id="ak-type5" onchange="argePreview()">
+                <option value="single">Tek Seçim</option>
+                <option value="multi">Çoklu Seçim</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="arge-savename-row">
+          <label>Kayıt Adı</label>
+          <input id="ak-savename" placeholder="örn: Müşteri Anketi">
+        </div>
+        <div class="arge-actions">
+          <button class="arge-save-btn" onclick="argeSave('anket')">💾 Kaydet</button>
+          <button class="arge-reset-btn" onclick="argeReset('anket')">🗑 Sıfırla</button>
+        </div>
+        <div class="arge-saved-msg" id="arge-saved-anket">✓ Kaydedildi!</div>
+      </div>
+
+      <!-- Kaydedilenler panel -->
+      <div id="arge-form-saves" style="display:none"></div>
+
+    </div><!-- /arge-left -->
+
+    <!-- RIGHT: Preview -->
+    <div class="arge-right">
+      <div class="arge-preview-label">📱 Canlı Önizleme</div>
+      <div class="arge-preview-box" id="arge-preview-box"></div>
+    </div>
+
+  </div>
+</div>
+
 <!-- Anket -->
 <div class="game-page" id="page-anket">
   <div class="game-topbar" style="max-width:none;width:100%;padding:12px 24px;background:#07061a;border-bottom:1px solid #7c3aed22;position:sticky;top:0;z-index:20;">
@@ -3678,6 +5104,7 @@ function showGame(id, name) {
   dbSetActive(id);
   if (id === 'countdown') { cdInit(); }
   if (id === 'sidebar') { sidebarInit(); }
+  if (id === 'brand-ua') { setTimeout(brandUaInit, 80); }
   if (id === 'kulakcik') {
     /* reset tab to closed state on each entry */
     var tp = document.getElementById('tab-panel-wrap');
@@ -3696,9 +5123,12 @@ function showLanding() {
   sidebarClose(true);
   tabCdStop();
   if (_anketTimer) { clearTimeout(_anketTimer); _anketTimer = null; }
+  if (typeof _buaCdInterval !== 'undefined' && _buaCdInterval) { clearInterval(_buaCdInterval); _buaCdInterval = null; }
+  if (typeof _buaPopupTimer !== 'undefined' && _buaPopupTimer) { clearTimeout(_buaPopupTimer); _buaPopupTimer = null; }
   closeAnket();
   if (_psTimer) { clearTimeout(_psTimer); _psTimer = null; }
   closePsPopup();
+  wsClose();
   if (!_historyNav) history.pushState(null, '', location.pathname);
   dbSetActive(null);
 }
@@ -4112,6 +5542,898 @@ document.addEventListener('keydown', function(e) {
 });
 
 
+/* ── Login ── */
+var _AUTH_USER = 'relatedadmin';
+var _AUTH_PASS = '1907';
+var _isGuest = false;
+
+function doLogin() {
+  var u = document.getElementById('login-user').value.trim();
+  var p = document.getElementById('login-pass').value;
+  var err = document.getElementById('login-error');
+  if (u === _AUTH_USER && p === _AUTH_PASS) {
+    _isGuest = false;
+    err.style.display = 'none';
+    _showApp(u);
+  } else {
+    err.style.display = 'block';
+  }
+}
+function doGuest() {
+  _isGuest = true;
+  _showApp('Misafir');
+}
+function doLogout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-error').style.display = 'none';
+  var topBar = document.getElementById('top-right-bar');
+  if (topBar) topBar.classList.remove('visible');
+  var argeBtn = document.getElementById('arge-btn');
+  if (argeBtn) argeBtn.classList.remove('visible');
+  showLanding();
+}
+function _showApp(username) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('landing').style.display = '';
+  var badge = document.getElementById('db-user-name');
+  if (badge) badge.textContent = '👤 ' + username;
+  var topBar = document.getElementById('top-right-bar');
+  if (topBar) topBar.classList.add('visible');
+  var argeBtn = document.getElementById('arge-btn');
+  if (argeBtn) argeBtn.classList.toggle('visible', !_isGuest);
+}
+
+// Enter key on login inputs
+document.addEventListener('DOMContentLoaded', function() {
+  ['login-user','login-pass'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') doLogin();
+    });
+  });
+  // Start login shader
+  (function() {
+    var canvas = document.getElementById('login-shader');
+    if (!canvas) return;
+    var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) return;
+    var VS = 'attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.,1.); }';
+    var FS = [
+      'precision highp float;',
+      'uniform vec2 u_res; uniform float u_time;',
+      'void main(){',
+      '  vec2 p=(gl_FragCoord.xy*2.-u_res)/min(u_res.x,u_res.y);',
+      '  float d=length(p)*.06;',
+      '  float r=.05/abs(p.y+sin((p.x*(1.+d)+u_time))*0.5);',
+      '  float g=.05/abs(p.y+sin((p.x+u_time))*0.5);',
+      '  float b=.05/abs(p.y+sin((p.x*(1.-d)+u_time))*0.5);',
+      '  gl_FragColor=vec4(r,g,b,1.);',
+      '}'
+    ].join('\n');
+    function mk(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+    var prog=gl.createProgram();
+    gl.attachShader(prog,mk(gl.VERTEX_SHADER,VS));
+    gl.attachShader(prog,mk(gl.FRAGMENT_SHADER,FS));
+    gl.linkProgram(prog); gl.useProgram(prog);
+    var buf=gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    var ap=gl.getAttribLocation(prog,'a_pos');
+    gl.enableVertexAttribArray(ap); gl.vertexAttribPointer(ap,2,gl.FLOAT,false,0,0);
+    var uR=gl.getUniformLocation(prog,'u_res');
+    var uT=gl.getUniformLocation(prog,'u_time');
+    var t=0;
+    function resize(){
+      canvas.width=canvas.offsetWidth||canvas.parentElement.offsetWidth;
+      canvas.height=canvas.offsetHeight||canvas.parentElement.offsetHeight;
+      gl.viewport(0,0,canvas.width,canvas.height);
+      gl.uniform2f(uR,canvas.width,canvas.height);
+    }
+    function render(){t+=.008;gl.uniform1f(uT,t);gl.drawArrays(gl.TRIANGLES,0,6);requestAnimationFrame(render);}
+    resize(); render();
+    window.addEventListener('resize',resize);
+  })();
+});
+
+// Hide landing on start — show login
+document.getElementById('landing').style.display = 'none';
+
+/* ══════════════════════════════════════
+   AR-GE MERKEZİ
+══════════════════════════════════════ */
+var _argeTab = 'scratch';
+
+var _argeDefaults = {
+  scratch: {
+    'sc-bg-color':'#1a0a2e','sc-bg-hex':'#1a0a2e',
+    'sc-scratch-color':'#7c3aed','sc-scratch-hex':'#7c3aed',
+    'sc-title':'Scratch To Win',
+    'sc-subtitle':'Kartı kazıyarak ödülünü bul',
+    'sc-hint':'✦ Parmağınla veya mouse ile kazı',
+    'sc-prizes':'%10 İndirim — KOD: SCRATCH10\n%20 İndirim — KOD: SCRATCH20\nÜcretsiz Kargo — KOD: FREESHIP\n%30 İndirim — KOD: BIG30\nSürpriz Ödül — KOD: SURPRISE\nÇarşamba İndirimi — KOD: WED15'
+  },
+  spin: {
+    'sp-color1':'#7c3aed','sp-color1-hex':'#7c3aed',
+    'sp-color2':'#ec4899','sp-color2-hex':'#ec4899',
+    'sp-title':'Spin To Win','sp-btn':'ÇEVİR',
+    'sp-prizes':'%10 İndirim\n%20 İndirim\nÜcretsiz Kargo\n%30 İndirim\nÇarşamba İndirimi\nSürpriz Ödül\n%15 İndirim\nÖzel Teklif'
+  },
+  countdown: {
+    'cd-bg':'#0f0a1e','cd-bg-hex':'#0f0a1e',
+    'cd-accent':'#7c3aed','cd-accent-hex':'#7c3aed',
+    'cd-title':'İndirim için kalan süre',
+    'cd-subtitle':'Kampanyadan yararlanmak için acele edin.',
+    'cd-cta':'Hemen Başvur →',
+    'cd-hours':'2','cd-mins':'0'
+  },
+  anket: {
+    'ak-color':'#7c3aed','ak-color-hex':'#7c3aed',
+    'ak-title':'Görüşünüz bizim için değerli!',
+    'ak-count':'1',
+    'ak-q1':'Related Scenarios platformunu nasıl buldunuz?',
+    'ak-opts1':'Çok beğendim\nBeğendim\nOrta\nBeğenmedim',
+    'ak-type1':'single',
+    'ak-q2':'','ak-opts2':'','ak-type2':'single',
+    'ak-q3':'','ak-opts3':'','ak-type3':'single',
+    'ak-q4':'','ak-opts4':'','ak-type4':'single',
+    'ak-q5':'','ak-opts5':'','ak-type5':'single'
+  }
+};
+
+function argeInit() {
+  // Always start with defaults — restore default values
+  var defs = _argeDefaults;
+  ['scratch','spin','countdown','anket'].forEach(function(game) {
+    Object.keys(defs[game]||{}).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.value = defs[game][id];
+    });
+  });
+  argeSetTab('scratch', document.querySelector('.arge-tab'));
+}
+
+function argeSetTab(tab, btn) {
+  _argeTab = tab;
+  document.querySelectorAll('.arge-tab').forEach(function(el) { el.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  ['scratch','spin','countdown','anket','saves'].forEach(function(t) {
+    var el = document.getElementById('arge-form-' + t);
+    if (el) el.style.display = t === tab ? '' : 'none';
+  });
+  if (tab === 'saves') {
+    argeRenderSaves();
+  } else {
+    argePreview();
+  }
+}
+
+function syncColor(colorId, hexId) {
+  var colorEl = document.getElementById(colorId);
+  var hexEl = document.getElementById(hexId);
+  if (!colorEl || !hexEl) return;
+  // Determine which changed
+  if (document.activeElement === hexEl) {
+    var val = hexEl.value;
+    if (/^#[0-9a-fA-F]{6}$/.test(val)) colorEl.value = val;
+  } else {
+    hexEl.value = colorEl.value;
+  }
+  argePreview();
+}
+
+function argePreview() {
+  var box = document.getElementById('arge-preview-box');
+  if (!box) return;
+  var t = _argeTab;
+
+  if (t === 'scratch') {
+    var bg = document.getElementById('sc-bg-color') ? document.getElementById('sc-bg-color').value : '#1a0a2e';
+    var sc = document.getElementById('sc-scratch-color') ? document.getElementById('sc-scratch-color').value : '#7c3aed';
+    var title = document.getElementById('sc-title') ? document.getElementById('sc-title').value : 'Scratch To Win';
+    var subtitle = document.getElementById('sc-subtitle') ? document.getElementById('sc-subtitle').value : '';
+    var hint = document.getElementById('sc-hint') ? document.getElementById('sc-hint').value : '';
+    var prizesRaw = document.getElementById('sc-prizes') ? document.getElementById('sc-prizes').value : '';
+    var prizes = prizesRaw.split('\n').filter(function(p){ return p.trim(); });
+    box.innerHTML = '<div style="background:' + bg + ';padding:28px 24px;border-radius:20px;">' +
+      '<div style="text-align:center;margin-bottom:20px;">' +
+        '<div style="font-family:Orbitron,sans-serif;font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:6px;">' + title + '</div>' +
+        '<div style="font-family:Rajdhani,sans-serif;font-size:.85rem;color:#a78bfa88;">' + subtitle + '</div>' +
+      '</div>' +
+      '<div style="width:100%;height:120px;border-radius:14px;background:' + sc + ';display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;overflow:hidden;">' +
+        '<div style="font-size:2rem;opacity:.3;">🪙</div>' +
+        '<div style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:Rajdhani,sans-serif;font-size:.75rem;color:rgba(255,255,255,.6);">' + hint + '</div>' +
+      '</div>' +
+      '<div style="font-family:Rajdhani,sans-serif;font-size:.72rem;color:#7c3aed66;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Ödül Havuzu (' + prizes.length + ' ödül)</div>' +
+      '<div style="display:flex;flex-direction:column;gap:5px;">' +
+        prizes.slice(0,4).map(function(p){ return '<div style="background:rgba(124,58,237,.12);border:1px solid #7c3aed22;border-radius:8px;padding:7px 12px;font-family:Rajdhani,sans-serif;font-size:.82rem;color:#c4b5fd;">' + p + '</div>'; }).join('') +
+        (prizes.length > 4 ? '<div style="font-family:Rajdhani,sans-serif;font-size:.75rem;color:#7c3aed66;text-align:center;padding-top:4px;">+ ' + (prizes.length-4) + ' daha...</div>' : '') +
+      '</div>' +
+    '</div>';
+
+  } else if (t === 'spin') {
+    var c1 = document.getElementById('sp-color1') ? document.getElementById('sp-color1').value : '#7c3aed';
+    var c2 = document.getElementById('sp-color2') ? document.getElementById('sp-color2').value : '#ec4899';
+    var title = document.getElementById('sp-title') ? document.getElementById('sp-title').value : 'Spin To Win';
+    var btn = document.getElementById('sp-btn') ? document.getElementById('sp-btn').value : 'ÇEVİR';
+    var prizesRaw = document.getElementById('sp-prizes') ? document.getElementById('sp-prizes').value : '';
+    var prizes = prizesRaw.split('\n').filter(function(p){ return p.trim(); });
+    var slices = prizes.slice(0,8);
+    var svgSize = 200; var cx = svgSize/2; var cy = svgSize/2; var r = svgSize/2 - 4;
+    var sliceSvg = ''; var n = slices.length || 8;
+    for (var i=0; i<n; i++) {
+      var a1 = (i/n)*Math.PI*2 - Math.PI/2;
+      var a2 = ((i+1)/n)*Math.PI*2 - Math.PI/2;
+      var x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+      var x2=cx+r*Math.cos(a2), y2=cy+r*Math.sin(a2);
+      var color = i%2===0 ? c1 : c2;
+      sliceSvg += '<path d="M'+cx+','+cy+' L'+x1+','+y1+' A'+r+','+r+' 0 0,1 '+x2+','+y2+' Z" fill="'+color+'" stroke="#07061a" stroke-width="1.5"/>';
+      var mid = (a1+a2)/2; var tr=r*.65;
+      sliceSvg += '<text x="'+(cx+tr*Math.cos(mid))+'" y="'+(cy+tr*Math.sin(mid))+'" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-size="9" font-family="Rajdhani,sans-serif" font-weight="700">'+(slices[i]||'').slice(0,8)+'</text>';
+    }
+    box.innerHTML = '<div style="background:#07061a;padding:24px;border-radius:20px;text-align:center;">' +
+      '<div style="font-family:Orbitron,sans-serif;font-size:1rem;font-weight:900;color:#fff;margin-bottom:16px;">' + title + '</div>' +
+      '<svg width="' + svgSize + '" height="' + svgSize + '" viewBox="0 0 '+svgSize+' '+svgSize+'" style="border-radius:50%;overflow:hidden;">' + sliceSvg + '</svg>' +
+      '<div style="width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:20px solid #fff;margin:-4px auto 16px;"></div>' +
+      '<button style="background:linear-gradient(135deg,'+c1+','+c2+');border:none;color:#fff;padding:12px 36px;border-radius:30px;font-family:Rajdhani,sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;cursor:pointer;">' + btn + '</button>' +
+    '</div>';
+
+  } else if (t === 'countdown') {
+    var bg = document.getElementById('cd-bg') ? document.getElementById('cd-bg').value : '#0f0a1e';
+    var accent = document.getElementById('cd-accent') ? document.getElementById('cd-accent').value : '#7c3aed';
+    var title = document.getElementById('cd-title') ? document.getElementById('cd-title').value : '';
+    var subtitle = document.getElementById('cd-subtitle') ? document.getElementById('cd-subtitle').value : '';
+    var cta = document.getElementById('cd-cta') ? document.getElementById('cd-cta').value : '';
+    box.innerHTML = '<div style="background:' + bg + ';padding:28px 24px;border-radius:20px;">' +
+      '<div style="text-align:center;margin-bottom:20px;">' +
+        '<div style="font-family:Rajdhani,sans-serif;font-size:.8rem;color:' + accent + ';letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">' + title + '</div>' +
+        '<div style="font-family:Rajdhani,sans-serif;font-size:.85rem;color:rgba(255,255,255,.5);max-width:280px;margin:0 auto 20px;line-height:1.5;">' + subtitle + '</div>' +
+        '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:20px;">' +
+          ['01','59','43'].map(function(n,i){ return '<div style="text-align:center;"><div style="background:rgba(255,255,255,.08);border:1px solid '+accent+'44;border-radius:10px;padding:12px 16px;font-family:Orbitron,sans-serif;font-size:1.6rem;font-weight:900;color:#fff;min-width:56px;">'+n+'</div><div style="font-size:.65rem;color:'+accent+'88;margin-top:4px;font-family:Rajdhani,sans-serif;letter-spacing:1px;">'+['SAAT','DAKİKA','SANİYE'][i]+'</div></div>'; }).join('') +
+        '</div>' +
+        '<button style="background:linear-gradient(135deg,'+accent+',#ec4899);border:none;color:#fff;padding:11px 28px;border-radius:30px;font-family:Rajdhani,sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;">' + cta + '</button>' +
+      '</div>' +
+    '</div>';
+
+  } else if (t === 'anket') {
+    var accent = document.getElementById('ak-color') ? document.getElementById('ak-color').value : '#7c3aed';
+    var title = document.getElementById('ak-title') ? document.getElementById('ak-title').value : '';
+    var count = parseInt((document.getElementById('ak-count')||{}).value) || 1;
+    var q1 = document.getElementById('ak-q1') ? document.getElementById('ak-q1').value : '';
+    var optsRaw = document.getElementById('ak-opts1') ? document.getElementById('ak-opts1').value : '';
+    var opts = optsRaw.split('\n').filter(function(o){ return o.trim(); });
+    box.innerHTML = '<div style="background:#0e0b28;padding:24px;border-radius:20px;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">' +
+        '<div style="font-family:Rajdhani,sans-serif;font-size:.75rem;font-weight:700;color:'+accent+';letter-spacing:1.5px;text-transform:uppercase;">ANKET — 1/'+count+'</div>' +
+        '<div style="font-family:Rajdhani,sans-serif;font-size:.75rem;color:rgba(255,255,255,.3);">✕</div>' +
+      '</div>' +
+      '<div style="height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:20px;"><div style="width:'+(100/count)+'%;height:100%;background:'+accent+';border-radius:2px;"></div></div>' +
+      '<div style="font-family:Orbitron,sans-serif;font-size:.95rem;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.4;">' + title + '</div>' +
+      '<div style="font-family:Rajdhani,sans-serif;font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:18px;">' + q1 + '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:8px;">' +
+        opts.map(function(o){ return '<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;font-family:Rajdhani,sans-serif;font-size:.9rem;color:#c4b5fd;cursor:pointer;">' + o + '</div>'; }).join('') +
+      '</div>' +
+    '</div>';
+  }
+}
+
+function argeQCount() {
+  var count = parseInt((document.getElementById('ak-count')||{}).value) || 1;
+  count = Math.min(5, Math.max(1, count));
+  for (var i = 1; i <= 5; i++) {
+    var block = document.getElementById('arge-q-' + i);
+    if (block) block.style.display = i <= count ? '' : 'none';
+  }
+  argePreview();
+}
+
+var _argeFormFields = {
+  scratch: ['sc-bg-color','sc-bg-hex','sc-scratch-color','sc-scratch-hex','sc-title','sc-subtitle','sc-hint','sc-prizes'],
+  spin: ['sp-color1','sp-color1-hex','sp-color2','sp-color2-hex','sp-title','sp-btn','sp-prizes'],
+  countdown: ['cd-bg','cd-bg-hex','cd-accent','cd-accent-hex','cd-title','cd-subtitle','cd-cta','cd-hours','cd-mins'],
+  anket: ['ak-color','ak-color-hex','ak-title','ak-count',
+    'ak-q1','ak-opts1','ak-type1',
+    'ak-q2','ak-opts2','ak-type2',
+    'ak-q3','ak-opts3','ak-type3',
+    'ak-q4','ak-opts4','ak-type4',
+    'ak-q5','ak-opts5','ak-type5']
+};
+var _argeNameInputs = {scratch:'sc-savename', spin:'sp-savename', countdown:'cd-savename', anket:'ak-savename'};
+var _argeGameLabels = {scratch:'🪙 Scratch', spin:'🎡 Spin', countdown:'⏱️ Countdown', anket:'📋 Anket'};
+
+function argeSave(game) {
+  var nameEl = document.getElementById(_argeNameInputs[game]);
+  var name = nameEl ? nameEl.value.trim() : '';
+  if (!name) {
+    if (nameEl) { nameEl.style.borderColor='#f87171'; setTimeout(function(){ nameEl.style.borderColor=''; }, 1500); }
+    return;
+  }
+  var data = {};
+  (_argeFormFields[game] || []).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) data[id] = el.value;
+  });
+  var saves = JSON.parse(localStorage.getItem('arge_saves') || '[]');
+  saves.push({
+    id: Date.now().toString(),
+    name: name,
+    game: game,
+    data: data,
+    date: new Date().toLocaleDateString('tr-TR')
+  });
+  localStorage.setItem('arge_saves', JSON.stringify(saves));
+  if (nameEl) nameEl.value = '';
+  var msg = document.getElementById('arge-saved-' + game);
+  if (msg) { msg.style.color='#34d399'; msg.textContent='✓ Kaydedildi!'; msg.style.display='block'; setTimeout(function(){ msg.style.display='none'; }, 2000); }
+}
+
+function argeRenderSaves() {
+  var box = document.getElementById('arge-form-saves');
+  if (!box) return;
+  var saves = JSON.parse(localStorage.getItem('arge_saves') || '[]');
+  if (saves.length === 0) {
+    box.innerHTML = '<div class="arge-saves-empty">📭 Henüz kaydedilmiş özelleştirme yok.<br><span style="font-size:.8rem;color:#7c3aed44;">Scratch, Spin, Countdown veya Anket sekmesinde<br>ayarları düzenleyip kayıt adı girerek kaydet.</span></div>';
+    return;
+  }
+  box.innerHTML = saves.map(function(s) {
+    return '<div class="arge-save-item">' +
+      '<div class="arge-save-item-top">' +
+        '<div class="arge-save-item-name">' + s.name + '</div>' +
+      '</div>' +
+      '<div class="arge-save-item-meta">' + (_argeGameLabels[s.game]||s.game) + ' &nbsp;·&nbsp; ' + (s.date||'') + '</div>' +
+      '<div class="arge-save-item-btns">' +
+        '<button class="arge-save-run-btn" onclick="argeRunSave(\'' + s.id + '\')">▶ Önizle</button>' +
+        '<button class="arge-save-del-btn" onclick="argeDeleteSave(\'' + s.id + '\')">🗑 Sil</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function argeRunSave(id) {
+  var saves = JSON.parse(localStorage.getItem('arge_saves') || '[]');
+  var s = saves.filter(function(x){ return x.id === id; })[0];
+  if (!s) return;
+  var d = s.data;
+  var box = document.getElementById('arge-preview-box');
+  if (!box) return;
+  var label = document.querySelector('.arge-preview-label');
+  if (label) label.textContent = '▶ Oynuyor: ' + s.name;
+
+  /* Sayfanın tüm CSS'ini topla */
+  var css = '';
+  document.querySelectorAll('style').forEach(function(el){ css += el.textContent + '\n'; });
+  var overrideCss = '.game-page{display:block!important;position:static!important;transform:none!important;opacity:1!important;height:auto!important;min-height:100vh;}' +
+    '.arge-topbar,.game-topbar,.back-btn{display:none!important}' +
+    'body{margin:0;overflow:auto;}' +
+    '#db-main,#landing,.db-sidebar,.db-topbar,#login-screen,#page-arge{display:none!important}';
+  var fonts = '<link rel="preconnect" href="https://fonts.googleapis.com">' +
+    '<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">';
+
+  /* Script bloğunu bul: initFn adını içeren scripti döndür */
+  function findScript(initFn) {
+    var found = '';
+    document.querySelectorAll('script:not([src])').forEach(function(el){
+      if (el.textContent.indexOf('function ' + initFn) !== -1) found = el.textContent;
+    });
+    return found;
+  }
+
+  /* Kaydedilmiş ayarları DOM'a inject eden JS */
+  function settingsJs(data) {
+    return Object.keys(data).map(function(fid){
+      return 'try{var _e=document.getElementById('+JSON.stringify(fid)+');if(_e)_e.value='+JSON.stringify(data[fid])+'}catch(e){}';
+    }).join('\n');
+  }
+
+  var html = '';
+
+  /* Simüle website arka planı + overlay yapısı */
+  var simWrap = '<div style="position:relative;width:100%;height:100vh;overflow:hidden;background:linear-gradient(180deg,#0e0b28 0%,#16103c 100%);display:flex;flex-direction:column;">' +
+    '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;filter:blur(2px) brightness(.55);pointer-events:none;user-select:none;">' +
+      '<h2 style="font-family:Orbitron,sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;background:linear-gradient(135deg,#fff 30%,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">BÜYÜME SENARYOLARI</h2>' +
+      '<p style="color:#a78bfa55;margin-top:12px;font-family:Rajdhani,sans-serif;">Related Scenarios — Oyunlar &amp; Kurgular</p>' +
+    '</div>' +
+    '<div style="position:absolute;inset:0;background:rgba(7,6,26,.78);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10;">';
+  var simWrapClose = '</div></div>';
+
+  if (s.game === 'scratch') {
+    var pageEl = document.getElementById('page-scratch');
+    if (!pageEl) return;
+    var cardEl = pageEl.querySelector('.game-card-wrap');
+    var cardHtml = cardEl ? cardEl.outerHTML : pageEl.outerHTML;
+    var gameScript = findScript('sInit');
+    var prizes = (d['sc-prizes']||'').split('\n').filter(function(p){return p.trim();});
+    var prizesJs = '_sPrizes=' + JSON.stringify(prizes.map(function(p,i){
+      var parts = p.split('—'); var nm = (parts[0]||p).trim(); var cd = ((parts[1]||'').replace(/KOD:/i,'').trim()||'CODE'+i);
+      return {icon:['🎉','🚚','⚡','🏆','⭐','🎁'][i%6], name:nm, code:cd, desc:''};
+    })) + ';';
+    html = '<!DOCTYPE html><html><head><meta charset="utf-8">'+fonts+
+      '<style>'+css+'\nbody{margin:0;overflow:hidden;}.game-card-wrap{background:var(--card-bg,#13103a);border-radius:20px;max-height:90vh;overflow-y:auto;}</style></head><body>'+
+      simWrap + cardHtml + simWrapClose+
+      '<script>function showLanding(){}function showGame(){}function dbCloseSidebar(){}\n'+
+      'var _cdInterval=null;\n'+
+      settingsJs(d)+'\n'+
+      gameScript+'\n'+
+      prizesJs+'\n'+
+      'try{sInit();}catch(e){console.error(e);}'+
+      '<\/script></body></html>';
+
+  } else if (s.game === 'spin') {
+    var pageEl = document.getElementById('page-spin');
+    if (!pageEl) return;
+    var cardEl = pageEl.querySelector('.game-card-wrap');
+    var cardHtml = cardEl ? cardEl.outerHTML : pageEl.outerHTML;
+    var gameScript = findScript('pInit');
+    var spinPrizes = (d['sp-prizes']||'').split('\n').filter(function(p){return p.trim();});
+    var spinPrizesJs = 'if(typeof _pSlices!=="undefined")_pSlices='+JSON.stringify(spinPrizes)+';';
+    html = '<!DOCTYPE html><html><head><meta charset="utf-8">'+fonts+
+      '<style>'+css+'\nbody{margin:0;overflow:hidden;}.game-card-wrap{background:var(--card-bg,#13103a);border-radius:20px;max-height:90vh;overflow-y:auto;}</style></head><body>'+
+      simWrap + cardHtml + simWrapClose+
+      '<script>function showLanding(){}function showGame(){}function dbCloseSidebar(){}\n'+
+      'var _cdInterval=null;\n'+
+      settingsJs(d)+'\n'+
+      gameScript+'\n'+
+      spinPrizesJs+'\n'+
+      'try{pInit();}catch(e){console.error(e);}'+
+      '<\/script></body></html>';
+
+  } else if (s.game === 'countdown') {
+    var pageEl = document.getElementById('page-countdown');
+    if (!pageEl) return;
+    var hours = parseInt(d['cd-hours']||'2')||2;
+    var mins  = parseInt(d['cd-mins']||'0')||0;
+    var totalMs = (hours*3600 + mins*60)*1000;
+    /* cdInit'i yeniden yaz, DURATION override ile */
+    var cdScript =
+      'var _cdInterval=null;\n'+
+      'function cdStop(){if(_cdInterval){clearInterval(_cdInterval);_cdInterval=null;}}\n'+
+      'function cdInit(){\n'+
+      '  var start=Date.now(),DURATION='+totalMs+';\n'+
+      '  function pad(n){return String(Math.floor(n)).padStart(2,"0");}\n'+
+      '  function update(){\n'+
+      '    var el=Date.now()-start,rem=Math.max(0,DURATION-el);\n'+
+      '    var h=Math.floor(rem/3600000),m=Math.floor((rem%3600000)/60000),s=Math.floor((rem%60000)/1000);\n'+
+      '    var eH=document.getElementById("cd-h"),eM=document.getElementById("cd-m"),eS=document.getElementById("cd-s");\n'+
+      '    if(!eH)return;\n'+
+      '    eH.textContent=pad(h);eM.textContent=pad(m);eS.textContent=pad(s);\n'+
+      '    eS.classList.add("tick");setTimeout(function(){eS.classList.remove("tick");},200);\n'+
+      '    if(rem===0)cdStop();\n'+
+      '  }\n'+
+      '  cdStop();update();_cdInterval=setInterval(update,1000);\n'+
+      '}\n';
+    html = '<!DOCTYPE html><html><head><meta charset="utf-8">'+fonts+
+      '<style>'+css+'\n'+overrideCss+'</style></head><body>'+
+      pageEl.outerHTML+
+      '<script>function showLanding(){}function showGame(){}function dbCloseSidebar(){}\n'+
+      settingsJs(d)+'\n'+
+      cdScript+
+      'try{cdInit();}catch(e){console.error(e);}'+
+      '<\/script></body></html>';
+
+  } else if (s.game === 'anket') {
+    var pageEl = document.getElementById('page-anket');
+    if (!pageEl) return;
+    var count = parseInt(d['ak-count']||'1')||1;
+    /* Soruları kayıttan oluştur ve anket-steps HTML'ini güncelle */
+    var cloned = pageEl.cloneNode(true);
+    var stepsEl = cloned.querySelector('#anket-steps');
+    if (stepsEl) {
+      var stepsHtml = '';
+      for (var qi=1; qi<=count; qi++) {
+        var q    = (d['ak-q'+qi]||'').replace(/</g,'&lt;');
+        var opts = (d['ak-opts'+qi]||'').split('\n').filter(function(o){return o.trim();});
+        var type = d['ak-type'+qi]||'single';
+        var fn   = type==='multi' ? 'toggleOpt(this)' : 'selectOpt(this)';
+        stepsHtml += '<div class="anket-step" data-step="'+qi+'"'+(qi>1?' style="display:none"':'')+'>'+
+          '<div class="anket-question">'+q+'</div>'+
+          '<div class="anket-options">'+
+          opts.map(function(o){ return '<div class="anket-opt" onclick="'+fn+'"><span class="anket-opt-check"></span>'+o.replace(/</g,'&lt;')+'</div>'; }).join('')+
+          '</div></div>';
+      }
+      stepsEl.innerHTML = stepsHtml;
+    }
+    /* Overlay baştan görünür olsun */
+    var ov = cloned.querySelector('#anket-overlay');
+    if (ov) ov.classList.add('visible');
+    /* anket JS fonksiyonları — asıl sayfa kopyası */
+    var anketScript =
+      'var _anketStep=1,_anketTotal='+count+';\n'+
+      'function selectOpt(el){var os=el.closest(".anket-options").querySelectorAll(".anket-opt");os.forEach(function(o){o.classList.remove("selected");});el.classList.add("selected");}\n'+
+      'function toggleOpt(el){el.classList.toggle("selected");}\n'+
+      'function renderAnketStep(){\n'+
+      '  document.querySelectorAll("#anket-steps .anket-step").forEach(function(s){s.style.display=s.dataset.step==_anketStep?"":"none";});\n'+
+      '  var pct=Math.round((_anketStep/_anketTotal)*100);\n'+
+      '  var pr=document.getElementById("anket-progress");if(pr)pr.style.width=pct+"%";\n'+
+      '  var ct=document.getElementById("anket-counter");if(ct)ct.textContent=_anketStep+"/"+_anketTotal;\n'+
+      '  var pv=document.getElementById("anket-prev");if(pv)pv.style.display=_anketStep>1?"":"";\n'+
+      '  var nx=document.getElementById("anket-next");if(nx)nx.textContent=_anketStep===_anketTotal?"Abone Ol ve İlerle":"İleri";\n'+
+      '}\n'+
+      'function anketNext(){\n'+
+      '  if(_anketStep===_anketTotal){\n'+
+      '    ["anket-steps","anket-nav","anket-counter"].forEach(function(i){var e=document.getElementById(i);if(e)e.style.display="none";});\n'+
+      '    var pr=document.getElementById("anket-progress");if(pr)pr.style.width="100%";\n'+
+      '    var ty=document.getElementById("anket-thankyou");if(ty)ty.classList.add("show");\n'+
+      '    return;\n'+
+      '  }\n'+
+      '  _anketStep++;renderAnketStep();\n'+
+      '}\n'+
+      'function anketPrev(){if(_anketStep<=1)return;_anketStep--;renderAnketStep();}\n'+
+      'function closeAnket(){var o=document.getElementById("anket-overlay");if(o)o.classList.remove("visible");}\n'+
+      'renderAnketStep();\n';
+    html = '<!DOCTYPE html><html><head><meta charset="utf-8">'+fonts+
+      '<style>'+css+'\n'+overrideCss+'\n#anket-overlay{position:fixed!important;}</style></head><body>'+
+      cloned.outerHTML+
+      '<script>function showLanding(){}function showGame(){}function dbCloseSidebar(){}\n'+
+      anketScript+
+      '<\/script></body></html>';
+  }
+
+  /* Site içinde aç — showGame ile */
+  if (html) {
+    var titleEl = document.getElementById('arge-preview-title');
+    if (titleEl) titleEl.textContent = s.name;
+    var frame = document.getElementById('arge-preview-frame');
+    if (frame) frame.setAttribute('srcdoc', html);
+    showGame('arge-preview', s.name);
+  }
+}
+
+function argeDeleteSave(id) {
+  var saves = JSON.parse(localStorage.getItem('arge_saves') || '[]');
+  saves = saves.filter(function(x){ return x.id !== id; });
+  localStorage.setItem('arge_saves', JSON.stringify(saves));
+  argeRenderSaves();
+}
+
+function argeReset(game) {
+  localStorage.removeItem('arge_' + game);
+  var defs = _argeDefaults[game] || {};
+  Object.keys(defs).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.value = defs[id];
+  });
+  argePreview();
+  var msg = document.getElementById('arge-saved-' + game);
+  if (msg) { msg.style.display='block'; msg.style.color='#f87171'; msg.textContent='✓ Sıfırlandı!';
+    setTimeout(function(){ msg.style.display='none'; msg.style.color='#34d399'; msg.textContent='✓ Kaydedildi!'; }, 2000); }
+}
+
+/* ── TR/EN Language ── */
+var _lang = 'tr';
+var _i18n = {
+  tr: {
+    'section-games':   'OYUNLAR',
+    'section-scenarios': 'KURGULAR',
+    'nav-squarespin':  'Kare Spin',
+    'nav-match':       'Emoji Eşleştir',
+    'nav-notification':'Bildirim Paneli',
+    'nav-kulakcik':    'Kulakçık',
+    'nav-popupscratch':'Pop-up Kazı Kazan',
+    'nav-anket':       'Anket',
+    'nav-webstory':    'Web Story',
+    'pill-hot':        'Popüler',
+    'pill-new':        'Yeni',
+    'back':            'Geri',
+    'topbar-popupscratch': 'Pop-up Kazı Kazan 🪙',
+    'topbar-anket':    'Anket 📋',
+    'topbar-kulakcik': 'Kulakçık 🏷️',
+    'topbar-notification': 'Bildirim Paneli 🔔',
+    'topbar-webstory': 'WEB STORY',
+    'game-squarespin': 'KARE SPIN',
+    'game-match':      'EMOJİ EŞLEŞTİR',
+    // chips: countdown
+    'chip-cd-0': '<strong>2 Saat</strong><span>Kullanıcı bazlı süre</span>',
+    'chip-cd-1': '<strong>LocalStorage</strong><span>Sayfa yenilense devam eder</span>',
+    'chip-cd-2': '<strong>Sıfır Kod</strong><span>Tek satırla entegre</span>',
+    // chips: sliding banner
+    'chip-sb-0': '<strong>3 Mesaj</strong><span>Sırayla döner</span>',
+    'chip-sb-1': '<strong>Sonsuz Döngü</strong><span>Kesintisiz kayan şerit</span>',
+    'chip-sb-2': '<strong>Tam Özelleştirme</strong><span>Metin & renk ayarlanır</span>',
+    // chips: bottom banner
+    'chip-bb-0': '<strong>3 Mesaj</strong><span>Yukarı kayarak döner</span>',
+    'chip-bb-1': '<strong>Sticky</strong><span>Scroll\'da da kalır</span>',
+    'chip-bb-2': '<strong>✕ Kapat</strong><span>Kullanıcı kapatabilir</span>',
+    // chips: popupscratch
+    'chip-ps-0': '<strong>1sn Gecikme</strong><span>Sayfa açılınca çıkar</span>',
+    'chip-ps-1': '<strong>Kazı & Kazan</strong><span>%70 kazınınca ödül</span>',
+    'chip-ps-2': '<strong>✕ Kapat</strong><span>Kullanıcı kapatabilir</span>',
+    // chips: web story
+    'chip-ws-0': '<strong>Story Daireleri</strong><span>Tıkla, story aç</span>',
+    'chip-ws-1': '<strong>4 Story</strong><span>Her oyun için</span>',
+    'chip-ws-2': '<strong>Keşfet</strong><span>Oyuna yönlendir</span>',
+    // chips: anket
+    'chip-ak-0': '<strong>7 Soru</strong><span>Adım adım anket</span>',
+    'chip-ak-1': '<strong>1-2sn Gecikme</strong><span>Sayfa açılınca çıkar</span>',
+    'chip-ak-2': '<strong>✕ Kapat</strong><span>Oturumda bir kez</span>',
+    // chips: kulakcik
+    'chip-kl-0': '<strong>Toggle</strong><span>Aç / kapat</span>',
+    'chip-kl-1': '<strong>Geri Sayım</strong><span>2 saatlik süre</span>',
+    'chip-kl-2': '<strong>Yapışık Değil</strong><span>Hafif boşluklu</span>',
+    // chips: sidebar
+    'chip-sd-0': '<strong>Sağdan Açılır</strong><span>Smooth slide animasyonu</span>',
+    'chip-sd-1': '<strong>YGZPLAY</strong><span>Özel kupon kodu</span>',
+    'chip-sd-2': '<strong>Otomatik</strong><span>1.5sn sonra açılır</span>',
+    // chips: notification
+    'chip-nt-0': '<strong>Sallanıyor</strong><span>Çan dikkat çeker</span>',
+    'chip-nt-1': '<strong>2 Bildirim</strong><span>Sabit içerik</span>',
+    'chip-nt-2': '<strong>Dropdown</strong><span>Tıkla & görüntüle</span>',
+  },
+  en: {
+    'section-games':   'GAMES',
+    'section-scenarios': 'SCENARIOS',
+    'nav-squarespin':  'Square Spin',
+    'nav-match':       'Emoji Match',
+    'nav-notification':'Notification Panel',
+    'nav-kulakcik':    'Tab Widget',
+    'nav-popupscratch':'Pop-up Scratch Card',
+    'nav-anket':       'Survey',
+    'nav-webstory':    'Web Story',
+    'pill-hot':        'Popular',
+    'pill-new':        'New',
+    'back':            'Back',
+    'topbar-popupscratch': 'Pop-up Scratch Card 🪙',
+    'topbar-anket':    'Survey 📋',
+    'topbar-kulakcik': 'Tab Widget 🏷️',
+    'topbar-notification': 'Notification Panel 🔔',
+    'topbar-webstory': 'WEB STORY',
+    'game-squarespin': 'SQUARE SPIN',
+    'game-match':      'EMOJI MATCH',
+    // chips: countdown
+    'chip-cd-0': '<strong>2 Hours</strong><span>User-based duration</span>',
+    'chip-cd-1': '<strong>LocalStorage</strong><span>Continues after refresh</span>',
+    'chip-cd-2': '<strong>Zero Code</strong><span>Integrate in one line</span>',
+    // chips: sliding banner
+    'chip-sb-0': '<strong>3 Messages</strong><span>Rotates sequentially</span>',
+    'chip-sb-1': '<strong>Infinite Loop</strong><span>Continuous sliding ribbon</span>',
+    'chip-sb-2': '<strong>Full Customization</strong><span>Text & color adjustable</span>',
+    // chips: bottom banner
+    'chip-bb-0': '<strong>3 Messages</strong><span>Rotates sliding up</span>',
+    'chip-bb-1': '<strong>Sticky</strong><span>Stays on scroll</span>',
+    'chip-bb-2': '<strong>✕ Close</strong><span>User can close</span>',
+    // chips: popupscratch
+    'chip-ps-0': '<strong>0.3s Delay</strong><span>Appears on page load</span>',
+    'chip-ps-1': '<strong>Scratch & Win</strong><span>Prize at 70% scratch</span>',
+    'chip-ps-2': '<strong>✕ Close</strong><span>User can close</span>',
+    // chips: web story
+    'chip-ws-0': '<strong>Story Circles</strong><span>Click, open story</span>',
+    'chip-ws-1': '<strong>4 Stories</strong><span>One per game</span>',
+    'chip-ws-2': '<strong>Discover</strong><span>Directs to game</span>',
+    // chips: anket
+    'chip-ak-0': '<strong>7 Questions</strong><span>Step-by-step survey</span>',
+    'chip-ak-1': '<strong>0.3s Delay</strong><span>Appears on page load</span>',
+    'chip-ak-2': '<strong>✕ Close</strong><span>Once per session</span>',
+    // chips: kulakcik
+    'chip-kl-0': '<strong>Toggle</strong><span>Open / close</span>',
+    'chip-kl-1': '<strong>Countdown</strong><span>2-hour duration</span>',
+    'chip-kl-2': '<strong>Not Sticky</strong><span>Slightly spaced</span>',
+    // chips: sidebar
+    'chip-sd-0': '<strong>Opens from Right</strong><span>Smooth slide animation</span>',
+    'chip-sd-1': '<strong>YGZPLAY</strong><span>Special coupon code</span>',
+    'chip-sd-2': '<strong>Auto</strong><span>Opens after 1.5s</span>',
+    // chips: notification
+    'chip-nt-0': '<strong>Shaking</strong><span>Bell catches attention</span>',
+    'chip-nt-1': '<strong>2 Notifications</strong><span>Fixed content</span>',
+    'chip-nt-2': '<strong>Dropdown</strong><span>Click & view</span>',
+  }
+};
+
+function setLang(l) {
+  _lang = l;
+  var T = _i18n[l] || _i18n.tr;
+
+  // toggle buttons
+  document.getElementById('lang-tr').classList.toggle('active', l === 'tr');
+  document.getElementById('lang-en').classList.toggle('active', l === 'en');
+
+  // data-tr/en elements
+  document.querySelectorAll('[data-tr]').forEach(function(el) {
+    el.innerHTML = el.getAttribute('data-' + l) || el.getAttribute('data-tr');
+  });
+
+  // sidebar section labels (preserve SVG)
+  document.querySelectorAll('.db-section-label').forEach(function(el, i) {
+    var svg = el.querySelector('svg');
+    var svgHtml = svg ? svg.outerHTML : '';
+    el.innerHTML = svgHtml + '\n          ' + (i === 0 ? T['section-games'] : T['section-scenarios']);
+  });
+
+  // sidebar nav item texts by data-id
+  ['squarespin','match','notification','kulakcik','popupscratch','anket','webstory'].forEach(function(id) {
+    var el = document.querySelector('.db-nav-item[data-id="' + id + '"] .db-item-text');
+    if (el) el.textContent = T['nav-' + id];
+  });
+
+  // pills
+  document.querySelectorAll('.db-item-pill.hot').forEach(function(el) { el.textContent = T['pill-hot']; });
+  document.querySelectorAll('.db-item-pill:not(.hot)').forEach(function(el) { el.textContent = T['pill-new']; });
+
+  // back buttons (preserve SVG)
+  document.querySelectorAll('.back-btn').forEach(function(el) {
+    var svg = el.querySelector('svg');
+    if (svg) el.innerHTML = svg.outerHTML + '\n      ' + T['back'];
+  });
+
+  // topbar titles
+  document.querySelectorAll('.topbar-title').forEach(function(el) {
+    var txt = el.textContent;
+    if (txt.includes('Kazı Kazan') || txt.includes('Scratch Card')) el.textContent = T['topbar-popupscratch'];
+    else if (txt.includes('Anket') || txt.includes('Survey')) el.textContent = T['topbar-anket'];
+    else if (txt.includes('Kulakçık') || txt.includes('Tab Widget')) el.textContent = T['topbar-kulakcik'];
+    else if (txt.includes('Bildirim') || txt.includes('Notification')) el.textContent = T['topbar-notification'];
+  });
+
+  // game topbar titles
+  document.querySelectorAll('.game-topbar-title').forEach(function(el) {
+    var txt = el.textContent;
+    if (txt.includes('KARE') || txt.includes('SQUARE')) el.textContent = T['game-squarespin'];
+    else if (txt.includes('EŞLEŞTİR') || txt.includes('MATCH')) el.textContent = T['game-match'];
+  });
+
+  // demo chips by page
+  var chipMap = {
+    countdown:    ['chip-cd-0','chip-cd-1','chip-cd-2'],
+    slidingbanner:['chip-sb-0','chip-sb-1','chip-sb-2'],
+    bottombanner: ['chip-bb-0','chip-bb-1','chip-bb-2'],
+    popupscratch: ['chip-ps-0','chip-ps-1','chip-ps-2'],
+    webstory:     ['chip-ws-0','chip-ws-1','chip-ws-2'],
+    anket:        ['chip-ak-0','chip-ak-1','chip-ak-2'],
+    kulakcik:     ['chip-kl-0','chip-kl-1','chip-kl-2'],
+    sidebar:      ['chip-sd-0','chip-sd-1','chip-sd-2'],
+    notification: ['chip-nt-0','chip-nt-1','chip-nt-2']
+  };
+  Object.keys(chipMap).forEach(function(pageId) {
+    var page = document.getElementById('page-' + pageId);
+    if (!page) return;
+    var chips = page.querySelectorAll('.demo-chip');
+    chipMap[pageId].forEach(function(key, i) {
+      if (chips[i] && T[key]) chips[i].innerHTML = T[key];
+    });
+  });
+}
+
+/* ── Web Story ── */
+var _wsData = [
+  {
+    icon: '🪙',
+    title: 'Scratch To Win',
+    desc: 'Kullanıcılarına anında kazanma heyecanı yaşat. Kazı-kazan oyunuyla dönüşüm oranını artır.',
+    bg: 'linear-gradient(160deg,#1e003a 0%,#7c3aed 50%,#ec4899 100%)',
+    game: 'scratch'
+  },
+  {
+    icon: '🎡',
+    title: 'Spin To Win',
+    desc: 'Çarkı çevir, ödülü kap! Müşterilerini eğlenceleri bir deneyimle bağ.',
+    bg: 'linear-gradient(160deg,#1a0a00 0%,#f59e0b 50%,#ec4899 100%)',
+    game: 'spin'
+  },
+  {
+    icon: '🎰',
+    title: 'Pop-up Kazı Kazan',
+    desc: 'Sitenize giren kullanıcıya anında kazı-kazan sun. Alışveriş öncesi etkileşimi zirveye taşı.',
+    bg: 'linear-gradient(160deg,#001a0e 0%,#10b981 50%,#3b82f6 100%)',
+    game: 'popupscratch'
+  },
+  {
+    icon: '📋',
+    title: 'Anket',
+    desc: 'Kullanıcılarını tanı, onlara özel deneyimler sun. Anket ile veri topla, büyümeni hızlandır.',
+    bg: 'linear-gradient(160deg,#000a1a 0%,#6366f1 50%,#06b6d4 100%)',
+    game: 'anket'
+  }
+];
+var _wsTimer = null;
+var _wsDur = 6000;
+
+function wsOpen(idx) {
+  var d = _wsData[idx];
+  var ov = document.getElementById('ws-overlay');
+  var bg = document.getElementById('ws-bg');
+  var icon = document.getElementById('ws-icon');
+  var title = document.getElementById('ws-title');
+  var desc = document.getElementById('ws-desc');
+  var prog = document.getElementById('ws-prog');
+  var cta = document.getElementById('ws-cta');
+  if (!ov) return;
+  bg.style.background = d.bg;
+  icon.textContent = d.icon;
+  title.textContent = d.title;
+  desc.textContent = d.desc;
+  cta.onclick = function(e) { e.stopPropagation(); wsClose(); showGame(d.game, d.title); };
+  prog.style.transition = 'none';
+  prog.style.width = '0%';
+  ov.style.display = 'flex';
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      prog.style.transition = 'width ' + _wsDur + 'ms linear';
+      prog.style.width = '100%';
+    });
+  });
+  if (_wsTimer) clearTimeout(_wsTimer);
+  _wsTimer = setTimeout(wsClose, _wsDur);
+}
+
+function wsClose() {
+  var ov = document.getElementById('ws-overlay');
+  if (ov) ov.style.display = 'none';
+  if (_wsTimer) { clearTimeout(_wsTimer); _wsTimer = null; }
+}
+
+/* ── Wave Shader Background ── */
+(function() {
+  var canvas = document.getElementById('hero-shader');
+  if (!canvas) return;
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+
+  var VS = 'attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.,1.); }';
+  var FS = [
+    'precision highp float;',
+    'uniform vec2  u_res;',
+    'uniform float u_time;',
+    'void main(){',
+    '  vec2 p = (gl_FragCoord.xy * 2.0 - u_res) / min(u_res.x, u_res.y);',
+    '  float d  = length(p) * 0.06;',
+    '  float rx = p.x * (1.0 + d);',
+    '  float gx = p.x;',
+    '  float bx = p.x * (1.0 - d);',
+    '  float r = 0.05 / abs(p.y + sin((rx + u_time) * 1.0) * 0.5);',
+    '  float g = 0.05 / abs(p.y + sin((gx + u_time) * 1.0) * 0.5);',
+    '  float b = 0.05 / abs(p.y + sin((bx + u_time) * 1.0) * 0.5);',
+    '  gl_FragColor = vec4(r, g, b, 1.0);',
+    '}'
+  ].join('\n');
+
+  function mkShader(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+    return s;
+  }
+  var prog = gl.createProgram();
+  gl.attachShader(prog, mkShader(gl.VERTEX_SHADER, VS));
+  gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  gl.useProgram(prog);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  var aPos = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  var uRes = gl.getUniformLocation(prog, 'u_res');
+  var uTime = gl.getUniformLocation(prog, 'u_time');
+  var t = 0, rafId;
+
+  function resize() {
+    var w = canvas.offsetWidth || window.innerWidth;
+    var h = canvas.offsetHeight || window.innerHeight;
+    canvas.width = w; canvas.height = h;
+    gl.viewport(0, 0, w, h);
+    gl.uniform2f(uRes, w, h);
+  }
+  function render() {
+    t += 0.008;
+    gl.uniform1f(uTime, t);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    rafId = requestAnimationFrame(render);
+  }
+  resize();
+  render();
+  setTimeout(function(){ canvas.classList.add('ready'); }, 80);
+  window.addEventListener('resize', resize);
+
+  var _origSG2 = showGame;
+  showGame = function(id, name) { _origSG2(id, name); cancelAnimationFrame(rafId); };
+  var _origSL2 = showLanding;
+  showLanding = function() { _origSL2(); render(); };
+})();
+
 /* ── showGame hook: init oyunları ── */
 var _origShowGame = showGame;
 showGame = function(id, name) {
@@ -4125,6 +6447,8 @@ showGame = function(id, name) {
     if (id === 'match')      matchInit();
     if (id === 'anket')        initAnket();
     if (id === 'popupscratch') initPsPopup();
+    if (id === 'webstory')     wsClose();
+    if (id === 'arge')         argeInit();
   }, 50);
 };
 </script>
@@ -5306,6 +7630,249 @@ function mLose() {
     el.classList.add('flipped');
     el.style.opacity='.4';
   });
+}
+</script>
+
+<!-- ═══════════════════════════════════════════
+     BRAND SEARCH + UNDER ARMOUR SCENARIOS
+═══════════════════════════════════════════ -->
+<script>
+/* ── Brand data ── */
+var _brands = [
+  {
+    id: 'ua',
+    name: 'Under Armour',
+    aliases: ['under armour','underarmour','ua','under','armour'],
+    emoji: '🏋️',
+    page: 'brand-ua',
+    label: 'Under Armour — Senaryolar'
+  }
+];
+
+function brandSearch(val) {
+  var dd = document.getElementById('brand-search-dd');
+  if (!val || !val.trim()) { dd.classList.remove('open'); return; }
+  var q = val.toLowerCase().trim();
+  var matches = _brands.filter(function(b) {
+    return b.name.toLowerCase().indexOf(q) !== -1 ||
+      b.aliases.some(function(a){ return a.indexOf(q) !== -1; });
+  });
+  if (!matches.length) { dd.classList.remove('open'); return; }
+  dd.innerHTML = matches.map(function(b) {
+    return '<div class="brand-dd-item" onmousedown="brandOpenPage(\''+b.id+'\')">' +
+      '<span class="brand-dd-emoji">'+b.emoji+'</span>' +
+      '<span>'+b.name+'</span>' +
+      '</div>';
+  }).join('');
+  dd.classList.add('open');
+}
+
+function brandCloseDD() {
+  var dd = document.getElementById('brand-search-dd');
+  if (dd) dd.classList.remove('open');
+  var inp = document.getElementById('brand-search-input');
+  if (inp) inp.value = '';
+}
+
+function brandOpenPage(id) {
+  brandCloseDD();
+  var brand = _brands.find(function(b){ return b.id === id; });
+  if (!brand) return;
+  showGame(brand.page, brand.label);
+}
+
+/* ── Under Armour Scenarios ── */
+var _buaW = 316, _buaH = 140;
+var _buaDone = false, _buaPrize = null, _buaLX = null, _buaLY = null, _buaCtx = null;
+var _buaScraping = false;
+var _buaCdInterval = null;
+var _buaPopupTimer = null;
+
+var _buaPrizes = [
+  { icon:'⚡', name:'%20 İndirim',    code:'UA20',   desc:'Tüm UA ürünlerinde geçerli' },
+  { icon:'🚚', name:'Ücretsiz Kargo', code:'UASHIP', desc:'Minimum sepet şartı yok' },
+  { icon:'🎉', name:'%15 İndirim',    code:'UA15',   desc:'Seçili kategorilerde geçerli' },
+  { icon:'🏆', name:'%30 İndirim',    code:'UA30',   desc:'Sınırlı süreli kampanya' }
+];
+
+function brandUaInit() {
+  /* Countdown timer — always running in background */
+  if (_buaCdInterval) clearInterval(_buaCdInterval);
+  var start = Date.now();
+  var DURATION = 2 * 60 * 60 * 1000;
+  function pad(n) { return String(Math.floor(n)).padStart(2,'0'); }
+  function updateCd() {
+    var rem = Math.max(0, DURATION - (Date.now() - start));
+    var eh = document.getElementById('bcd-h');
+    var em = document.getElementById('bcd-m');
+    var es = document.getElementById('bcd-s');
+    if (!eh) { clearInterval(_buaCdInterval); return; }
+    eh.textContent = pad(Math.floor(rem/3600000));
+    em.textContent = pad(Math.floor((rem%3600000)/60000));
+    es.textContent = pad(Math.floor((rem%60000)/1000));
+    if (rem === 0) clearInterval(_buaCdInterval);
+  }
+  updateCd();
+  _buaCdInterval = setInterval(updateCd, 1000);
+
+  /* Hide all scenarios, init scratch */
+  document.getElementById('bua-cd-banner').style.display = 'none';
+  document.getElementById('bua-sb').style.display = 'none';
+  var overlay = document.getElementById('bua-popup-overlay');
+  if (overlay) overlay.classList.remove('open');
+  buaInitScratch();
+
+  /* Default: show scratch popup */
+  buaShowScenario('scratch');
+}
+
+function buaShowScenario(type) {
+  /* Update active state on sidebar */
+  document.querySelectorAll('.bua-sc-item').forEach(function(el){ el.classList.remove('active'); });
+  var activeItem = document.getElementById('bua-item-' + type);
+  if (activeItem) activeItem.classList.add('active');
+
+  /* Hide all */
+  document.getElementById('bua-cd-banner').style.display = 'none';
+  document.getElementById('bua-sb').style.display = 'none';
+  var overlay = document.getElementById('bua-popup-overlay');
+  if (overlay) overlay.classList.remove('open');
+
+  if (type === 'scratch') {
+    buaInitScratch();
+    setTimeout(function() {
+      var o = document.getElementById('bua-popup-overlay');
+      if (o) o.classList.add('open');
+    }, 250);
+  } else if (type === 'countdown') {
+    document.getElementById('bua-cd-banner').style.display = '';
+  } else if (type === 'sliding') {
+    document.getElementById('bua-sb').style.display = '';
+  } else if (type === 'both') {
+    document.getElementById('bua-cd-banner').style.display = '';
+    document.getElementById('bua-sb').style.display = '';
+  } else if (type === 'spin' || type === 'slot') {
+    /* Yakında — göster bilgi popup'ı */
+    buaInitScratch();
+    setTimeout(function() {
+      var o = document.getElementById('bua-popup-overlay');
+      if (o) o.classList.add('open');
+    }, 250);
+  }
+}
+
+function buaClosePopup() {
+  var o = document.getElementById('bua-popup-overlay');
+  if (o) o.classList.remove('open');
+}
+
+function buaInitScratch() {
+  var canvas = document.getElementById('bua-scratch-canvas');
+  if (!canvas) return;
+  canvas.removeEventListener('mousedown',  _buaDown);
+  canvas.removeEventListener('mousemove',  _buaMove);
+  canvas.removeEventListener('mouseup',    _buaUp);
+  canvas.removeEventListener('touchstart', _buaTDown);
+  canvas.removeEventListener('touchmove',  _buaTMove);
+  canvas.removeEventListener('touchend',   _buaUp);
+
+  _buaDone = false; _buaLX = null; _buaLY = null; _buaScraping = false;
+  _buaPrize = _buaPrizes[Math.floor(Math.random() * _buaPrizes.length)];
+
+  document.getElementById('bua-prize-icon').textContent = _buaPrize.icon;
+  document.getElementById('bua-prize-name').textContent = _buaPrize.name;
+  document.getElementById('bua-prize-code').textContent = '';
+  document.getElementById('bua-progress').style.width = '0%';
+  var res = document.getElementById('bua-result');
+  if (res) { res.classList.remove('show'); res.style.display = 'none'; }
+
+  var rect = canvas.parentElement.getBoundingClientRect();
+  if (rect.width > 0) { _buaW = rect.width; canvas.width = _buaW; }
+
+  _buaCtx = canvas.getContext('2d');
+  _buaCtx.clearRect(0, 0, _buaW, _buaH);
+
+  var grd = _buaCtx.createLinearGradient(0, 0, _buaW, _buaH);
+  grd.addColorStop(0, '#111');
+  grd.addColorStop(0.5, '#2a2a2a');
+  grd.addColorStop(1, '#000');
+  _buaCtx.fillStyle = grd;
+  _buaCtx.fillRect(0, 0, _buaW, _buaH);
+
+  _buaCtx.globalAlpha = .1;
+  _buaCtx.fillStyle = '#fff';
+  _buaCtx.font = 'bold 44px Arial';
+  _buaCtx.textAlign = 'center';
+  _buaCtx.fillText('UA', _buaW/2, _buaH/2 + 16);
+  _buaCtx.globalAlpha = 1;
+
+  _buaCtx.fillStyle = 'rgba(255,255,255,.6)';
+  _buaCtx.font = 'bold 14px Arial';
+  _buaCtx.textAlign = 'center';
+  _buaCtx.fillText('KAZIMAK İÇİN SÜRÜKLE', _buaW/2, _buaH/2 - 8);
+  _buaCtx.font = '12px Arial';
+  _buaCtx.fillStyle = 'rgba(255,255,255,.32)';
+  _buaCtx.fillText('İndirim kodunu keşfet!', _buaW/2, _buaH/2 + 14);
+
+  canvas.addEventListener('mousedown',  _buaDown);
+  canvas.addEventListener('mousemove',  _buaMove);
+  canvas.addEventListener('mouseup',    _buaUp);
+  canvas.addEventListener('touchstart', _buaTDown, {passive:true});
+  canvas.addEventListener('touchmove',  _buaTMove, {passive:true});
+  canvas.addEventListener('touchend',   _buaUp);
+}
+
+function buaReset() { buaInitScratch(); }
+
+function _buaDown(e)  { _buaScraping = true; _buaLX = null; _buaLY = null; _buaScratch(e); }
+function _buaMove(e)  { if (_buaScraping) _buaScratch(e); }
+function _buaUp()     { _buaScraping = false; _buaLX = null; _buaLY = null; }
+function _buaTDown(e) { _buaScraping = true; _buaLX = null; _buaLY = null; _buaScratchT(e); }
+function _buaTMove(e) { if (_buaScraping) _buaScratchT(e); }
+
+function _buaScratchT(e) {
+  var r = e.target.getBoundingClientRect();
+  var t = e.touches[0];
+  _buaScratchXY(t.clientX - r.left, t.clientY - r.top);
+}
+function _buaScratch(e) {
+  var r = e.target.getBoundingClientRect();
+  _buaScratchXY(e.clientX - r.left, e.clientY - r.top);
+}
+function _buaScratchXY(x, y) {
+  if (_buaDone) return;
+  _buaCtx.globalCompositeOperation = 'destination-out';
+  _buaCtx.lineWidth = 60; _buaCtx.lineCap = 'round'; _buaCtx.lineJoin = 'round';
+  if (_buaLX !== null) {
+    _buaCtx.beginPath(); _buaCtx.moveTo(_buaLX, _buaLY); _buaCtx.lineTo(x, y); _buaCtx.stroke();
+  }
+  _buaCtx.beginPath();
+  var g = _buaCtx.createRadialGradient(x, y, 0, x, y, 30);
+  g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  _buaCtx.fillStyle = g; _buaCtx.arc(x, y, 30, 0, Math.PI*2); _buaCtx.fill();
+  _buaLX = x; _buaLY = y;
+  _buaCtx.globalCompositeOperation = 'source-over';
+  _buaCheckProgress();
+}
+function _buaCheckProgress() {
+  var data = _buaCtx.getImageData(0, 0, _buaW, _buaH).data;
+  var total = 0, transparent = 0;
+  for (var i = 3; i < data.length; i += 32) { total++; if (data[i] < 128) transparent++; }
+  var pct = transparent / total;
+  document.getElementById('bua-progress').style.width = Math.min(pct*100,100) + '%';
+  if (pct > 0.70 && !_buaDone) { _buaDone = true; _buaReveal(); }
+}
+function _buaReveal() {
+  _buaCtx.clearRect(0, 0, _buaW, _buaH);
+  document.getElementById('bua-progress').style.width = '100%';
+  var code = sRnd(_buaPrize.code);
+  document.getElementById('bua-prize-code').textContent = code;
+  document.getElementById('bua-res-icon').textContent = _buaPrize.icon;
+  document.getElementById('bua-res-code').textContent = code;
+  document.getElementById('bua-res-desc').textContent = _buaPrize.desc;
+  var res = document.getElementById('bua-result');
+  if (res) { res.style.display = 'flex'; res.classList.add('show'); }
+  confetti();
 }
 </script>
 
