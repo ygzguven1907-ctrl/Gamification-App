@@ -6000,6 +6000,69 @@ body { overflow: hidden; }
   transition: background .2s;
 }
 .db-user-badge:hover { background: rgba(124,58,237,.28); }
+
+/* ═══════════════════════════════════════════
+   MOBILE RESPONSIVE — BRAND & GAME PAGES
+═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Brand page sidebars gizle */
+  .bua-sidebar,
+  .chakra-sidebar,
+  .avva-sidebar,
+  .polo-sidebar,
+  .oyn-sidebar { display: none !important; }
+
+  /* Brand sayfaları tam genişlik */
+  #page-brand-ua,
+  #page-brand-chakra,
+  #page-brand-avva,
+  #page-brand-uspolo,
+  #page-brand-oyuneks { flex-direction: column !important; }
+
+  .bua-sim,
+  .chakra-sim,
+  .avva-sim,
+  .polo-sim,
+  .oyn-sim {
+    width: 100% !important;
+    min-height: calc(100vh - 52px) !important;
+  }
+
+  /* Ar-Ge: dikey layout */
+  .arge-body { flex-direction: column !important; height: auto !important; overflow-y: auto !important; }
+  .arge-left { width: 100% !important; height: auto !important; max-height: 45vh !important; border-right: none !important; border-bottom: 1px solid #7c3aed22 !important; }
+  .arge-right { width: 100% !important; padding: 20px !important; }
+
+  /* Oyun sayfası spacing */
+  .game-page { padding: 0 12px 32px; }
+  .game-card-wrap { padding: 22px 14px; border-radius: 18px; }
+  .game-topbar { padding: 14px 0 12px; }
+
+  /* Dashboard stat wrap */
+  .db-stat-row { flex-wrap: wrap; }
+
+  /* Login */
+  .login-left { padding: 32px 22px !important; }
+}
+
+@media (max-width: 480px) {
+  /* Hero */
+  .stat-divider { display: none; }
+  .hero-stats { gap: 20px; }
+  .hero { margin: 32px 0 36px; }
+
+  /* Oyun kartı */
+  .game-card-wrap { padding: 18px 12px; }
+
+  /* Dashboard */
+  .db-welcome { padding: 20px 16px 24px; }
+  .db-stat-box { flex: 1 1 calc(50% - 8px); }
+
+  /* Ar-Ge tab scroll */
+  .arge-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .arge-tab { white-space: nowrap; flex-shrink: 0; }
+}
 </style>
 </head>
 <body>
